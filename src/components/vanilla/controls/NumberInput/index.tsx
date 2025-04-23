@@ -48,6 +48,7 @@ export default (props: Props) => {
             outline-none
             px-3
             w-full
+            bg-[color:--embeddable-controls-backgrounds-colors-transparent]
             rounded-[--embeddable-controls-borders-radius]
           `}
           onChange={(e) => {

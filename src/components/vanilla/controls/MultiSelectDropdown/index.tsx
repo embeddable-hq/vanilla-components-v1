@@ -136,9 +136,10 @@ export default (props: Props) => {
             min-w-[50px]
             relative
             w-full
+            bg-[color:--embeddable-controls-backgrounds-colors-soft]
             border-[color:--embeddable-controls-borders-colors-normal]
             rounded-[--embeddable-controls-borders-radius]
-          `,
+            `,
           props.className,
         )}
       >
@@ -159,6 +160,7 @@ export default (props: Props) => {
             px-3
             text-sm ${focus || !value ? '' : 'opacity-0'}
             w-full
+            rounded-[--embeddable-controls-borders-radius]
             bg-[color:--embeddable-controls-backgrounds-colors-transparent]
           `}
         />
@@ -178,6 +180,8 @@ export default (props: Props) => {
               truncate
               w-[calc(100%-2rem)]
               whitespace-nowrap
+              bg-[color:--embeddable-controls-backgrounds-colors-soft]
+              border-[color:--embeddable-controls-borders-colors-normal]
               rounded-[--embeddable-controls-borders-radius]
               ${focus ? 'hidden' : ''}
             `}
@@ -203,7 +207,6 @@ export default (props: Props) => {
               w-full
               z-50
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
-              border-[color:--embeddable-controls-borders-colors-normal]
               rounded-[--embeddable-controls-borders-radius]
             `}
           >

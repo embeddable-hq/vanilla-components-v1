@@ -126,6 +126,7 @@ export default (props: Props) => {
             min-w-[50px]
             relative
             w-full
+            bg-[color:--embeddable-controls-backgrounds-colors-soft]
             border-[color:--embeddable-controls-borders-colors-normal]
             rounded-[--embeddable-controls-borders-radius]
           `,
@@ -150,6 +151,7 @@ export default (props: Props) => {
             text-sm ${focus || !value ? '' : 'opacity-0'}
             w-full
             bg-[color:--embeddable-controls-backgrounds-colors-transparent]
+            rounded-[--embeddable-controls-borders-radius]
           `}
         />
 
