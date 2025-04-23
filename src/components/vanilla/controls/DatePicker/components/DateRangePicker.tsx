@@ -160,6 +160,7 @@ export default function DateRangePicker(props: Props) {
             p-4
             relative
             text-sm
+            bg-[color:--embeddable-controls-backgrounds-colors-soft]
             border-[color:--embeddable-controls-borders-colors-normal]
             hover:bg-[color:--embeddable-controls-inputs-colors-hover]
             rounded-r-[--embeddable-controls-borders-radius]
