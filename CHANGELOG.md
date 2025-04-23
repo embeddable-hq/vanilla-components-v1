@@ -1,5 +1,23 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.1
+
+### Patch Changes
+
+- a15d774: Improves README
+
+## 1.0.0
+
+### Major Changes
+
+- 6b4f816: Release version - 1.0.0
+
+## 0.0.8
+
+### Patch Changes
+
+- b96fa42: Trying to fix audit issues in boilerplate
+
 ## 0.0.7
 
 ### Patch Changes
