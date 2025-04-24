@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.2
+
+### Patch Changes
+
+- 6dbe835: Improves Control Styling
+
 ## 1.0.1
 
 ### Patch Changes
