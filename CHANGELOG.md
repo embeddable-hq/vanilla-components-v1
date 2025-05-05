@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.3
+
+### Patch Changes
+
+- f5e20e2: Fixes download button filtering issues
+
 ## 1.0.2
 
 ### Patch Changes
