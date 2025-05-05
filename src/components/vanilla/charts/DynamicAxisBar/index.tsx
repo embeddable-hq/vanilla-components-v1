@@ -34,7 +34,7 @@ export default (props: Props) => {
 
   const theme: Theme = useTheme() as Theme;
 
-  const xAxisOptions = props.xAxisOptions?.find((item) => props.xAxis.name == item.name)
+  const xAxisOptions = props.xAxisOptions?.find((item) => props.xAxis.name === item.name)
     ? props.xAxisOptions
     : [...(props.xAxisOptions || []), props.xAxis];
 
