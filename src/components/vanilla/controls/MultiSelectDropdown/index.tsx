@@ -209,6 +209,12 @@ export default (props: Props) => {
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
               rounded-[--embeddable-controls-borders-radius]
             `}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              // re-focus the input (allows repeated clicking in and out)
+              ref.current?.focus();
+              setTriggerBlur(false);
+            }}
           >
             {list}
             {list?.length === 0 && !!search && (
