@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.4
+
+### Patch Changes
+
+- 6321326: Fix dropdown closing when scrollbar is dragged, retain dynamic x-axis value on graph change
+
 ## 1.0.3
 
 ### Patch Changes
