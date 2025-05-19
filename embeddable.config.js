@@ -5,12 +5,12 @@ export default defineConfig({
   plugins: [react],
   lifecycleHooksFile: './lifecycle.config.ts',
 
-  // 
+  //
   // Uncomment for US deployments
   //
   // previewBaseUrl: 'https://app.us.embeddable.com',
   // pushBaseUrl: 'https://api.us.embeddable.com',
-  
+
   //
   // Uncomment for EU deployments
   //
