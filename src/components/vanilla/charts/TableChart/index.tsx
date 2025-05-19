@@ -64,7 +64,7 @@ export default (props: Props) => {
     }
   }, [allResults, isDownloadingAll, props, results, setMeta]);
 
-  const calculateMaxRowFix = useCallback(
+  const calculateMaxRowFit = useCallback(
     ({ height }: { height: number }) => {
       let val = 0;
 
