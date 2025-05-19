@@ -20,6 +20,7 @@ type Props = {
     chartName: string;
     props: CSVProps;
   };
+  downloadAllFunction?: () => void;
   enableDownloadAsCSV?: boolean;
   enableDownloadAsPNG?: boolean;
   pngOpts?: {
@@ -33,6 +34,7 @@ type Props = {
 const DownloadMenu: React.FC<Props> = (props) => {
   const {
     csvOpts,
+    downloadAllFunction,
     enableDownloadAsCSV,
     enableDownloadAsPNG,
     pngOpts,
@@ -160,12 +162,12 @@ const DownloadMenu: React.FC<Props> = (props) => {
                 absolute
                 flex
                 items-center
+                max-w-100
                 p-4
                 right-0
                 rounded
                 shadow-md
                 top-6
-                w-40
                 whitespace-nowrap
                 bg-[color:--embeddable-controls-backgrounds-colors-soft]
               `}
@@ -180,6 +182,18 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       <IconDownloadCSV className="cursor-pointer inline-block mr-2" /> Download CSV
                     </a>
                   </li>
+                  {downloadAllFunction && (
+                    <li className="mb-2">
+                      <a
+                        href="#"
+                        onClick={downloadAllFunction}
+                        className="inline-block flex items-center hover:opacity-100 opacity-60"
+                      >
+                        <IconDownloadCSV className="cursor-pointer inline-block mr-2" /> Download
+                        All as CSV
+                      </a>
+                    </li>
+                  )}
                   <li>
                     <a
                       href="#"
