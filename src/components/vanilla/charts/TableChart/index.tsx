@@ -62,9 +62,9 @@ export default (props: Props) => {
       setIsDownloadingAll(false);
       setMeta((meta) => ({ ...meta, downloadAll: false }));
     }
-  }, [allResults, isDownloadingAll, props, results, setMeta]);
+  }, [allResults, isDownloadingAll, props, setMeta]);
 
-  const calculateMaxRowFix = useCallback(
+  const calculateMaxRowFit = useCallback(
     ({ height }: { height: number }) => {
       let val = 0;
 
