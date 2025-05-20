@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.5
+
+### Patch Changes
+
+- f085fcb: Adds download all as CSV to table
+
 ## 1.0.4
 
 ### Patch Changes
