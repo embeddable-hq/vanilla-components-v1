@@ -114,7 +114,7 @@ export default (props: Props) => {
       childContainerClassName="overflow-x-auto"
       className="overflow-y-auto"
       downloadAllFunction={handleDownloadAll}
-      onResize={calculateMaxRowFix}
+      onResize={calculateMaxRowFit}
       setResizeState={(value) => setResizing(value)}
     >
       <div style={{ minWidth: `${columns.length * (props.minColumnWidth ?? 100)}px` }}>
