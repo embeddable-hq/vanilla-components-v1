@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.6
+
+### Patch Changes
+
+- f8790b9: Fixes a dropdown error and improves bar chart sorting
+
 ## 1.0.5
 
 ### Patch Changes
