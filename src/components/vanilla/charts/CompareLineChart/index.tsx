@@ -53,12 +53,14 @@ type Props = {
   title?: string;
   ds: Dataset;
   xAxis: Dimension;
+  comparisonXAxis?: Dimension;
   granularity: Granularity;
   metrics: Measure[];
   timeFilter?: TimeRange;
   prevTimeFilter?: TimeRange;
   yAxisMin?: number;
   xAxisTitle?: string;
+  comparisonXAxisTitle?: string;
   yAxisTitle?: string;
   applyFill?: boolean;
   showLabels?: boolean;
@@ -123,7 +125,7 @@ export default (propsInitial: Props) => {
           data: props.prevTimeFilter
             ? prevData?.map((d: Record) => ({
                 y: parseFloat(d[metrics[i].name] || '0'),
-                x: parseTime(d[props.xAxis?.name || '']),
+                x: parseTime(d[props.comparisonXAxis?.name || '']),
               })) || []
             : [],
           backgroundColor: applyFill
@@ -209,7 +211,7 @@ export default (propsInitial: Props) => {
         comparison: {
           min: bounds.comparison?.from?.toJSON(),
           max: bounds.comparison?.to?.toJSON(),
-          display: false,
+          display: !!props.comparisonXAxis,
           grid: {
             display: false,
           },
@@ -221,7 +223,8 @@ export default (propsInitial: Props) => {
             unit: props.granularity,
           },
           title: {
-            display: false,
+            display: !!props.comparisonXAxisTitle,
+            text: props.comparisonXAxisTitle,
           },
         },
       },
