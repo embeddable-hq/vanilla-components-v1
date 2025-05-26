@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.7
+
+### Patch Changes
+
+- 7aad57d: Allows optional 2nd x-axis on Comparison Line Chart
+
 ## 1.0.6
 
 ### Patch Changes
