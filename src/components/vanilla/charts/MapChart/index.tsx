@@ -25,9 +25,9 @@ export default (props: Props) => {
   const hoverColor = tinyColor(theme.brand.secondary);
 
   const [mapComponents, setMapComponents] = useState<{
-    ComposableMap: React.ComponentType<ComposableMapProps>;
-    Geographies: React.ComponentType<GeographiesProps>;
-    Geography: React.ComponentType<GeographyProps>;
+    ComposableMap: React.FunctionComponent<ComposableMapProps>;
+    Geographies: React.FunctionComponent<GeographiesProps>;
+    Geography: React.FunctionComponent<GeographyProps>;
   } | null>(null);
   const box = useRef<HTMLDivElement | null>(null);
   const tooltip = useRef<HTMLDivElement | null>(null);
