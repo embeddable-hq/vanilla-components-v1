@@ -17,10 +17,7 @@ export default {
     if (existingStyle) {
       existingStyle.remove();
     }
-    // This check keeps us from appending multiple style tags
-    if (!document.head.querySelector('#theme-config')) {
-      document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
 
     // Load Google Fonts
     const fontFamily = theme.font.family;
