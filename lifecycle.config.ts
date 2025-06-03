@@ -16,6 +16,9 @@ export default {
     const existingStyle = document.head.querySelector('#theme-config');
     if (existingStyle) {
       existingStyle.remove();
+    }
+    // This check keeps us from appending multiple style tags
+    if (!document.head.querySelector('#theme-config')) {
       document.head.appendChild(style);
     }
 
