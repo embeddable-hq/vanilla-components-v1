@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.8
+
+### Patch Changes
+
+- 75557b0: Improves pie chart labels and CSS variable handling
+
 ## 1.0.7
 
 ### Patch Changes
