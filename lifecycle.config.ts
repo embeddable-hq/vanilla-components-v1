@@ -3,7 +3,6 @@ import { Theme } from './src/themes/theme';
 
 export default {
   onThemeUpdated: (updatedTheme: Theme) => {
-    console.log('Theme updated:', updatedTheme);
     // If for some reason the theme is not provided, use the default theme
     const theme = updatedTheme ? updatedTheme : defaultTheme;
 
@@ -13,7 +12,10 @@ export default {
     style.textContent = `:root {\n${cssVariables}}`;
     style.id = 'theme-config';
 
-    if (!document.head.querySelector('#theme-config')) {
+    // There may be an existing theme config from a previous embeddable
+    const existingStyle = document.head.querySelector('#theme-config');
+    if (existingStyle) {
+      existingStyle.remove();
       document.head.appendChild(style);
     }
 

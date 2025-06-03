@@ -36,7 +36,6 @@ type PropsWithRequiredtheme = Props & { theme: Theme };
 
 export default (props: Props): React.JSX.Element => {
   const theme: Theme = useTheme() as Theme;
-  console.log('Theme updated - VANILLA:', theme);
 
   //add missing dates to time-series barcharts
   const { fillGaps } = useTimeseries(props, 'desc');
