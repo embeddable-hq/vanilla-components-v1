@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.9
+
+### Patch Changes
+
+- edcbf44: Fix possible issue w/ timeseries line chart
+
 ## 1.0.8
 
 ### Patch Changes
