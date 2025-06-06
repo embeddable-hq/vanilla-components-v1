@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.10
+
+### Patch Changes
+
+- 84686e4: Fixes a minor issue with the comparison line chart
+
 ## 1.0.9
 
 ### Patch Changes
