@@ -138,6 +138,21 @@ const DownloadMenu: React.FC<Props> = (props) => {
     setShowMenu(!showMenu);
   };
 
+  const handleKeyDownCallback = (
+    e: React.KeyboardEvent<HTMLElement>,
+    callback: any,
+    escapable?: boolean,
+  ) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      callback(e);
+    }
+    if (escapable && e.key === 'Escape') {
+      e.preventDefault();
+      setShowMenu(false);
+    }
+  };
+
   // If neither CSV nor PNG downloads are enabled, show nothing
   if (!enableDownloadAsCSV && !enableDownloadAsPNG) {
     return null;
@@ -152,12 +167,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
           onClick={handleCSVClick}
           className="cursor-pointer"
           tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleCSVClick(e);
-            }
-          }}
+          onKeyDown={(e) => handleKeyDownCallback(e, handleCSVClick, false)}
         >
           {!preppingDownload && (
             <IconDownloadCSV className="cursor-pointer hover:opacity-100 opacity-50" />
@@ -175,12 +185,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
           onClick={handlePNGClick}
           className="cursor-pointer"
           tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handlePNGClick(e);
-            }
-          }}
+          onKeyDown={(e) => handleKeyDownCallback(e, handlePNGClick, false)}
         >
           {!preppingDownload && (
             <IconDownloadPNG className="cursor-pointer hover:opacity-100 opacity-50" />
@@ -197,16 +202,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
         <div
           onClick={handleSetShow}
           className="cursor-pointer relative w-3 flex justify-center"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleSetShow();
-            }
-            if (e.key === 'Escape') {
-              e.preventDefault();
-              setShowMenu(false);
-            }
-          }}
+          onKeyDown={(e) => handleKeyDownCallback(e, handleSetShow, true)}
           tabIndex={0}
         >
           {!preppingDownload && (
@@ -234,12 +230,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
                     <a
                       href="#"
                       onClick={handleCSVClick}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          handleCSVClick(e);
-                        }
-                      }}
+                      onKeyDown={(e) => handleKeyDownCallback(e, handleCSVClick, false)}
                       className="inline-block flex items-center hover:opacity-100 opacity-60"
                       tabIndex={0}
                       ref={refFocus}
@@ -257,12 +248,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
                           e.preventDefault();
                           downloadAllFunction();
                         }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            downloadAllFunction();
-                          }
-                        }}
+                        onKeyDown={(e) => handleKeyDownCallback(e, downloadAllFunction, false)}
                         className="inline-block flex items-center hover:opacity-100 opacity-60"
                         tabIndex={0}
                         onFocus={() => setFocusedMenuItem('downloadAll')}
@@ -277,12 +263,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
                     <a
                       href="#"
                       onClick={handlePNGClick}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          handlePNGClick(e);
-                        }
-                      }}
+                      onKeyDown={(e) => handleKeyDownCallback(e, handlePNGClick, false)}
                       className="inline-block flex items-center hover:opacity-100 opacity-60"
                       tabIndex={0}
                       onFocus={() => setFocusedMenuItem('png')}
