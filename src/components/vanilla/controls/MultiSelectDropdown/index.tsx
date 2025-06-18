@@ -192,7 +192,6 @@ export default (props: Props) => {
           name="dropdown"
           placeholder={props.placeholder}
           onFocus={() => setFocus(true)}
-          // onBlur={() => setTriggerBlur(true)}
           onChange={(e) => performSearch(e.target.value)}
           className={`
             border-0
