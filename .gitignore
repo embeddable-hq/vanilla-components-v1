@@ -32,6 +32,8 @@ dist-ssr
 # build files
 embeddable-entry-point.jsx
 .embeddable-dev-build
+.embeddable-dev-tmp
+.embeddable-tmp
 
 # license report file
 license-report.csv

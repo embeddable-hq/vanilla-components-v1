@@ -14,7 +14,6 @@ import { twMerge } from 'tailwind-merge';
 import Container from '../../Container';
 import Spinner from '../../Spinner';
 import { ChevronDown, ClearIcon } from '../../icons';
-import { Theme } from '../../../../themes/theme';
 
 export type Props = {
   icon?: ReactNode;
@@ -37,11 +36,14 @@ type Record = { [p: string]: string };
 let debounce: number | undefined = undefined;
 
 export default (props: Props) => {
-  const [focus, setFocus] = useState(false);
   const ref = useRef<HTMLInputElement | null>(null);
+
+  const [focus, setFocus] = useState(false);
+  const [isDropdownOrItemFocused, setIsDropdownOrItemFocused] = useState(false);
+  const [search, setSearch] = useState('');
   const [triggerBlur, setTriggerBlur] = useState(false);
   const [value, setValue] = useState(props.defaultValue);
-  const [search, setSearch] = useState('');
+
   const [_, setServerSearch] = useEmbeddableState({
     [props.searchProperty || 'search']: '',
   }) as [Record, (f: (m: Record) => Record) => void];
@@ -87,6 +89,27 @@ export default (props: Props) => {
     return () => clearTimeout(timeout);
   }, [triggerBlur]);
 
+  // Accessibility - Close the menu if we've tabbed off of any items it contains
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    if (!isDropdownOrItemFocused) {
+      timeoutId = setTimeout(() => {
+        setFocus(false);
+      }, 200);
+    } else {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isDropdownOrItemFocused]);
+
   const list = useMemo(
     () =>
       props.options?.data?.reduce((memo, o, i: number) => {
@@ -98,9 +121,22 @@ export default (props: Props) => {
               setTriggerBlur(true);
               set(o[props.property?.name || ''] || '');
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                set(o[props.property?.name || ''] || '');
+                setFocus(false);
+                setTriggerBlur(true);
+              } else if (e.key === 'Escape') {
+                e.preventDefault();
+                setFocus(false);
+                setTriggerBlur(true);
+              }
+            }}
             className={`flex items-center min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal ${
               value === o[props.property?.name || ''] ? 'bg-black/5' : ''
             } whitespace-nowrap overflow-hidden text-ellipsis`}
+            tabIndex={0}
           >
             {o[props.property?.name || '']}
             {o.note && (
@@ -142,7 +178,14 @@ export default (props: Props) => {
             setFocus(true);
             setTriggerBlur(false);
           }}
-          onBlur={() => setTriggerBlur(true)}
+          onFocus={() => {
+            setFocus(true);
+            setTriggerBlur(false);
+            setIsDropdownOrItemFocused(true);
+          }}
+          onBlur={() => {
+            setIsDropdownOrItemFocused(false);
+          }}
           onChange={(e) => performSearch(e.target.value)}
           className={`
             border-0
@@ -204,6 +247,13 @@ export default (props: Props) => {
               ref.current?.focus();
               setTriggerBlur(false);
             }}
+            onFocus={() => {
+              setIsDropdownOrItemFocused(true);
+            }}
+            onBlur={() => {
+              setIsDropdownOrItemFocused(false);
+            }}
+            tabIndex={0}
           >
             {list}
             {list?.length === 0 && !!search && (
