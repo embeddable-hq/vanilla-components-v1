@@ -1,5 +1,5 @@
-import { DataResponse } from '@embeddable.com/core';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { DataResponse } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 
 import IconDownloadCSV from '../icons/DownloadCSV';
@@ -45,7 +45,8 @@ const DownloadMenu: React.FC<Props> = (props) => {
 
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [isDownloadStarted, setIsDownloadStarted] = useState<boolean>(false);
-  const refFocus = useRef<HTMLInputElement>(null);
+  const [focusedMenuItem, setFocusedMenuItem] = useState<string>('');
+  const refFocus = useRef<HTMLAnchorElement>(null);
 
   // Need a useEffect here because we want a render cycle to complete so the menu closes pre-html2canvas
   useEffect(() => {
@@ -72,10 +73,10 @@ const DownloadMenu: React.FC<Props> = (props) => {
       }
       setIsDownloadStarted(false);
     }
-  }, [isDownloadStarted, pngOpts, preppingDownload, setPreppingDownload]);
+  }, [isDownloadStarted, pngOpts, preppingDownload, setPreppingDownload, theme]);
 
   // Handle CSV downloads using supplied options
-  const handleCSVClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handleCSVClick = (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
     e.preventDefault();
     if (!csvOpts) {
       console.error('No CSV options supplied');
@@ -103,8 +104,29 @@ const DownloadMenu: React.FC<Props> = (props) => {
     }
   }, [showMenu]);
 
+  // Accessibility - Close the menu if we've tabbed off of any items it contains
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    if (focusedMenuItem === '') {
+      timeoutId = setTimeout(() => {
+        setShowMenu(false);
+      }, 200);
+    } else {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [focusedMenuItem]);
+
   // Handle the Click on the PNG icon - triggers the useEffect above
-  const handlePNGClick = (e: React.MouseEvent<HTMLElement>) => {
+  const handlePNGClick = (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
     e.preventDefault();
     setShowMenu(false);
     setPreppingDownload(true);
@@ -126,7 +148,17 @@ const DownloadMenu: React.FC<Props> = (props) => {
   if (enableDownloadAsCSV && !enableDownloadAsPNG && !downloadAllFunction) {
     return (
       <div className="absolute top-0 right-0 z-5 flex items-center justify-end space-x-2">
-        <div onClick={handleCSVClick} className="cursor-pointer">
+        <div
+          onClick={handleCSVClick}
+          className="cursor-pointer"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCSVClick(e);
+            }
+          }}
+        >
           {!preppingDownload && (
             <IconDownloadCSV className="cursor-pointer hover:opacity-100 opacity-50" />
           )}
@@ -139,7 +171,17 @@ const DownloadMenu: React.FC<Props> = (props) => {
   if (!enableDownloadAsCSV && enableDownloadAsPNG) {
     return (
       <div className="absolute top-0 right-0 z-5 flex items-center justify-end space-x-2">
-        <div onClick={handlePNGClick} className="cursor-pointer">
+        <div
+          onClick={handlePNGClick}
+          className="cursor-pointer"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handlePNGClick(e);
+            }
+          }}
+        >
           {!preppingDownload && (
             <IconDownloadPNG className="cursor-pointer hover:opacity-100 opacity-50" />
           )}
@@ -152,7 +194,21 @@ const DownloadMenu: React.FC<Props> = (props) => {
   return (
     <>
       <div className="absolute top-0 right-0 z-5 flex items-center justify-end space-x-2 ">
-        <div onClick={handleSetShow} className="cursor-pointer relative w-3 flex justify-center">
+        <div
+          onClick={handleSetShow}
+          className="cursor-pointer relative w-3 flex justify-center"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleSetShow();
+            }
+            if (e.key === 'Escape') {
+              e.preventDefault();
+              setShowMenu(false);
+            }
+          }}
+          tabIndex={0}
+        >
           {!preppingDownload && (
             <IconVerticalEllipsis className="cursor-pointer hover:opacity-100 opacity-50" />
           )}
@@ -179,6 +235,10 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       href="#"
                       onClick={handleCSVClick}
                       className="inline-block flex items-center hover:opacity-100 opacity-60"
+                      tabIndex={0}
+                      ref={refFocus}
+                      onFocus={() => setFocusedMenuItem('csv')}
+                      onBlur={(e) => setFocusedMenuItem('')}
                     >
                       <IconDownloadCSV className="cursor-pointer inline-block mr-2" /> Download CSV
                     </a>
@@ -187,8 +247,14 @@ const DownloadMenu: React.FC<Props> = (props) => {
                     <li className="mb-2">
                       <a
                         href="#"
-                        onClick={(e) => { e.preventDefault(); downloadAllFunction(); }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          downloadAllFunction();
+                        }}
                         className="inline-block flex items-center hover:opacity-100 opacity-60"
+                        tabIndex={0}
+                        onFocus={() => setFocusedMenuItem('downloadAll')}
+                        onBlur={(e) => setFocusedMenuItem('')}
                       >
                         <IconDownloadCSV className="cursor-pointer inline-block mr-2" /> Download
                         All as CSV
@@ -200,22 +266,15 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       href="#"
                       onClick={handlePNGClick}
                       className="inline-block flex items-center hover:opacity-100 opacity-60"
+                      tabIndex={0}
+                      onFocus={() => setFocusedMenuItem('png')}
+                      onBlur={(e) => setFocusedMenuItem('')}
                     >
                       <IconDownloadPNG className="cursor-pointer inline-block mr-2" /> Download PNG
                     </a>
                   </li>
                 </ul>
               </div>
-              <input
-                type="text"
-                ref={refFocus}
-                onBlur={() =>
-                  setTimeout(() => {
-                    setShowMenu(false);
-                  }, 200)
-                }
-                style={{ width: 1, height: 1, opacity: 0 }}
-              />
             </>
           )}
         </div>
