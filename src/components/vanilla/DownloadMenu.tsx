@@ -268,7 +268,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       className="inline-block flex items-center hover:opacity-100 opacity-60"
                       tabIndex={0}
                       onFocus={() => setFocusedMenuItem('png')}
-                      onBlur={(e) => setFocusedMenuItem('')}
+                      onBlur={() => setFocusedMenuItem('')}
                     >
                       <IconDownloadPNG className="cursor-pointer inline-block mr-2" /> Download PNG
                     </a>
