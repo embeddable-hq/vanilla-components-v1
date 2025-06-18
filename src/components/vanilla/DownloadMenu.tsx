@@ -234,6 +234,12 @@ const DownloadMenu: React.FC<Props> = (props) => {
                     <a
                       href="#"
                       onClick={handleCSVClick}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleCSVClick(e);
+                        }
+                      }}
                       className="inline-block flex items-center hover:opacity-100 opacity-60"
                       tabIndex={0}
                       ref={refFocus}
@@ -251,6 +257,12 @@ const DownloadMenu: React.FC<Props> = (props) => {
                           e.preventDefault();
                           downloadAllFunction();
                         }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            downloadAllFunction();
+                          }
+                        }}
                         className="inline-block flex items-center hover:opacity-100 opacity-60"
                         tabIndex={0}
                         onFocus={() => setFocusedMenuItem('downloadAll')}
@@ -265,6 +277,12 @@ const DownloadMenu: React.FC<Props> = (props) => {
                     <a
                       href="#"
                       onClick={handlePNGClick}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handlePNGClick(e);
+                        }
+                      }}
                       className="inline-block flex items-center hover:opacity-100 opacity-60"
                       tabIndex={0}
                       onFocus={() => setFocusedMenuItem('png')}
