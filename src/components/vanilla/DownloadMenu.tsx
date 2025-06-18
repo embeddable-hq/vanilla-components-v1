@@ -238,7 +238,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       tabIndex={0}
                       ref={refFocus}
                       onFocus={() => setFocusedMenuItem('csv')}
-                      onBlur={(e) => setFocusedMenuItem('')}
+                      onBlur={() => setFocusedMenuItem('')}
                     >
                       <IconDownloadCSV className="cursor-pointer inline-block mr-2" /> Download CSV
                     </a>
