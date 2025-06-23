@@ -3,7 +3,7 @@
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Language and Environment */
-    "target": "es2021" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "target": "es2022" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "jsx": "preserve" /* Specify what JSX code is generated. */,
 
     /* Modules */
