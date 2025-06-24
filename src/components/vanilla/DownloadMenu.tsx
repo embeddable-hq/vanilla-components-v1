@@ -10,6 +10,9 @@ import downloadAsPNG from '../util/downloadAsPNG';
 import { ContainerProps } from './Container';
 import { Theme } from '../../themes/theme';
 
+const FOCUS_TIMEOUT_MS = 200;
+const PNG_TIMEOUT_MS = 200;
+
 interface CSVProps extends ContainerProps {
   results?: DataResponse | DataResponse[];
   prevResults?: DataResponse;
@@ -69,11 +72,38 @@ const DownloadMenu: React.FC<Props> = (props) => {
             setPreppingDownload,
             theme,
           );
-        }, 200);
+        }, PNG_TIMEOUT_MS);
       }
       setIsDownloadStarted(false);
     }
   }, [isDownloadStarted, pngOpts, preppingDownload, setPreppingDownload, theme]);
+
+  useEffect(() => {
+    if (showMenu) {
+      refFocus.current?.focus();
+    }
+  }, [showMenu]);
+
+  // Accessibility - Close the menu if we've tabbed off of any items it contains
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    if (focusedMenuItem === '') {
+      timeoutId = setTimeout(() => {
+        setShowMenu(false);
+      }, FOCUS_TIMEOUT_MS);
+    } else {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [focusedMenuItem]);
 
   // Handle CSV downloads using supplied options
   const handleCSVClick = (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
@@ -98,46 +128,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
     downloadAsCSV(csvProps, data, csvProps.prevResults?.data, chartName, setPreppingDownload);
   };
 
-  useEffect(() => {
-    if (showMenu) {
-      refFocus.current?.focus();
-    }
-  }, [showMenu]);
-
-  // Accessibility - Close the menu if we've tabbed off of any items it contains
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-
-    if (focusedMenuItem === '') {
-      timeoutId = setTimeout(() => {
-        setShowMenu(false);
-      }, 200);
-    } else {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [focusedMenuItem]);
-
-  // Handle the Click on the PNG icon - triggers the useEffect above
-  const handlePNGClick = (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
-    e.preventDefault();
-    setShowMenu(false);
-    setPreppingDownload(true);
-    setIsDownloadStarted(true);
-  };
-
-  // Toggle the download menu
-  const handleSetShow = () => {
-    setShowMenu(!showMenu);
-  };
-
+  // Used for handling keydown events on the menu items
   const handleKeyDownCallback = (
     e: React.KeyboardEvent<HTMLElement>,
     callback: any,
@@ -151,6 +142,19 @@ const DownloadMenu: React.FC<Props> = (props) => {
       e.preventDefault();
       setShowMenu(false);
     }
+  };
+
+  // Handle the Click on the PNG icon - triggers the useEffect above
+  const handlePNGClick = (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
+    e.preventDefault();
+    setShowMenu(false);
+    setPreppingDownload(true);
+    setIsDownloadStarted(true);
+  };
+
+  // Toggle the download menu
+  const handleSetShow = () => {
+    setShowMenu(!showMenu);
   };
 
   // If neither CSV nor PNG downloads are enabled, show nothing

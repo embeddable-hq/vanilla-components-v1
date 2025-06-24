@@ -52,6 +52,38 @@ export default (props: Props) => {
     setValue(props.defaultValue);
   }, [props.defaultValue]);
 
+  // Accessibility - Close the menu if we've tabbed off of any items it contains
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    if (!isDropdownOrItemFocused) {
+      timeoutId = setTimeout(() => {
+        setFocus(false);
+      }, 200);
+    } else {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isDropdownOrItemFocused]);
+
+  useLayoutEffect(() => {
+    if (!triggerBlur) return;
+
+    const timeout = setTimeout(() => {
+      setFocus(false);
+      setTriggerBlur(false);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [triggerBlur]);
+
   const performSearch = useCallback(
     (newSearch: string) => {
       setSearch(newSearch);
@@ -78,37 +110,24 @@ export default (props: Props) => {
     [setValue, props, performSearch],
   );
 
-  useLayoutEffect(() => {
-    if (!triggerBlur) return;
-
-    const timeout = setTimeout(() => {
+  // Used for handling keydown events on the menu items
+  const handleKeyDownCallback = (
+    e: React.KeyboardEvent<HTMLElement>,
+    callback: any,
+    escapable?: boolean,
+  ) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      callback(e);
       setFocus(false);
-      setTriggerBlur(false);
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [triggerBlur]);
-
-  // Accessibility - Close the menu if we've tabbed off of any items it contains
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-
-    if (!isDropdownOrItemFocused) {
-      timeoutId = setTimeout(() => {
-        setFocus(false);
-      }, 200);
-    } else {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      setTriggerBlur(true);
     }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [isDropdownOrItemFocused]);
+    if (escapable && e.key === 'Escape') {
+      e.preventDefault();
+      setFocus(false);
+      setTriggerBlur(true);
+    }
+  };
 
   const list = useMemo(
     () =>
@@ -121,18 +140,9 @@ export default (props: Props) => {
               setTriggerBlur(true);
               set(o[props.property?.name || ''] || '');
             }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                set(o[props.property?.name || ''] || '');
-                setFocus(false);
-                setTriggerBlur(true);
-              } else if (e.key === 'Escape') {
-                e.preventDefault();
-                setFocus(false);
-                setTriggerBlur(true);
-              }
-            }}
+            onKeyDown={(e) =>
+              handleKeyDownCallback(e, set(o[props.property?.name || ''] || ''), true)
+            }
             className={`flex items-center min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal ${
               value === o[props.property?.name || ''] ? 'bg-black/5' : ''
             } whitespace-nowrap overflow-hidden text-ellipsis`}

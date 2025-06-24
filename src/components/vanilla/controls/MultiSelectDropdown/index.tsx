@@ -52,6 +52,38 @@ export default (props: Props) => {
     setValue(props.defaultValue);
   }, [props.defaultValue]);
 
+  // Accessibility - Close the menu if we've tabbed off of any items it contains
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    if (!isDropdownOrItemFocused) {
+      timeoutId = setTimeout(() => {
+        setFocus(false);
+      }, 200);
+    } else {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isDropdownOrItemFocused]);
+
+  useLayoutEffect(() => {
+    if (!triggerBlur) return;
+
+    const timeout = setTimeout(() => {
+      setFocus(false);
+      setTriggerBlur(false);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [triggerBlur]);
+
   const performSearch = useCallback(
     (newSearch: string) => {
       setSearch(newSearch);
@@ -89,37 +121,22 @@ export default (props: Props) => {
     [performSearch, props, value],
   );
 
-  useLayoutEffect(() => {
-    if (!triggerBlur) return;
-
-    const timeout = setTimeout(() => {
-      setFocus(false);
-      setTriggerBlur(false);
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [triggerBlur]);
-
-  // Accessibility - Close the menu if we've tabbed off of any items it contains
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-
-    if (!isDropdownOrItemFocused) {
-      timeoutId = setTimeout(() => {
-        setFocus(false);
-      }, 200);
-    } else {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+  // Used for handling keydown events on the menu items
+  const handleKeyDownCallback = (
+    e: React.KeyboardEvent<HTMLElement>,
+    callback: any,
+    escapable?: boolean,
+  ) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      callback(e);
     }
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [isDropdownOrItemFocused]);
+    if (escapable && e.key === 'Escape') {
+      e.preventDefault();
+      setFocus(false);
+      setTriggerBlur(true);
+    }
+  };
 
   const list = useMemo(
     () =>
@@ -131,17 +148,9 @@ export default (props: Props) => {
               setTriggerBlur(false);
               set(o[props.property?.name || ''] || '');
             }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                set(o[props.property?.name || ''] || '');
-              }
-              if (e.key === 'Escape') {
-                e.preventDefault();
-                setFocus(false);
-                setTriggerBlur(true);
-              }
-            }}
+            onKeyDown={(e) =>
+              handleKeyDownCallback(e, set(o[props.property?.name || ''] || ''), true)
+            }
             onFocus={() => {
               setIsDropdownOrItemFocused(true);
               setFocus(true);
