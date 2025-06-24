@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.11
+
+### Patch Changes
+
+- e859c41: Improves keyboard accessibility of dropdowns and download menu
+
 ## 1.0.10
 
 ### Patch Changes
