@@ -12,6 +12,12 @@ export default {
     style.textContent = `:root {\n${cssVariables}}`;
     style.id = 'theme-config';
 
+    // If a custom font url is provided, we need to add it to the CSS
+    const hasCustomFonts = theme.font.urls.length > 0;
+    if (hasCustomFonts) {
+      style.textContent += `\n@font-face {\n  font-family: '${theme.font.family}';\n  src: ${theme.font.urls.map((url) => `url('${url}')`).join(', ')};\n}`;
+    }
+
     // There may be an existing theme config from a previous embeddable
     const existingStyle = document.head.querySelector('#theme-config');
     if (existingStyle) {
@@ -19,6 +25,18 @@ export default {
     }
     document.head.appendChild(style);
 
+    // If we had custom fonts, we're done
+    if (hasCustomFonts) {
+      return () => {
+        style.remove();
+        const fontLink = document.head.querySelector('#google-fonts');
+        if (fontLink) {
+          fontLink.remove();
+        }
+      };
+    }
+
+    // Otherwise, we need to load Google Fonts if the theme specifies a font family
     // Load Google Fonts
     const fontFamily = theme.font.family;
     const fontLink = loadGoogleFonts(fontFamily, theme);

@@ -180,6 +180,7 @@ export type Theme = {
     family: string;
     size: string;
     weight: number;
+    urls: string[];
   };
   png: {
     backgroundColor: string;
