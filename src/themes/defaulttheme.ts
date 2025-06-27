@@ -171,10 +171,7 @@ export const defaultTheme: Theme = {
       '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     size: `14px`,
     weight: 400,
-    urls: [
-      'https://assets.ctfassets.net/rz1oowkt5gyp/6EnDcOBYnO67MYVJcpQLUc/85d36587de9855f3cd9f4e23f2119cf8/Charlie_Display-Thin.woff2',
-      'https://assets.ctfassets.net/rz1oowkt5gyp/5Bpl6vErvLYCi1EdOqI2IK/b57fbec62ffab536b59e311837de9042/Charlie_Display-Thin.woff',
-    ],
+    urls: [],
   },
   png: {
     backgroundColor: '#FFFFFF',
