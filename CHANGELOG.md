@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.12
+
+### Patch Changes
+
+- 4b65df3: Adds custom font support, fixes npm security complaints
+
 ## 1.0.11
 
 ### Patch Changes
