@@ -15,7 +15,7 @@ export default {
     // If a custom font url is provided, we need to add it to the CSS
     const hasCustomFonts = theme.font.urls.length > 0;
     if (hasCustomFonts) {
-      style.textContent += `\n@font-face {\n  font-family: '${theme.font.family}';\n  src: ${theme.font.urls.map((url) => `url('${url}')`).join(', ')};\n}`;
+      style.textContent += `\n@font-face {\n  font-family: '${theme.font.family}';\n  src: ${theme.font.urls.map((url) => `url('${url}')`).join(', ')};\n font-display: swap;\n}`;
     }
 
     // There may be an existing theme config from a previous embeddable
