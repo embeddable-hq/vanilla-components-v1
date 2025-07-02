@@ -32,6 +32,21 @@ export const meta = {
       type: 'dimensionOrMeasure',
       label: 'Columns',
       array: true,
+      inputs: [
+        {
+          name: 'label',
+          type: 'string',
+          label: 'Label name',
+          description: 'The label to show on this column',
+          required: false,
+        },
+        {
+          name: 'suffix',
+          type: 'string',
+          supportedTypes: ['number', 'string'],
+          label: 'Suffix',
+        },
+      ],
       config: {
         dataset: 'ds',
       },
