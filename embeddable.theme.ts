@@ -189,7 +189,7 @@ const themeProvider = (clientContext: any, parentTheme: Theme): any => {
       fillNormal: '#780064',
       fillStrong: '#1D1E22',
       strokeSoft: '#474752',
-      strokeNormal: '#959CA8',
+      strokeNormal: '#780064',
       strokeStrong: '#101010',
     },
   }) as Theme;
