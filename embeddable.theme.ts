@@ -180,7 +180,7 @@ const themeProvider = (clientContext: any, parentTheme: Theme): any => {
       color: '#780064',
       colorNormal: '#333942',
       colorSoft: '#e3e3e3',
-      family: 'Delius',
+      family: 'Inter',
       size: `14px`,
       weight: 400,
     },

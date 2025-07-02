@@ -8,8 +8,11 @@
   color: var(--embeddable-font-color);
   font-family: var(--embeddable-font-family);
 }
-.font-family-embeddable {
-  font-family: var(--embeddable-font-family);
+.font-family-embeddable-title {
+  font-family: var(--embeddable-font-title-family);
+}
+.font-family-embeddable-description {
+  font-family: var(--embeddable-font-description-family);
 }
 .embeddable-table-header {
   color: var(--embeddable-table-header-color);

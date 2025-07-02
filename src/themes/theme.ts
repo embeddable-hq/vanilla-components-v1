@@ -190,6 +190,7 @@ export type Theme = {
     colorSoft: string;
     description: {
       color: string;
+      family: string;
       size: string;
     };
     family: string;
@@ -197,6 +198,7 @@ export type Theme = {
     weight: number;
     title: {
       color: string;
+      family: string;
       size: string;
     };
     urls: string[];

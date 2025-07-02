@@ -181,6 +181,8 @@ export const defaultTheme: Theme = {
     description: {
       color: '#888888',
       size: '14px',
+      family:
+        '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     },
     family:
       '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
@@ -189,6 +191,8 @@ export const defaultTheme: Theme = {
     title: {
       color: '#333942',
       size: '16px',
+      family:
+        '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     },
     urls: [],
   },

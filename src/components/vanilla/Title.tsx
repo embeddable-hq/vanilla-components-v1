@@ -15,7 +15,7 @@ export default function Title({ title, style }: Props) {
       <h2
         className={`
           flex
-          font-family-embeddable
+          font-family-embeddable-title
           justify-start
           leading-6
           mb-2

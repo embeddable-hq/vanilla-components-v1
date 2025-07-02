@@ -15,7 +15,7 @@ export default function Description({ description, style }: Props) {
       <p
         className={`
           flex
-          font-family-embeddable
+          font-family-embeddable-description
           justify-start
           mb-2
           text-[color:--embeddable-font-description-color]
