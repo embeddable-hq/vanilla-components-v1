@@ -188,9 +188,17 @@ export type Theme = {
     color: string;
     colorNormal: string;
     colorSoft: string;
+    description: {
+      color: string;
+      size: string;
+    };
     family: string;
     size: string;
     weight: number;
+    title: {
+      color: string;
+      size: string;
+    };
     urls: string[];
   };
   png: {
