@@ -39,7 +39,6 @@ export default {
     // Otherwise, we need to load Google Fonts if the theme specifies a font family
     // Load Google Fonts
     const fontFamily = `${theme.font.family}, ${theme.font.description.family}, ${theme.font.title.family}`;
-    console.log(fontFamily);
     const links = loadGoogleFonts(fontFamily);
     if (links) {
       const { fontLink, preconnectLink1, preconnectLink2 } = links;
