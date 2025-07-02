@@ -19,7 +19,7 @@ export default function Description({ description, style }: Props) {
           justify-start
           mb-2
           text-[color:--embeddable-font-description-color]
-          text-[size:--embeddable-font-description-size]
+          text-[font-size:--embeddable-font-description-size]
         `}
         style={style || {}}
       >

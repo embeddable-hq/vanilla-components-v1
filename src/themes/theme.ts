@@ -1,4 +1,4 @@
-export type ChartType = 'bar' | 'bubble' | 'kpi' | 'line' | 'pie' | 'scatter';
+export type ChartType = 'bar' | 'bubble' | 'kpi' | 'line' | 'pie' | 'scatter' | 'stackedArea';
 
 type ButtonSettings = {
   background: string;

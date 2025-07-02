@@ -80,7 +80,7 @@
 }
 
 .rdp-range_end .rdp-day_button {
-  color: var(--embeddable-controls-datepicker-font-colors-rangeStart) !important;
+  color: var(--embeddable-controls-datepicker-font-colors-rangeEnd) !important;
   background-color: var(--embeddable-controls-datepicker-backgrounds-colors-rangeEnd) !important;
   border-radius: var(--embeddable-controls-datepicker-radiuses-buttonEnd) !important;
 }

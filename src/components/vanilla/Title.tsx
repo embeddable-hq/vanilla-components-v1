@@ -21,7 +21,7 @@ export default function Title({ title, style }: Props) {
           mb-2
           text-base
           font-[--embeddable-charts-fontWeights-title]
-          font-size-[--embeddable-font-title-size]
+          text-[font-size:--embeddable-font-title-size]
           text-[color:--embeddable-font-title-color]
         `}
         style={style || {}}

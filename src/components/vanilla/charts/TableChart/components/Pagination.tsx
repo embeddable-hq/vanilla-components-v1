@@ -51,7 +51,8 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
       <span className="mx-4">Page {currentPage + 1}</span>
 
       <ChevronRight
-        className={`
+        className={cn(
+          `
           border
           cursor-pointer
           flex
@@ -63,8 +64,12 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
           w-8
           border-[color:--embeddable-controls-borders-colors-normal]
           rounded-[--embeddable-controls-borders-radius]
-          ${hasNextPage ? 'opacity-50 pointer-events-none' : ''}
-        `}
+          
+        `,
+          {
+            'opacity-50 pointer-events-none': !hasNextPage,
+          },
+        )}
         onClick={() => {
           onPageChange?.(currentPage + 1);
         }}
