@@ -37,7 +37,7 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
             p-1
             w-8
             border-[color:--embeddable-controls-borders-colors-normal]
-            rounded-[--embeddable-controls-buttons-radius]
+            rounded-[--embeddable-controls-borders-radius]
           `,
           {
             'opacity-50 pointer-events-none': currentPage === 0,
@@ -62,7 +62,7 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
           p-1
           w-8
           border-[color:--embeddable-controls-borders-colors-normal]
-          rounded-[--embeddable-controls-buttons-radius]
+          rounded-[--embeddable-controls-borders-radius]
           ${hasNextPage ? 'opacity-50 pointer-events-none' : ''}
         `}
         onClick={() => {
