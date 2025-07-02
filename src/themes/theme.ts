@@ -84,9 +84,12 @@ export type Theme = {
     };
     pie: {
       colors?: string[];
+      borderColor: string;
+      borderWidth: number;
       font: {
         size: number;
       };
+      weight: number;
     };
     scatter: {
       colors?: string[];

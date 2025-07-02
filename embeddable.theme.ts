@@ -65,9 +65,12 @@ const themeProvider = (clientContext: any, parentTheme: Theme): any => {
         lineTension: 0.5,
       },
       pie: {
+        borderColor: '#780064',
+        borderWidth: 3,
         font: {
           size: 16,
         },
+        weight: 5,
       },
       scatter: {
         font: {

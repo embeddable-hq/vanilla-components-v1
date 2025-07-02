@@ -62,9 +62,12 @@ export const defaultTheme: Theme = {
       lineTension: 0.1,
     },
     pie: {
+      borderColor: '#FFFFFF',
+      borderWidth: 2,
       font: {
         size: 12,
       },
+      weight: 5,
     },
     scatter: {
       font: {

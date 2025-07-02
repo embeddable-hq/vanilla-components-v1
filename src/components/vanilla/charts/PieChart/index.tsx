@@ -219,8 +219,9 @@ function chartData(props: PropsWithRequiredTheme, chartColors: string[]) {
       {
         data: counts,
         backgroundColor: chartColors,
-        borderColor: '#fff',
-        borderWeight: 5,
+        borderColor: theme.charts.pie.borderColor,
+        borderWidth: theme.charts.pie.borderWidth,
+        weight: theme.charts.pie.weight,
       },
     ],
   };
