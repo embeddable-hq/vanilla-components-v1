@@ -57,6 +57,7 @@
 .rdp-range_start .rdp-day_button {
   background-color: var(--embeddable-controls-datepicker-backgrounds-colors-rangeStart) !important;
   color: var(--embeddable-controls-datepicker-font-colors-rangeStart) !important;
+  border-radius: var(--embeddable-controls-datepicker-radiuses-buttonStart) !important;
 }
 
 .rdp-range_middle {
@@ -75,6 +76,7 @@
 .rdp-range_end .rdp-day_button {
   color: var(--embeddable-controls-datepicker-font-colors-rangeStart) !important;
   background-color: var(--embeddable-controls-datepicker-backgrounds-colors-rangeEnd) !important;
+  border-radius: var(--embeddable-controls-datepicker-radiuses-buttonEnd) !important;
 }
 
 .rdp-day.rdp-range_end {
@@ -83,6 +85,11 @@
 
 .rdp-day.rdp-range_start {
   border-radius: var(--embeddable-controls-datepicker-radiuses-buttonStart) !important;
+}
+
+.rdp-day.rdp-range_start.rdp-range_end,
+.rdp-day.rdp-range_start.rdp-range_end .rdp-day_button {
+  border-radius: var(--embeddable-controls-datepicker-radiuses-button) !important;
 }
 
 /* Spinner */
