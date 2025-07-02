@@ -36,9 +36,11 @@ export const defaultTheme: Theme = {
       borderRadius: 4,
       borderSkipped: 'bottom',
       borderWidth: 0,
+      cubicInterpolationMode: 'default',
       font: {
         size: 12,
       },
+      lineTension: 0.1,
     },
     bubble: {
       font: {
@@ -53,6 +55,7 @@ export const defaultTheme: Theme = {
       },
     },
     line: {
+      cubicInterpolationMode: 'default',
       font: {
         size: 12,
       },
@@ -67,6 +70,10 @@ export const defaultTheme: Theme = {
       font: {
         size: 12,
       },
+    },
+    stackedArea: {
+      cubicInterpolationMode: 'default',
+      lineTension: 0.1,
     },
     /* End custom chart overrides */
   },
@@ -138,6 +145,7 @@ export const defaultTheme: Theme = {
       },
       outsideOpacity: 0.4,
       radiuses: {
+        button: '4px',
         buttonEnd: '0px 4px 4px 0px',
         buttonStart: '4px 0px 0px 4px',
         weekNumber: '4px',
