@@ -103,7 +103,7 @@ export default (props: Props) => {
           tension: theme.charts.line.lineTension,
           pointHoverRadius: 3,
           fill: applyFill,
-          cubicInterpolationMode: 'monotone' as const,
+          cubicInterpolationMode: theme.charts.bar.cubicInterpolationMode,
         })) || [],
     };
   }, [updatedProps, fillGaps]);

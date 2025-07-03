@@ -149,14 +149,11 @@ export default (props: Props) => {
               set(o[props.property?.name || ''] || '');
             }}
             onKeyDown={(e) =>
-              handleKeyDownCallback(e, set(o[props.property?.name || ''] || ''), true)
+              handleKeyDownCallback(e, () => set(o[props.property?.name || ''] || ''), true)
             }
             onFocus={() => {
               setIsDropdownOrItemFocused(true);
               setFocus(true);
-            }}
-            onBlur={() => {
-              setIsDropdownOrItemFocused(false);
             }}
             className={`flex items-center min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal gap-1 ${
               value?.includes(o[props.property?.name || '']) ? 'bg-black/5' : ''
@@ -258,12 +255,6 @@ export default (props: Props) => {
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
               rounded-[--embeddable-controls-borders-radius]
             `}
-            onMouseDown={(e) => {
-              e.preventDefault();
-              // re-focus the input (allows repeated clicking in and out)
-              ref.current?.focus();
-              setTriggerBlur(false);
-            }}
             onFocus={() => {
               setIsDropdownOrItemFocused(true);
             }}

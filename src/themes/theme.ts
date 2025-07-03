@@ -1,4 +1,4 @@
-export type ChartType = 'bar' | 'bubble' | 'kpi' | 'line' | 'pie' | 'scatter';
+export type ChartType = 'bar' | 'bubble' | 'kpi' | 'line' | 'pie' | 'scatter' | 'stackedArea';
 
 type ButtonSettings = {
   background: string;
@@ -54,9 +54,11 @@ export type Theme = {
         | true;
       borderWidth: number;
       colors?: string[];
+      cubicInterpolationMode: 'monotone' | 'default';
       font: {
         size: number;
       };
+      lineTension: number;
     };
     bubble: {
       colors?: string[];
@@ -74,6 +76,7 @@ export type Theme = {
     };
     line: {
       colors?: string[];
+      cubicInterpolationMode: 'monotone' | 'default';
       font: {
         size: number;
       };
@@ -81,15 +84,22 @@ export type Theme = {
     };
     pie: {
       colors?: string[];
+      borderColor: string;
+      borderWidth: number;
       font: {
         size: number;
       };
+      weight: number;
     };
     scatter: {
       colors?: string[];
       font: {
         size: number;
       };
+    };
+    stackedArea: {
+      cubicInterpolationMode: 'monotone' | 'default';
+      lineTension: number;
     };
   };
   container: {
@@ -148,6 +158,7 @@ export type Theme = {
       };
       outsideOpacity: number;
       radiuses: {
+        button: string;
         buttonEnd: string;
         buttonStart: string;
         weekNumber: string;
@@ -177,9 +188,19 @@ export type Theme = {
     color: string;
     colorNormal: string;
     colorSoft: string;
+    description: {
+      color: string;
+      family: string;
+      size: string;
+    };
     family: string;
     size: string;
     weight: number;
+    title: {
+      color: string;
+      family: string;
+      size: string;
+    };
     urls: string[];
   };
   png: {

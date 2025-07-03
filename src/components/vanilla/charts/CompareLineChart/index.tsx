@@ -106,10 +106,10 @@ export default (propsInitial: Props) => {
           : theme.charts.colors[i % theme.charts.colors.length],
         borderColor: theme.charts.colors[i % theme.charts.colors.length],
         pointRadius: 0,
-        tension: 0.1,
+        tension: theme.charts.line.lineTension,
         pointHoverRadius: 3,
         fill: applyFill,
-        cubicInterpolationMode: 'monotone' as const,
+        cubicInterpolationMode: theme.charts.line.cubicInterpolationMode,
       })) || [];
 
     const datasets = [
@@ -118,7 +118,7 @@ export default (propsInitial: Props) => {
         const c = hexToRgb(theme.charts.colors[i % theme.charts.colors.length], 0.5);
 
         const update: ChartDataset<'line', DefaultDataPoint<'line'>> = {
-          cubicInterpolationMode: 'monotone' as const,
+          cubicInterpolationMode: theme.charts.bar.cubicInterpolationMode,
           showLine: !!props.prevTimeFilter,
           xAxisID: 'comparison',
           label: `Previous ${metrics[i].title}`,
@@ -133,7 +133,7 @@ export default (propsInitial: Props) => {
             : c,
           borderColor: c,
           pointRadius: 0,
-          tension: 0.1,
+          tension: theme.charts.line.lineTension,
           pointHoverRadius: 3,
           fill: applyFill && !!props.prevTimeFilter,
           segment: {

@@ -36,9 +36,11 @@ export const defaultTheme: Theme = {
       borderRadius: 4,
       borderSkipped: 'bottom',
       borderWidth: 0,
+      cubicInterpolationMode: 'default',
       font: {
         size: 12,
       },
+      lineTension: 0.1,
     },
     bubble: {
       font: {
@@ -53,20 +55,28 @@ export const defaultTheme: Theme = {
       },
     },
     line: {
+      cubicInterpolationMode: 'default',
       font: {
         size: 12,
       },
       lineTension: 0.1,
     },
     pie: {
+      borderColor: '#FFFFFF',
+      borderWidth: 2,
       font: {
         size: 12,
       },
+      weight: 5,
     },
     scatter: {
       font: {
         size: 12,
       },
+    },
+    stackedArea: {
+      cubicInterpolationMode: 'default',
+      lineTension: 0.1,
     },
     /* End custom chart overrides */
   },
@@ -138,6 +148,7 @@ export const defaultTheme: Theme = {
       },
       outsideOpacity: 0.4,
       radiuses: {
+        button: '4px',
         buttonEnd: '0px 4px 4px 0px',
         buttonStart: '4px 0px 0px 4px',
         weekNumber: '4px',
@@ -167,10 +178,22 @@ export const defaultTheme: Theme = {
     color: '#888888',
     colorNormal: '#333942',
     colorSoft: '#e3e3e3',
+    description: {
+      color: '#888888',
+      size: '14px',
+      family:
+        '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    },
     family:
       '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     size: `14px`,
     weight: 400,
+    title: {
+      color: '#333942',
+      size: '16px',
+      family:
+        '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    },
     urls: [],
   },
   png: {

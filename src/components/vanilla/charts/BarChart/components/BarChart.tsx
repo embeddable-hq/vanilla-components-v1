@@ -118,13 +118,13 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
     lineMetrics?.map((metric, i) => ({
       backgroundColor: chartColors[metrics.length + (i % chartColors.length)],
       borderColor: chartColors[metrics.length + (i % chartColors.length)],
-      cubicInterpolationMode: 'monotone' as const,
+      cubicInterpolationMode: theme.charts.bar.cubicInterpolationMode,
       data: results?.data?.map((d) => parseFloat(d[metric.name] || 0)) || [],
       label: metric.title,
       order: 0,
       pointHoverRadius: 3,
       pointRadius: 2,
-      tension: theme.charts.line.lineTension,
+      tension: theme.charts.bar.lineTension,
       type: 'line' as const,
       yAxisID: showSecondYAxis ? 'y1' : 'y',
     })) || [];

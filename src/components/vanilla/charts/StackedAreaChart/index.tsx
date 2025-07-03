@@ -68,9 +68,9 @@ export default (props: Props) => {
 
     const datasetsMeta = {
       fill: !isMultiDimensionLine,
-      cubicInterpolationMode: 'monotone' as const,
+      cubicInterpolationMode: theme.charts.stackedArea.cubicInterpolationMode,
       pointRadius: 0,
-      tension: 0.1,
+      tension: theme.charts.stackedArea.lineTension,
       pointHoverRadius: 3,
     };
 

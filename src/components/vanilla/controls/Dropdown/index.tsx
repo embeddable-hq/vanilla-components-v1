@@ -141,7 +141,7 @@ export default (props: Props) => {
               set(o[props.property?.name || ''] || '');
             }}
             onKeyDown={(e) =>
-              handleKeyDownCallback(e, set(o[props.property?.name || ''] || ''), true)
+              handleKeyDownCallback(e, () => set(o[props.property?.name || ''] || ''), true)
             }
             className={`flex items-center min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal ${
               value === o[props.property?.name || ''] ? 'bg-black/5' : ''

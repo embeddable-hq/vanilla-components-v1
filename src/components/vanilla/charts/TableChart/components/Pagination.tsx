@@ -37,7 +37,7 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
             p-1
             w-8
             border-[color:--embeddable-controls-borders-colors-normal]
-            rounded-[--embeddable-controls-buttons-radius]
+            rounded-[--embeddable-controls-borders-radius]
           `,
           {
             'opacity-50 pointer-events-none': currentPage === 0,
@@ -51,7 +51,8 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
       <span className="mx-4">Page {currentPage + 1}</span>
 
       <ChevronRight
-        className={`
+        className={cn(
+          `
           border
           cursor-pointer
           flex
@@ -62,9 +63,13 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
           p-1
           w-8
           border-[color:--embeddable-controls-borders-colors-normal]
-          rounded-[--embeddable-controls-buttons-radius]
-          ${hasNextPage ? 'opacity-50 pointer-events-none' : ''}
-        `}
+          rounded-[--embeddable-controls-borders-radius]
+          
+        `,
+          {
+            'opacity-50 pointer-events-none': !hasNextPage,
+          },
+        )}
         onClick={() => {
           onPageChange?.(currentPage + 1);
         }}
