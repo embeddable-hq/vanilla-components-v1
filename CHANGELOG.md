@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.13
+
+### Patch Changes
+
+- d52f2c0: Significant theme improvements / additions
+
 ## 1.0.12
 
 ### Patch Changes
