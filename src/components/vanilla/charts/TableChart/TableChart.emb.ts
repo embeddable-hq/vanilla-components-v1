@@ -9,7 +9,7 @@ import {
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
-import Component, { Props } from './index';
+import Component, { Props } from './index2';
 
 export const meta = {
   name: 'TableChart',
@@ -45,6 +45,13 @@ export const meta = {
           type: 'string',
           supportedTypes: ['number', 'string'],
           label: 'Suffix',
+        },
+        {
+          name: 'format',
+          type: 'string',
+          label: 'Format',
+          description: 'The format to use for this column, e.g. "YYYY-MM-DD" for dates',
+          supportedTypes: ['time'],
         },
       ],
       config: {
@@ -137,7 +144,7 @@ export default defineComponent<
     const limit =
       inputs.maxPageRows || state?.maxRowsFit
         ? Math.min(inputs.maxPageRows || 1000, Math.max(state?.maxRowsFit, 1) || 1000)
-        : 0;
+        : 1000;
 
     const defaultSortDirection =
       // @ts-expect-error - defaultSortDirection.value is added by defineComponent.
