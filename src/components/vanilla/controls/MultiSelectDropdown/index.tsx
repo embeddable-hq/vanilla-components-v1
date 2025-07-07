@@ -145,7 +145,7 @@ export default (props: Props) => {
           <div
             key={i}
             onClick={() => {
-              setTriggerBlur(false);
+              setFocus(true);
               set(o[props.property?.name || ''] || '');
             }}
             onKeyDown={(e) =>
@@ -155,16 +155,26 @@ export default (props: Props) => {
               setIsDropdownOrItemFocused(true);
               setFocus(true);
             }}
-            className={`flex items-center min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal gap-1 ${
+            className={`flex items-center min-h-[36px] w-[100%] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal gap-1 ${
               value?.includes(o[props.property?.name || '']) ? 'bg-black/5' : ''
-            } whitespace-nowrap overflow-hidden text-ellipsis`}
+            }`}
             tabIndex={0}
           >
-            {value?.includes(o[props.property?.name || '']) ? <Checkbox /> : <CheckboxEmpty />}
-            {o[props.property?.name || '']}
-            {o.note && (
-              <span className="font-normal ml-auto pl-3 text-xs opacity-70">{o.note}</span>
+            {value?.includes(o[props.property?.name || '']) ? (
+              <div className={`w-[16px] h-[16px] inline-block`}>
+                <Checkbox />
+              </div>
+            ) : (
+              <div className={`w-[16px] h-[16px] inline-block`}>
+                <CheckboxEmpty />
+              </div>
             )}
+            <div className={`block w-[100%]  whitespace-nowrap overflow-hidden text-ellipsis`}>
+              {o[props.property?.name || '']}
+              {o.note && (
+                <span className="font-normal ml-auto pl-3 text-xs opacity-70">{o.note}</span>
+              )}
+            </div>
           </div>,
         );
 
@@ -197,7 +207,18 @@ export default (props: Props) => {
           value={search}
           name="dropdown"
           placeholder={props.placeholder}
-          onFocus={() => setFocus(true)}
+          onClick={() => {
+            setFocus(true);
+            setTriggerBlur(false);
+          }}
+          onFocus={() => {
+            setFocus(true);
+            setTriggerBlur(false);
+            setIsDropdownOrItemFocused(true);
+          }}
+          onBlur={() => {
+            setIsDropdownOrItemFocused(false);
+          }}
           onChange={(e) => performSearch(e.target.value)}
           className={`
             border-0
