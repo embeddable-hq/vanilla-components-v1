@@ -155,7 +155,7 @@ export default (props: Props) => {
               setIsDropdownOrItemFocused(true);
               setFocus(true);
             }}
-            className={`flex items-center min-h-[36px] w-[100%] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal gap-1 ${
+            className={`flex items-center min-h-[36px] w-full px-3 py-2 hover:bg-black/5 cursor-pointer font-normal gap-1 ${
               value?.includes(o[props.property?.name || '']) ? 'bg-black/5' : ''
             }`}
             tabIndex={0}
@@ -169,7 +169,7 @@ export default (props: Props) => {
                 <CheckboxEmpty />
               </div>
             )}
-            <div className={`block w-[100%]  whitespace-nowrap overflow-hidden text-ellipsis`}>
+            <div className={`block w-full whitespace-nowrap overflow-hidden text-ellipsis`}>
               {o[props.property?.name || '']}
               {o.note && (
                 <span className="font-normal ml-auto pl-3 text-xs opacity-70">{o.note}</span>
