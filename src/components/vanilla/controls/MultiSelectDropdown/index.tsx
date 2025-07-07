@@ -169,7 +169,7 @@ export default (props: Props) => {
                 <CheckboxEmpty />
               </div>
             )}
-            <div className={`block w-full whitespace-nowrap overflow-hidden text-ellipsis`}>
+            <div className={`block w-full truncate`}>
               {o[props.property?.name || '']}
               {o.note && (
                 <span className="font-normal ml-auto pl-3 text-xs opacity-70">{o.note}</span>
