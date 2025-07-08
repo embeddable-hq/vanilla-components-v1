@@ -37,6 +37,10 @@ export function getComparisonOptions(period: TimeRange) {
       note: getNote(subDays(period.from, days), subDays(period.to, days)),
     },
     {
+      value: 'Previous week',
+      note: getNote(subDays(period.to, 13), subDays(period.to, 7)),
+    },
+    {
       value: 'Previous month',
       note: getNote(subMonths(period.from, 1), subMonths(period.to, 1)),
     },
@@ -57,6 +61,13 @@ export function getComparisonPeriod(rts: string, period: TimeRange) {
       relativeTimeString: 'No comparison',
       from: new Date(),
       to: new Date(),
+    };
+  }
+  if (rts === 'Previous week') {
+    return {
+      relativeTimeString: 'previous week',
+      from: subDays(period.to, 13),
+      to: subDays(period.to, 7),
     };
   }
   if (rts === 'Previous month') {
