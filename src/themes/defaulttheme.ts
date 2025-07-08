@@ -77,6 +77,9 @@ export const defaultTheme: Theme = {
     stackedArea: {
       cubicInterpolationMode: 'default',
       lineTension: 0.1,
+      font: {
+        size: 12,
+      },
     },
     /* End custom chart overrides */
   },

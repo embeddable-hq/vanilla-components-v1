@@ -100,6 +100,9 @@ export type Theme = {
     stackedArea: {
       cubicInterpolationMode: 'monotone' | 'default';
       lineTension: number;
+      font: {
+        size: number;
+      };
     };
   };
   container: {
