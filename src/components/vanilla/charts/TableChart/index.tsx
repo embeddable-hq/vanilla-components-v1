@@ -117,7 +117,7 @@ export default (props: Props) => {
       onResize={calculateMaxRowFit}
       setResizeState={(value) => setResizing(value)}
     >
-      <div style={{ minWidth: `${columns.length * (props.minColumnWidth ?? 100)}px` }}>
+      <div style={{ minWidth: `${columns?.length * (props.minColumnWidth ?? 100)}px` }}>
         {!!meta && !(props.results?.isLoading && !props.results?.data?.length) && (
           <table
             className="overflow-visible w-full"
