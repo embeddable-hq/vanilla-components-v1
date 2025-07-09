@@ -1,4 +1,4 @@
-import { Dimension, Measure } from '@embeddable.com/core';
+import { Measure } from '@embeddable.com/core';
 import React from 'react';
 
 import MultiSelector from '../MultiSelector';
