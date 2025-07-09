@@ -5,7 +5,7 @@ import Selector from '../Selector';
 
 export type Props = {
   allowNoValue?: boolean;
-  defaultValue: DimensionOrMeasure;
+  defaultValue?: DimensionOrMeasure;
   options: DimensionOrMeasure[];
   title?: string;
   onChange: (v: DimensionOrMeasure) => void;

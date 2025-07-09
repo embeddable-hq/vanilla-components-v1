@@ -5,7 +5,7 @@ import MultiSelector from '../MultiSelector';
 
 export type Props = {
   allowNoValue?: boolean;
-  defaultValue: Dimension[];
+  defaultValue?: Dimension[];
   options: Dimension[];
   title?: string;
   onChange: (v: Dimension[]) => void;
