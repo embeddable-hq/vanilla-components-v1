@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.14
+
+### Patch Changes
+
+- 44f935b: numerous updates (see patch notes page in the docs)
+
 ## 1.0.13
 
 ### Patch Changes
