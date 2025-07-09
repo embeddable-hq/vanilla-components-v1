@@ -98,7 +98,6 @@ export default (props: Props) => {
       performSearch('');
       setValue(value);
       props.onChange(value);
-      clearTimeout(debounce);
     },
     [setValue, props, performSearch],
   );
