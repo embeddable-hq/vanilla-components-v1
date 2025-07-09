@@ -1,4 +1,4 @@
-import { Value, loadData } from '@embeddable.com/core';
+import { Value } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component, { Props } from './index';
