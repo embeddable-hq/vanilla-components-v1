@@ -1,4 +1,3 @@
-import { useEmbeddableState } from '@embeddable.com/react';
 import React, {
   ReactNode,
   useCallback,
