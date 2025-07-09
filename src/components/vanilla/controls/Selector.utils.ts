@@ -7,3 +7,9 @@ export const selectorOptionIncludesSearch = (
   !search ||
   option.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
   option.title.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+
+export const getSelectorOptions = (options: Measure[] | Dimension[] | DimensionOrMeasure[]) =>
+  options.map((option) => ({
+    value: option.name,
+    label: option.inputs?.overrideName ?? option.title,
+  }));
