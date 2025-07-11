@@ -82,10 +82,12 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   }
 
   let dateFormat: string | undefined;
-  if (xAxis.nativeType === 'time' && granularity) {
+  if (xAxis.nativeType === 'time' && granularity && granularity in dateFormats) {
     dateFormat = dateFormats[granularity];
+  } else if(xAxis?.inputs?.granularity && xAxis.inputs.granularity in dateFormats) {
+    dateFormat = dateFormats[xAxis.inputs.granularity as Granularity];
   }
-
+  
   const labels = [
     ...new Set(
       results?.data?.map((d: { [p: string]: string }) => {
