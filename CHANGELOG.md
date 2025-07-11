@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.15
+
+### Patch Changes
+
+- 3ac2a6d: Improve dimensions/measures as variables, change a CSS filename
+
 ## 1.0.14
 
 ### Patch Changes
