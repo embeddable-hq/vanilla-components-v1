@@ -6,7 +6,7 @@ import Container from '../../Container';
 import Pagination from './components/Pagination';
 import TableHead from './components/TableHead';
 import downloadAsCSV from '../../../util/downloadAsCSV';
-import formatValue from '../../../util/format';
+import formatValue, { detectAndReturnLinks } from '../../../util/format';
 import { SortDirection } from '../../../../enums/SortDirection';
 import { Theme } from '../../../../themes/theme';
 
@@ -178,6 +178,16 @@ function formatColumn(text: string | number, column: DimensionOrMeasure) {
   }
 
   if (text && column.nativeType === 'time') return formatValue(text, 'date');
+
+  // detect links - we can't do this in the format function because it returns a dom element
+  const { linkText, linkUrl } = detectAndReturnLinks(text);
+  if (linkText && linkUrl) {
+    return (
+      <a href={linkUrl} target="_blank" rel="noopener noreferrer">
+        {linkText}
+      </a>
+    );
+  }
 
   return formatValue(text);
 }
