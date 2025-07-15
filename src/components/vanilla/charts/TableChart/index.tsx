@@ -158,7 +158,7 @@ export default (props: Props) => {
                             : 'auto',
                         }}
                       >
-                        <span title={title}>{formatColumn(row[column.name], column)}</span>
+                        <span title={title}>{formattedValue}</span>
                       </td>
                     );
                   })}
