@@ -138,20 +138,31 @@ export default (props: Props) => {
             <tbody>
               {results?.data?.slice(0, maxRowsFit).map((row, index) => (
                 <tr key={index} className="hover:bg-gray-400/5">
-                  {columns.map((column, index) => (
-                    <td
-                      key={index}
-                      className="text-dark p-3 truncate"
-                      style={{
-                        fontSize: props.fontSize ? `${props.fontSize}px` : theme.font.size,
-                        maxWidth: props.minColumnWidth ? `${props.minColumnWidth * 1.2}px` : 'auto',
-                      }}
-                    >
-                      <span title={formatColumn(row[column.name], column) ?? ''}>
-                        {formatColumn(row[column.name], column)}
-                      </span>
-                    </td>
-                  ))}
+                  const
+                  {columns.map((column, index) => {
+                    const formattedValue = formatColumn(row[column.name], column);
+                    let title = '';
+                    if (typeof formattedValue === 'object') {
+                      // It's a link, so we just want the link text as the title
+                      title = (formattedValue as React.ReactElement).props.children;
+                    } else {
+                      title = formattedValue;
+                    }
+                    return (
+                      <td
+                        key={index}
+                        className="text-dark p-3 truncate"
+                        style={{
+                          fontSize: props.fontSize ? `${props.fontSize}px` : theme.font.size,
+                          maxWidth: props.minColumnWidth
+                            ? `${props.minColumnWidth * 1.2}px`
+                            : 'auto',
+                        }}
+                      >
+                        <span title={title}>{formatColumn(row[column.name], column)}</span>
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>
