@@ -55,6 +55,6 @@ export const detectAndReturnLinks = (text: string) => {
   if (!text) {
     return { linkText: null, linkUrl: null };
   }
-  const linkData = /\[(.*)\]\((.*)\)/g.exec(text);
+  const linkData = /\[(.*)\]\((.*)\)/.exec(text);
   return { linkText: linkData?.[1], linkUrl: encodeURI(linkData?.[2] || '') };
 };
