@@ -138,7 +138,6 @@ export default (props: Props) => {
             <tbody>
               {results?.data?.slice(0, maxRowsFit).map((row, index) => (
                 <tr key={index} className="hover:bg-gray-400/5">
-                  const
                   {columns.map((column, index) => {
                     const formattedValue = formatColumn(row[column.name], column);
                     let title = '';
