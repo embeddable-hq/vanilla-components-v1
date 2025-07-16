@@ -29,13 +29,20 @@ export default (props: Props) => {
     <Container title={title}>
       <div className="multiSelectContainer font-embeddable text-[font-size:--embeddable-font-size]">
         {values?.map((value, i) => {
-          const background = selected.includes(value) ? '#6778DE' : '#f1f1f1';
-          const color = selected.includes(value) ? 'white' : 'inherit';
+          const background = selected.includes(value)
+            ? theme.controls.buttons.multiSelect.active.background
+            : theme.controls.buttons.multiSelect.inactive.background;
+          const color = selected.includes(value)
+            ? theme.controls.buttons.multiSelect.active.fontColor
+            : theme.controls.buttons.multiSelect.inactive.fontColor;
+          const border = selected.includes(value)
+            ? theme.controls.buttons.multiSelect.active.border
+            : theme.controls.buttons.multiSelect.inactive.border;
           return (
             <div
               key={i}
               className={`multiselectItem text-[color:--embeddable-font-colorNormal]`}
-              style={{ background: background }}
+              style={{ background, border }}
               onClick={() => handleClick(value)}
             >
               <div className="multiSelectInner" style={{ color: color }}>

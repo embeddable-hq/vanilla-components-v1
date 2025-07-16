@@ -117,6 +117,18 @@ export const defaultTheme: Theme = {
       },
       fontSize: '14px',
       height: '50px',
+      multiSelect: {
+        active: {
+          background: '#6778DE',
+          border: '1px solid #5062c9',
+          fontColor: '#FFFFFF',
+        },
+        inactive: {
+          background: '#F3F4F6',
+          border: '1px solid #ffffff',
+          fontColor: '#333942',
+        },
+      },
       paddingY: '16px',
       paddingX: '32px',
       radius: 'calc(infinity+1px)',
