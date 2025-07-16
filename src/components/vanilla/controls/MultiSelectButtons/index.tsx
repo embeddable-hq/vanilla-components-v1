@@ -45,7 +45,7 @@ export default (props: Props) => {
               style={{ background, border }}
               onClick={() => handleClick(value)}
             >
-              <div className="multiSelectInner" style={{ color: color }}>
+              <div className="multiSelectInner" style={{ color }}>
                 {value}
               </div>
             </div>
