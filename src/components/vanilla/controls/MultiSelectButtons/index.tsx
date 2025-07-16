@@ -38,11 +38,12 @@ export default (props: Props) => {
           const border = selected.includes(value)
             ? theme.controls.buttons.multiSelect.active.border
             : theme.controls.buttons.multiSelect.inactive.border;
+          const borderRadius = theme.controls.buttons.radius;
           return (
             <div
               key={i}
               className={`multiselectItem text-[color:--embeddable-font-colorNormal]`}
-              style={{ background, border }}
+              style={{ background, border, borderRadius }}
               onClick={() => handleClick(value)}
             >
               <div className="multiSelectInner" style={{ color }}>
