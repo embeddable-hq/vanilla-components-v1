@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.16
+
+### Patch Changes
+
+- 828441c: Allows linking in table items, makes multiselect buttons themeable
+
 ## 1.0.15
 
 ### Patch Changes
