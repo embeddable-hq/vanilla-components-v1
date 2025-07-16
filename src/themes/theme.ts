@@ -127,6 +127,10 @@ export type Theme = {
       pressed: ButtonSettings;
       fontSize: string;
       height: string;
+      multiSelect: {
+        active: ButtonSettings;
+        inactive: ButtonSettings;
+      };
       paddingY: string;
       paddingX: string;
       radius: string;
