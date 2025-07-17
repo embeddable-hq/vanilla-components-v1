@@ -20,15 +20,6 @@ export const meta = {
       category: 'Chart data',
     },
     {
-      name: 'metric',
-      type: 'measure',
-      label: 'Metric',
-      config: {
-        dataset: 'ds',
-      },
-      category: 'Chart data',
-    },
-    {
       name: 'timeProperty',
       type: 'dimension',
       label: 'Time Property',
@@ -40,11 +31,20 @@ export const meta = {
       category: 'Chart data',
     },
     {
-      name: 'timeFilter',
-      type: 'timeRange',
-      label: 'Primary date range',
-      description: 'Date range',
-      category: 'Variables to configure',
+      name: 'metric',
+      type: 'measure',
+      label: 'Metric',
+      config: {
+        dataset: 'ds',
+      },
+      category: 'Chart data',
+    },
+    {
+      name: 'granularity',
+      type: 'granularity',
+      label: 'Granularity',
+      defaultValue: 'day',
+      category: 'Chart data',
     },
     {
       name: 'title',
@@ -83,6 +83,27 @@ export default defineComponent(Component, meta, {
       ...inputs,
       results: loadData({
         from: inputs.ds,
+        dimensions: [inputs.timeProperty],
+        measures: [inputs.metric],
+        timeDimensions: [
+          {
+            dimension: inputs.timeProperty?.name,
+            granularity: inputs.granularity || 'day',
+          },
+        ],
+        limit: 10_000,
+      }),
+    };
+  },
+});
+
+/*
+export default defineComponent(Component, meta, {
+  props: (inputs: Inputs<typeof meta>) => {
+    return {
+      ...inputs,
+      results: loadData({
+        from: inputs.ds,
         measures: [inputs.metric],
         filters:
           inputs.timeFilter?.from && inputs.timeProperty
@@ -98,3 +119,5 @@ export default defineComponent(Component, meta, {
     };
   },
 });
+
+*/
