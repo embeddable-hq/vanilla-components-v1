@@ -21,8 +21,10 @@ export const meta = {
       name: 'bubblePlacement',
       type: 'dimension',
       label: 'Bubble Placement - Geolocation',
+      required: true,
       config: {
         dataset: 'ds',
+        supportedTypes: ['geo']
       },
       category: 'Chart Data',
     },
@@ -30,6 +32,7 @@ export const meta = {
       name: 'metric',
       type: 'measure',
       label: 'Metric',
+      required: true,
       description: 'Metric to be displayed in the tooltip when a marker is hovered over',
       config: {
         dataset: 'ds',
@@ -130,8 +133,7 @@ export default defineComponent(Component, meta, {
       results: loadData({
         from: inputs.ds,
         limit: 5000,
-        dimensions: [inputs.bubblePlacement],
-        measures: [inputs.metric],
+        select: [inputs.bubblePlacement, inputs.metric],
       }),
     };
   },

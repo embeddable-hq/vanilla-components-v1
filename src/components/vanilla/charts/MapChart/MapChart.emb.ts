@@ -22,9 +22,11 @@ export const meta = {
     {
       name: 'segments',
       type: 'dimension',
-      label: 'Segments',
+      label: 'Countries',
+      required: true,
       config: {
         dataset: 'ds',
+        supportedTypes: ['string']
       },
       category: 'Chart data',
     },
@@ -32,6 +34,7 @@ export const meta = {
       name: 'metric',
       type: 'measure',
       label: 'Metric',
+      required: true,
       config: {
         dataset: 'ds',
       },
@@ -74,8 +77,7 @@ export default defineComponent(Component, meta, {
       ...inputs,
       results: loadData({
         from: inputs.ds,
-        dimensions: [inputs.segments],
-        measures: [inputs.metric],
+        select: [inputs.segments, inputs.metric],
       }),
     };
   },
