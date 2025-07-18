@@ -11,7 +11,7 @@
 }
 .font-family-embeddable-title {
   font-family: var(--embeddable-font-title-family);
-  size: var(--embeddable-font-title-size);
+  font-size: var(--embeddable-font-title-size);
   color: var(--embeddable-font-title-color);
 }
 .font-family-embeddable-description {
