@@ -68,7 +68,7 @@ export default function BarChart({ ...props }: Props): React.JSX.Element {
 
 function chartData(props: Props): ChartData<'bar' | 'line'> {
   const { results, xAxis, metrics, lineMetrics, showSecondYAxis, theme } = props;
-  const granularity = xAxis?.inputs?.granularity as Granularity | undefined;
+  const granularity = xAxis?.inputs?.granularity;
   const {
     charts: { colors },
     dateFormats,
