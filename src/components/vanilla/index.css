@@ -16,7 +16,7 @@
 }
 .font-family-embeddable-description {
   font-family: var(--embeddable-font-description-family);
-  size: var(--embeddable-font-description-size);
+  font-size: var(--embeddable-font-description-size);
   color: var(--embeddable-font-description-color);
 }
 .embeddable-table-header {
