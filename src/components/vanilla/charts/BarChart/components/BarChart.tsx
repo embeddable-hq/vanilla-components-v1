@@ -50,7 +50,6 @@ type Props = {
   xAxis: Dimension;
   xAxisTitle?: string;
   yAxisTitle?: string;
-  granularity?: Granularity;
   showSecondYAxis?: boolean;
   secondAxisTitle?: string;
   theme: Theme;
@@ -68,7 +67,8 @@ export default function BarChart({ ...props }: Props): React.JSX.Element {
 }
 
 function chartData(props: Props): ChartData<'bar' | 'line'> {
-  const { results, xAxis, metrics, granularity, lineMetrics, showSecondYAxis, theme } = props;
+  const { results, xAxis, metrics, lineMetrics, showSecondYAxis, theme } = props;
+  const granularity = xAxis?.inputs?.granularity as Granularity | undefined;
   const {
     charts: { colors },
     dateFormats,
@@ -81,7 +81,7 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
     chartColors = theme.charts.bar.colors;
   }
 
-  let dateFormat: string | undefined;
+  let dateFormat: string = 'yyyy-mm-dd';
   if (xAxis.nativeType === 'time' && granularity) {
     dateFormat = dateFormats[granularity];
   }
