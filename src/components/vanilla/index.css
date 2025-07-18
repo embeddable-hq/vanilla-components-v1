@@ -7,7 +7,7 @@
 .font-embeddable {
   color: var(--embeddable-font-color);
   font-family: var(--embeddable-font-family);
-  size: var(--embeddable-font-size);
+  font-size: var(--embeddable-font-size);
 }
 .font-family-embeddable-title {
   font-family: var(--embeddable-font-title-family);
