@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.17
+
+### Patch Changes
+
+- 7d0f4bb: improve theming of index.css, fix bar chart date handling
+
 ## 1.0.16
 
 ### Patch Changes
