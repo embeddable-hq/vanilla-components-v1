@@ -5,23 +5,22 @@ export default defineConfig({
   plugins: [react],
   lifecycleHooksFile: './lifecycle.config.ts',
 
-  //
-  // Uncomment for US deployments
-  //
-  // previewBaseUrl: 'https://app.us.embeddable.com',
-  // pushBaseUrl: 'https://api.us.embeddable.com',
+  /*
+   * uncomment for EU deployments
+   */
+  region: 'EU',
 
-  //
-  // Uncomment for EU deployments
-  //
-  // previewBaseUrl: 'https://app.eu.embeddable.com',
-  // pushBaseUrl: 'https://api.eu.embeddable.com',
-  // audienceUrl: 'https://auth.eu.embeddable.com',
-  // authDomain: 'auth.eu.embeddable.com',
-  // authClientId: '6OGPwIQsVmtrBKhNrwAaXhz4ePb0kBGV',
+  /*
+   * uncomment for US deployments
+   */
+  // region: 'US',
 
-  //
-  // For internal use only
+  /*
+   * Uncomment use ALL vanilla components.
+   */
+  // componentLibraries: ['@embeddable.com/vanilla-components'],
+
+  //For internal use only (this helps us help you debug issues)
   //
   // previewBaseUrl: 'https://app.dev.embeddable.com',
   // pushBaseUrl: 'https://api.dev.embeddable.com',
