@@ -128,10 +128,14 @@ export const defaultTheme: Theme = {
           border: '1px solid #ffffff',
           fontColor: '#333942',
         },
+        margin: '0px 4px 4px 4px',
+        maxWidth: '150px',
+        padding: '4px 8px',
+        radius: '9999px',
       },
       paddingY: '16px',
       paddingX: '32px',
-      radius: 'calc(infinity+1px)',
+      radius: '9999px',
     },
     borders: {
       colors: {
@@ -174,6 +178,16 @@ export const defaultTheme: Theme = {
         hover: '#F3F4F6',
         selected: '#F3F4F6',
       },
+    },
+    skeletonBox: {
+      animation: `shimmer 2s infinite`,
+      backgroundImage: `linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.5) 60%,
+        rgba(255, 255, 255, 0)
+      );`,
     },
     tooltips: {
       radius: '4px',

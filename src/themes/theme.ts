@@ -130,6 +130,10 @@ export type Theme = {
       multiSelect: {
         active: ButtonSettings;
         inactive: ButtonSettings;
+        margin: string;
+        maxWidth: string;
+        padding: string;
+        radius: string;
       };
       paddingY: string;
       paddingX: string;
@@ -176,6 +180,10 @@ export type Theme = {
         hover: string;
         selected: string;
       };
+    };
+    skeletonBox: {
+      animation: string;
+      backgroundImage: string;
     };
     tooltips: {
       radius: string;
