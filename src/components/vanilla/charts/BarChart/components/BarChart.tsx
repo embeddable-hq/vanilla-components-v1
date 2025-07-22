@@ -80,19 +80,18 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   if (theme.charts.bar.colors) {
     chartColors = theme.charts.bar.colors;
   }
+const isTimeDimension = xAxis?.nativeType === 'time';
 
-  let dateFormat: string = 'yyyy-mm-dd';
-  if (xAxis.nativeType === 'time' && granularity) {
-    dateFormat = dateFormats[granularity];
-  }
+  const dateFormat: string =
+    isTimeDimension && granularity ? dateFormats[granularity] : 'yyyy-mm-dd';
 
   const labels = [
     ...new Set(
       results?.data?.map((d: { [p: string]: string }) => {
         const value = d[xAxis?.name];
-        return formatValue(value === null ? '' : value, {
+        return formatValue(value ?? '', {
           meta: xAxis?.meta,
-          dateFormat: dateFormat,
+          ...(isTimeDimension ? { dateFormat: dateFormat } : {}),
         });
       }),
     ),
