@@ -27,6 +27,7 @@ export const meta = {
       name: 'xAxis',
       type: 'dimension',
       label: 'X-Axis',
+      required: true,
       config: {
         dataset: 'ds',
       },
@@ -36,6 +37,7 @@ export const meta = {
       name: 'metrics',
       type: 'measure',
       array: true,
+      required: true,
       label: 'Metrics',
       config: {
         dataset: 'ds',
@@ -197,8 +199,7 @@ export default defineComponent(Component, meta, {
       reverseXAxis: inputs.reverseXAxis,
       results: loadData({
         from: inputs.ds,
-        dimensions,
-        measures,
+        select: [...dimensions, ...measures],
         orderBy: orderProp,
         limit: inputs.limit || 50,
       }),
