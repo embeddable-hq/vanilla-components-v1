@@ -91,7 +91,7 @@ const isTimeDimension = xAxis?.nativeType === 'time';
         const value = d[xAxis?.name];
         return formatValue(value ?? '', {
           meta: xAxis?.meta,
-          ...(isTimeDimension ? { dateFormat: dateFormat } : {}),
+          ...(isTimeDimension ? { dateFormat } : {}),
         });
       }),
     ),
