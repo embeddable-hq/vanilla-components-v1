@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.18
+
+### Patch Changes
+
+- 89e03a1: Fix labels for non-time dimensions on Bar Chart
+
 ## 1.0.17
 
 ### Patch Changes
