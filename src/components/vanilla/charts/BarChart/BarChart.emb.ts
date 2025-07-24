@@ -192,7 +192,7 @@ export default defineComponent(Component, meta, {
     if (inputs.sortBy && isMeasure(inputs.sortBy) && !measures.includes(inputs.sortBy)) {
       measures.push(inputs.sortBy as Measure);
     }
-
+    // No timeDimension logic needed, just ensure select is used
     return {
       ...inputs,
       clientContext,
