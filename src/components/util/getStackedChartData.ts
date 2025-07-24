@@ -94,8 +94,18 @@ export default function getStackedChartData(
     }
   });
 
-  const dateFormat =
-    useCustomDateFormat && granularity ? theme.dateFormats[granularity] : undefined;
+  let dateFormat: string | undefined = undefined;
+  if (useCustomDateFormat && granularity) {
+    dateFormat = theme.dateFormats[granularity];
+  }
+  else if (xAxis.nativeType === 'time') {
+    if (granularity && theme.dateFormats[granularity]) {
+      dateFormat = theme.dateFormats[granularity];
+    } else if (xAxis?.inputs?.granularity && theme.dateFormats[xAxis.inputs.granularity as Granularity]) {
+      dateFormat = theme.dateFormats[xAxis.inputs.granularity as Granularity];
+    }
+  }
+ 
 
   return {
     labels: labels.map((l) => formatValue(l, { meta: xAxis?.meta, dateFormat: dateFormat })),
