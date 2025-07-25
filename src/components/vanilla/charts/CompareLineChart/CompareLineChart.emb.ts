@@ -172,7 +172,7 @@ export default defineComponent(Component, meta, {
             dimension: inputs.xAxis?.name,
             granularity: inputs.granularity,
           },
-          ...(inputs.metrics || []),
+          inputs.metrics,
         ],
         filters:
           inputs.timeFilter && inputs.xAxis

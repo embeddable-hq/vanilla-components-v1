@@ -145,11 +145,7 @@ export default defineComponent(Component, meta, {
             from: inputs.ds,
             orderBy: orderProp,
             select: [
-              {
-                dimension: inputs.xAxis?.name,
-                granularity: inputs.granularity,
-              },
-
+              { dimension: inputs.xAxis?.name, granularity: inputs.granularity },
               inputs.metrics,
             ],
             limit: inputs.limit || 50,
