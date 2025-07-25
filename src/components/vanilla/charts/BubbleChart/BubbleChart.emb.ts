@@ -154,7 +154,7 @@ export default defineComponent(Component, meta, {
             from: inputs.ds,
             orderBy: orderProp,
             select: [{ dimension: inputs.xAxis?.name, granularity: inputs.granularity }, inputs.yAxis, inputs.bubbleSize],
-                      limit: inputs.limit || 50,
+            limit: inputs.limit || 50,
           })
         : loadData({
             from: inputs.ds,
