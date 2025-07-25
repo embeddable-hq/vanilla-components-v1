@@ -105,7 +105,6 @@ export default function getStackedChartData(
       dateFormat = theme.dateFormats[xAxis.inputs.granularity as Granularity];
     }
   }
- }
 
   return {
     labels: labels.map((l) => formatValue(l, { meta: xAxis?.meta, dateFormat: dateFormat })),
