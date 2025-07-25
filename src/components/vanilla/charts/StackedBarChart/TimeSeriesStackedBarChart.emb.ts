@@ -22,6 +22,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -38,6 +39,7 @@ export const meta = {
       label: 'Grouping',
       config: {
         dataset: 'ds',
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -143,17 +145,16 @@ export default defineComponent(Component, meta, {
       isGroupedBar: true,
       isTSGroupedBarChart: true,
       reverseXAxis: true,
-      useCustomDateFormat: true,
       results: loadData({
         from: inputs.ds,
-        timeDimensions: [
+        select: [
           {
             dimension: inputs.xAxis?.name,
             granularity: inputs.granularity,
           },
+          inputs.segment,
+          inputs.metric,
         ],
-        dimensions: [inputs.segment],
-        measures: [inputs.metric],
         orderBy: [
           {
             property: inputs.xAxis,

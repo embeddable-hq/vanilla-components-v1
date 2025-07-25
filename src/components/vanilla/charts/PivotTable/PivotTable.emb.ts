@@ -194,16 +194,17 @@ export default defineComponent(Component, meta, {
               ...resultSet,
               [`resultsDimension${index}`]: loadData({
                 from: inputs.ds,
-                dimensions: dimensionsToFetch.filter(
-                  (dimension) => dimension.nativeType !== 'time',
-                ),
-                measures: measures,
-                timeDimensions: dimensionsToFetch
-                  .filter((dimension) => dimension.nativeType === 'time')
+                select: [
+                  ...dimensionsToFetch.filter(
+                    (dimension) => dimension.nativeType !== 'time',
+                  ),
+                  ...dimensionsToFetch.filter((dimension) => dimension.nativeType === 'time')
                   .map((timeDimension) => ({
                     dimension: timeDimension.name,
                     granularity: inputs.granularity,
                   })),
+                  ...measures,
+                ],
                 orderBy: sort.slice(0, index + 1),
                 limit: 10_000,
               }),
@@ -212,16 +213,17 @@ export default defineComponent(Component, meta, {
         : {
             resultsDimension0: loadData({
               from: inputs.ds,
-              dimensions: [...(filteredRowDimensions || []), ...columnDimensions].filter(
-                (dimension) => dimension.nativeType !== 'time',
-              ),
-              timeDimensions: [...(filteredRowDimensions || []), ...columnDimensions]
-                .filter((dimension) => dimension.nativeType === 'time')
-                .map((timeDimension) => ({
-                  dimension: timeDimension.name,
-                  granularity: inputs.granularity,
-                })),
-              measures: measures,
+              select: [
+                {
+                  ...[...(filteredRowDimensions || []), ...columnDimensions]
+                  .filter((dimension) => dimension.nativeType === 'time')
+                  .map((timeDimension) => ({
+                    dimension: timeDimension.name,
+                    granularity: inputs.granularity,
+                  })),
+                },
+                ...measures,
+              ],
               limit: 10_000,
             }),
           };
