@@ -122,7 +122,7 @@ export default defineComponent(Component, meta, {
       ...inputs,
       results: loadData({
         from: inputs.ds,
-        select: [inputs.slice, inputs.metric]
+        select: [inputs.slice, inputs.metric],
       }),
     };
   },

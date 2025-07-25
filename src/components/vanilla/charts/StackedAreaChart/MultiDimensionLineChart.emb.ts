@@ -137,14 +137,14 @@ export default defineComponent(Component, meta, {
         from: inputs.ds,
         limit: inputs.limit || 500,
         orderBy: orderProp,
-        timeDimensions: [
+        select: [
           {
             dimension: inputs.xAxis?.name,
             granularity: inputs.granularity,
           },
+          inputs.segment,
+          inputs.metric,
         ],
-        dimensions: [inputs.segment],
-        measures: [inputs.metric],
       }),
     };
   },
