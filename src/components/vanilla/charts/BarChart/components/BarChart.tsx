@@ -83,10 +83,8 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   const isTimeDimension = xAxis?.nativeType === 'time';
 
   let dateFormat: string | undefined;
-  if (xAxis.nativeType === 'time' && granularity && granularity in dateFormats) {
+  if (granularity && granularity in dateFormats) {
     dateFormat = dateFormats[granularity];
-  } else if (granularity && typeof granularity === 'string' && granularity in dateFormats) {
-    dateFormat = dateFormats[granularity as keyof typeof dateFormats];
   }
   const labels = [
     ...new Set(
