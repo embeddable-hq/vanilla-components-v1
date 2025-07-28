@@ -24,6 +24,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
