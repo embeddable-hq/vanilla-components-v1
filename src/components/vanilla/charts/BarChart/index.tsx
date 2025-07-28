@@ -1,10 +1,12 @@
 import { DataResponse, Dimension, Granularity, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
+import React, { useMemo } from 'react';
 
 import useTimeseries from '../../../hooks/useTimeseries';
 import Container from '../../Container';
 import BarChart from './components/BarChart';
 import { Theme } from '../../../../themes/theme';
+import formatValue from '../../../util/format';
 
 export type Props = {
   clientContext?: any;
@@ -41,13 +43,35 @@ export default (props: Props): React.JSX.Element => {
   const { fillGaps } = useTimeseries(props, 'desc');
   const { results, isTSBarChart } = props;
 
-  // Update props with theme and filled gaps
+  // Create mapped data with proper date formatting for time-series bar charts
+  const mappedData = useMemo(() => {
+    if (!isTSBarChart) return results?.data;
+    
+    const filledData = results?.data?.reduce(fillGaps, []);
+    let dateFormat: string | undefined;
+    if (props.xAxis?.nativeType === 'time' && props.granularity && props.granularity in theme.dateFormats) {
+      dateFormat = theme.dateFormats[props.granularity];
+    }
+    
+    return filledData?.map((d) => ({
+      ...d,
+      ...(props.xAxis?.name && {
+        [props.xAxis.name]: dateFormat
+          ? formatValue(d?.[props.xAxis.name], {
+              meta: props.xAxis?.meta,
+              dateFormat,
+              granularity: props.granularity,
+            })
+          : d?.[props.xAxis.name],
+      }),
+    })) ?? [];
+  }, [isTSBarChart, results?.data, fillGaps, props.xAxis, props.granularity, theme.dateFormats]);
+
+  // Update props with theme and mapped data
   const updatedProps: PropsWithRequiredtheme = {
     ...props,
     theme,
-    results: isTSBarChart
-      ? { ...props.results, data: results?.data?.reduce(fillGaps, []) }
-      : props.results,
+    results: { ...props.results, data: mappedData },
   };
 
   return (
