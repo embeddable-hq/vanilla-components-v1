@@ -24,6 +24,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -34,6 +35,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -192,7 +194,7 @@ export default defineComponent(Component, meta, {
             dimension: inputs.xAxis?.name,
             granularity: inputs.granularity,
           },
-          ...(inputs.metrics || []),
+          inputs.metrics,
         ],
         limit: !inputs.prevTimeFilter ? 1 : 500,
         orderBy: orderProp,
