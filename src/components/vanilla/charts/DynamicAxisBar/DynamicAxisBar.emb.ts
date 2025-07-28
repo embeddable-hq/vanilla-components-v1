@@ -21,6 +21,7 @@ export const meta = {
       label: 'Default X-axis',
       config: {
         dataset: 'ds',
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -31,6 +32,7 @@ export const meta = {
       label: 'X-axis options',
       config: {
         dataset: 'ds',
+        hideGranularity: true,
       },
       category: 'Chart data',
     },

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Container from '../../Container';
 import BarChart from '../BarChart/components/BarChart';
 import { Theme } from '../../../../themes/theme';
+import formatValue from '../../../util/format';
 
 export type Props = {
   description?: string;
@@ -45,11 +46,27 @@ export default (props: Props) => {
   };
 
   const xAxis = xAxisOptions.find((item) => value === item.name);
+  let dateFormat: string | undefined;
+  if (xAxis?.nativeType === 'time' && props.granularity && props.granularity in theme.dateFormats) {
+    dateFormat = theme.dateFormats[props.granularity];
+  }
   const updatedProps = {
     ...props,
     theme,
     xAxis: xAxis ? xAxis : props.xAxis,
   };
+  const mappedData = results?.data?.map((d) => ({
+    ...d,
+    ...(xAxis?.name && {
+      [xAxis.name]: dateFormat
+        ? formatValue(d?.[xAxis.name], {
+            meta: xAxis?.meta,
+            dateFormat,
+            granularity: props.granularity,
+          })
+        : d?.[xAxis.name],
+    }),
+  })) ?? [];
 
   return (
     <Container {...props} className="overflow-y-hidden">
@@ -82,8 +99,8 @@ export default (props: Props) => {
       <div className="flex grow overflow-hidden">
         {results.isLoading ||
         !xAxis ||
-        !results?.data?.filter((_, i) => i < 10)?.some((row) => row[xAxis.name]) ? null : (
-          <BarChart key={value} {...updatedProps} />
+        !mappedData?.filter((_, i) => i < 10)?.some((row) => row[xAxis.name]) ? null : (
+          <BarChart key={value} {...updatedProps} results={{ ...results, data: mappedData }} />
         )}
       </div>
     </Container>
