@@ -144,6 +144,10 @@ const PivotTable = <T,>({
             isRowGroupDefaultExpanded={isRowGroupDefaultExpanded}
             renderCell={(rowRecord, column) => {
               const cellValue = rowRecord[column.key];
+              // Check if it's a boolean and if so just return the string representation
+              if (typeof cellValue === 'boolean') {
+                return <span style={{ fontSize }}>{cellValue ? 'True' : 'False'}</span>;
+              }
 
               return (
                 <span style={{ fontSize }}>
