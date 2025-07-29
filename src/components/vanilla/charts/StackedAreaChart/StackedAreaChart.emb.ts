@@ -22,6 +22,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -31,6 +32,8 @@ export const meta = {
       label: 'Segment',
       config: {
         dataset: 'ds',
+        hideGranularity: true,
+      
       },
       category: 'Chart data',
     },
@@ -40,6 +43,7 @@ export const meta = {
       label: 'Metric',
       config: {
         dataset: 'ds',
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
