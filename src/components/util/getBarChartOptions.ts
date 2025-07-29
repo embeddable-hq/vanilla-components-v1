@@ -64,6 +64,7 @@ export default function getBarChartOptions({
   xAxisTitle = '',
   yAxisTitle = '',
 }: Partial<Props> & {
+  theme: Theme;
   isGroupedBar?: boolean;
   lineMetrics?: Measure[];
   metric?: Measure;
@@ -75,7 +76,6 @@ export default function getBarChartOptions({
   stackBars?: boolean;
   stackMetrics?: boolean;
   stacked?: boolean;
-  theme: Theme;
   xAxisTitle?: string;
   yAxisTitle?: string;
 }): ChartOptions<'bar' | 'line'> {
