@@ -1,4 +1,4 @@
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { DataResponse, Dimension, Measure, Granularity } from '@embeddable.com/core';
 import {
   ArcElement,
   CategoryScale,
@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { Pie, getElementAtEvent } from 'react-chartjs-2';
 
 import formatValue from '../../../util/format';
@@ -46,16 +46,37 @@ type Props = {
   displayAsPercentage?: boolean;
   enableDownloadAsCSV?: boolean;
   onClick: (args: { slice: string | null; metric: string | null }) => void;
+  granularity?: Granularity;
 };
 
 type PropsWithRequiredTheme = Props & { theme: Theme };
 type Record = { [p: string]: string };
 
 export default (props: Props) => {
-  const { results, title, enableDownloadAsCSV, maxSegments, metric, slice, onClick } = props;
+  const { results, title, enableDownloadAsCSV, maxSegments, metric, slice, onClick, granularity } = props;
 
   const theme: Theme = useTheme() as Theme;
 
+  // Create mapped data with proper date formatting
+  const mappedData = useMemo(() => {
+    let dateFormat: string | undefined;
+    if (slice?.nativeType === 'time' && granularity && granularity in theme.dateFormats) {
+      dateFormat = theme.dateFormats[granularity];
+    }
+    
+    return results?.data?.map((d) => ({
+      ...d,
+      ...(slice?.name && {
+        [slice.name]: dateFormat
+          ? formatValue(d?.[slice.name], {
+              meta: slice?.meta,
+              dateFormat,
+              granularity,
+            })
+          : d?.[slice.name],
+      }),
+    })) ?? [];
+  }, [results?.data, slice, granularity, theme.dateFormats]);
   // Set ChartJS defaults
   setChartJSDefaults(theme, 'pie');
 
@@ -69,6 +90,7 @@ export default (props: Props) => {
   const updatedProps: PropsWithRequiredTheme = {
     ...props,
     theme,
+    results: { ...results, data: mappedData },
   };
 
   const [clickedIndex, setClickedIndex] = useState<number | null>(null);
@@ -89,8 +111,8 @@ export default (props: Props) => {
     }
     setClickedIndex(index);
     onClick({
-      slice: results.data?.[index][slice.name],
-      metric: results.data?.[index][metric.name],
+      slice: mappedData?.[index][slice.name],
+      metric: mappedData?.[index][metric.name],
     });
   };
 
@@ -179,14 +201,14 @@ function chartOptions(props: Props): ChartOptions<'pie'> {
   };
 }
 
-function mergeLongTail({ results, slice, metric, maxSegments }: Props) {
-  if (!maxSegments || !metric || !slice) return results?.data;
+function mergeLongTail(data: any[], slice: Dimension, metric: Measure, maxSegments: number) {
+  if (!maxSegments || !metric || !slice) return data;
 
-  const newData = [...(results?.data || [])]
+  const newData = [...(data || [])]
     .sort((a, b) => parseInt(b[metric.name]) - parseInt(a[metric.name]))
     .slice(0, maxSegments - 1);
 
-  const sumLongTail = results?.data
+  const sumLongTail = data
     ?.slice(maxSegments - 1)
     .reduce((accumulator, record: Record) => accumulator + parseInt(record[metric.name]), 0);
 
@@ -198,11 +220,10 @@ function mergeLongTail({ results, slice, metric, maxSegments }: Props) {
 function chartData(props: PropsWithRequiredTheme, chartColors: string[]) {
   const { maxSegments, results, metric, slice, displayAsPercentage, theme } = props;
   const labelsExceedMaxSegments = maxSegments && maxSegments < (results?.data?.length || 0);
-  const newData = labelsExceedMaxSegments ? mergeLongTail(props) : results.data;
+  const newData = labelsExceedMaxSegments ? mergeLongTail(results.data || [], slice, metric, maxSegments) : results.data;
 
   // Chart.js pie expects labels like so: ['US', 'UK', 'Germany']
-  const labels = newData?.map((d) => formatValue(d[slice.name], { meta: slice?.meta, granularity: slice.inputs?.granularity }));
-
+  const labels = newData?.map((d) => d[slice.name]);
   const sum = displayAsPercentage
     ? newData?.reduce((accumulator, obj) => accumulator + parseFloat(obj[metric.name]), 0)
     : null;
