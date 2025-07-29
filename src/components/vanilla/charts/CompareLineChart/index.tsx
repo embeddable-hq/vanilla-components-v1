@@ -263,6 +263,13 @@ export default (propsInitial: Props) => {
         datalabels: {
           align: 'top',
           display: props.showLabels ? 'auto' : false,
+          backgroundColor: theme.charts.line.labels.backgroundColor,
+          borderRadius: theme.charts.line.labels.borderRadius,
+          color: theme.charts.line.labels.color,
+          font: {
+            size: theme.charts.line.labels.font.size,
+            weight: theme.charts.line.labels.font.weight,
+          },
           formatter: (v, context) => {
             //get metrics index including for comparison datasets
             const metricIndex = context.datasetIndex % props.metrics.length;

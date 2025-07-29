@@ -1,5 +1,17 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.20
+
+### Patch Changes
+
+- 2415970: Makes chart labels respond to theme
+
+## 1.0.19
+
+### Patch Changes
+
+- 6fc32fe: Updates table components to display booleans
+
 ## 1.0.18
 
 ### Patch Changes

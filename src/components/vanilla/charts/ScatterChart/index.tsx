@@ -147,8 +147,12 @@ function chartOptions(
         display: props.showLabels ? 'auto' : false,
         anchor: 'end',
         align: 'end',
+        backgroundColor: theme.charts.scatter.labels.backgroundColor,
+        borderRadius: theme.charts.scatter.labels.borderRadius,
+        color: theme.charts.scatter.labels.color,
         font: {
-          weight: 'normal',
+          size: theme.charts.scatter.labels.font.size,
+          weight: theme.charts.scatter.labels.font.weight,
         },
         formatter: (v, context) => {
           const metricIndex = context.datasetIndex;

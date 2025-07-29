@@ -24,13 +24,13 @@ export const defaultTheme: Theme = {
       toolTipEnabled: true,
       usePointStyle: true,
     },
-    textJustify: 'start',
     fontWeights: {
       description: 400,
       kpiNumber: 700,
       pagination: 400,
       title: 700,
     },
+    textJustify: 'start',
     /* Custom overrides for certain charts */
     bar: {
       borderRadius: 4,
@@ -40,11 +40,40 @@ export const defaultTheme: Theme = {
       font: {
         size: 12,
       },
+      labels: {
+        total: {
+          backgroundColor: '#ffffff',
+          borderRadius: 8,
+          color: '#888888',
+          font: {
+            size: 12,
+            weight: 'normal',
+          },
+        },
+        value: {
+          backgroundColor: 'transparent',
+          borderRadius: 8,
+          color: '#888888',
+          font: {
+            size: 12,
+            weight: 'normal',
+          },
+        },
+      },
       lineTension: 0.1,
     },
     bubble: {
       font: {
         size: 12,
+      },
+      labels: {
+        backgroundColor: '#ffffff',
+        borderRadius: 8,
+        color: '#888888',
+        font: {
+          size: 12,
+          weight: 'normal',
+        },
       },
     },
     kpi: {
@@ -59,6 +88,15 @@ export const defaultTheme: Theme = {
       font: {
         size: 12,
       },
+      labels: {
+        backgroundColor: 'transparent',
+        borderRadius: 8,
+        color: '#888888',
+        font: {
+          size: 12,
+          weight: 'normal',
+        },
+      },
       lineTension: 0.1,
     },
     pie: {
@@ -67,19 +105,46 @@ export const defaultTheme: Theme = {
       font: {
         size: 12,
       },
+      labels: {
+        backgroundColor: '#ffffff',
+        borderRadius: 8,
+        color: '#888888',
+        font: {
+          size: 12,
+          weight: 'normal',
+        },
+      },
       weight: 5,
     },
     scatter: {
       font: {
         size: 12,
       },
+      labels: {
+        backgroundColor: '#ffffff',
+        borderRadius: 8,
+        color: '#888888',
+        font: {
+          size: 12,
+          weight: 'normal',
+        },
+      },
     },
     stackedArea: {
       cubicInterpolationMode: 'default',
-      lineTension: 0.1,
       font: {
         size: 12,
       },
+      labels: {
+        backgroundColor: '#ffffff',
+        borderRadius: 8,
+        color: '#888888',
+        font: {
+          size: 12,
+          weight: 'normal',
+        },
+      },
+      lineTension: 0.1,
     },
     /* End custom chart overrides */
   },

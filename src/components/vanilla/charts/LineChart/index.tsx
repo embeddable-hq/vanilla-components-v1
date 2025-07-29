@@ -180,6 +180,13 @@ export default (props: Props) => {
         datalabels: {
           align: 'top',
           display: updatedProps.showLabels ? 'auto' : false,
+          backgroundColor: theme.charts.line.labels.backgroundColor,
+          borderRadius: theme.charts.line.labels.borderRadius,
+          color: theme.charts.line.labels.color,
+          font: {
+            size: theme.charts.line.labels.font.size,
+            weight: theme.charts.line.labels.font.weight,
+          },
           formatter: (v, context) => {
             //metric needed for formatting
             const metricIndex = context.datasetIndex;
