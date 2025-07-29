@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.20
+
+### Patch Changes
+
+- 2415970: Makes chart labels respond to theme
+
 ## 1.0.19
 
 ### Patch Changes
