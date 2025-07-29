@@ -45,6 +45,7 @@ export const meta = {
       array: true,
       config: {
         dataset: 'ds',
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -55,6 +56,7 @@ export const meta = {
       array: true,
       config: {
         dataset: 'ds',
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
