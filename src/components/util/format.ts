@@ -1,6 +1,7 @@
 import { format as formatDate } from 'date-fns';
 
 import { parseTime } from '../util/timezone';
+import { Granularity } from '@embeddable.com/core';
 
 type Type = 'number' | 'date' | 'string';
 
@@ -9,6 +10,7 @@ type Options = {
   truncate?: number;
   dateFormat?: string;
   meta?: { pretext?: string; posttext?: string };
+  granularity?: Granularity;
   dps?: number;
 };
 

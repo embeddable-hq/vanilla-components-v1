@@ -238,7 +238,6 @@ function chartData(
   updatedData: Record[] | undefined,
   chartColors: string[],
 ): ChartData<'bubble'> {
-  const { theme } = props;
   const bubbleRadiusValue =
     updatedData?.map((row) => {
       const value = row[props.bubbleSize.name];
