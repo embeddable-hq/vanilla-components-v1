@@ -4,6 +4,7 @@ import { ChartDataset, ChartOptions } from 'chart.js';
 import formatValue from '../util/format';
 import { setYAxisStepSize } from './chartjs/common';
 import { Props } from './getStackedChartData';
+import { Theme } from '../../themes/theme';
 
 // We're adding a few properties to use when showing totals on the chart
 type ExtendedChartDataset = ChartDataset<'bar' | 'line'> & {
@@ -40,8 +41,10 @@ const getPadding = (
 };
 
 export default function getBarChartOptions({
+  displayAsPercentage = false,
   displayHorizontally = false,
   dps = undefined,
+  isGroupedBar,
   lineMetrics,
   metric,
   metrics,
@@ -53,15 +56,15 @@ export default function getBarChartOptions({
   showLegend = false,
   showSecondYAxis = false,
   showTotals = false,
+  stackBars,
   stackMetrics = false,
   stacked = false,
+  theme,
   xAxis,
   xAxisTitle = '',
   yAxisTitle = '',
-  displayAsPercentage = false,
-  isGroupedBar,
-  stackBars,
 }: Partial<Props> & {
+  isGroupedBar?: boolean;
   lineMetrics?: Measure[];
   metric?: Measure;
   metrics?: Measure[];
@@ -69,12 +72,12 @@ export default function getBarChartOptions({
   reverseXAxis?: boolean;
   secondAxisTitle?: string;
   showSecondYAxis?: boolean;
+  stackBars?: boolean;
   stackMetrics?: boolean;
   stacked?: boolean;
+  theme: Theme;
   xAxisTitle?: string;
   yAxisTitle?: string;
-  isGroupedBar?: boolean;
-  stackBars?: boolean;
 }): ChartOptions<'bar' | 'line'> {
   return {
     responsive: true,
@@ -246,8 +249,12 @@ export default function getBarChartOptions({
               return displayHorizontally ? 'right' : 'top';
             },
             display: showTotals && stackBars ? 'true' : false,
+            backgroundColor: theme.charts.bar.labels.total.backgroundColor,
+            borderRadius: theme.charts.bar.labels.total.borderRadius,
+            color: theme.charts.bar.labels.total.color,
             font: {
-              weight: 'bold',
+              size: theme.charts.bar.labels.total.font.size,
+              weight: theme.charts.bar.labels.total.font.weight,
             },
             formatter: (v, context) => {
               const dataset = context.dataset as ExtendedChartDataset;
@@ -281,6 +288,13 @@ export default function getBarChartOptions({
             anchor: stacked || stackMetrics ? 'center' : 'end',
             align: stacked || stackMetrics ? 'center' : 'end',
             display: showLabels ? 'auto' : false,
+            backgroundColor: theme.charts.bar.labels.value.backgroundColor,
+            borderRadius: theme.charts.bar.labels.value.borderRadius,
+            color: theme.charts.bar.labels.value.color,
+            font: {
+              size: theme.charts.bar.labels.value.font.size,
+              weight: theme.charts.bar.labels.value.font.weight,
+            },
             formatter: (v, context) => {
               //metric needed for formatting
               const metricIndex = context.datasetIndex;

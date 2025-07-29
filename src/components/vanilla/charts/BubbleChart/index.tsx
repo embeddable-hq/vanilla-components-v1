@@ -176,8 +176,12 @@ function chartOptions(
         display: props.showLabels ? 'auto' : false,
         anchor: 'end',
         align: 'end',
+        backgroundColor: theme.charts.bubble.labels.backgroundColor,
+        borderRadius: theme.charts.bubble.labels.borderRadius,
+        color: theme.charts.bubble.labels.color,
         font: {
-          weight: 'normal',
+          size: theme.charts.bubble.labels.font.size,
+          weight: theme.charts.bubble.labels.font.weight,
         },
         formatter: (_, { dataIndex }) => {
           const v = updatedData?.[dataIndex][props.bubbleSize.name] || 0;
