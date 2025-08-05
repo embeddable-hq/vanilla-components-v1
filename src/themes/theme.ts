@@ -218,6 +218,29 @@ export type Theme = {
     minute: string;
     second: string;
   };
+  downloadMenu: {
+    backgroundColor: string;
+    border: string;
+    borderRadius: string;
+    boxShadow: string;
+    font: {
+      color: string;
+      family: string;
+      size: string;
+      weight: number;
+    };
+    hover?: {
+      backgroundColor: string;
+      fontColor: string;
+      svgColor: string;
+    };
+    paddingOuter: number | string;
+    paddingInner: number | string;
+    svg?: {
+      width?: number | string;
+      height?: number | string;
+    };
+  };
   font: {
     color: string;
     colorNormal: string;
