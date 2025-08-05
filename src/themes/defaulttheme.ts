@@ -123,7 +123,7 @@ export const defaultTheme: Theme = {
         normal: '#DADCE1',
         heavy: 'D1D5DB',
       },
-      padding: 8,
+      padding: 1,
       radius: '12px',
     },
     datepicker: {

@@ -1,4 +1,4 @@
-import { loadData } from '@embeddable.com/core';
+import { Dimension, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component from './index';
@@ -83,14 +83,7 @@ export default defineComponent(Component, meta, {
       ...inputs,
       results: loadData({
         from: inputs.ds,
-        dimensions: [inputs.timeProperty],
-        measures: [inputs.metric],
-        timeDimensions: [
-          {
-            dimension: inputs.timeProperty?.name,
-            granularity: inputs.granularity || 'day',
-          },
-        ],
+        select: [inputs.metric, inputs.timeProperty],
         limit: 10_000,
       }),
     };
