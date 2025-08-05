@@ -240,7 +240,6 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       onKeyDown={(e) => handleKeyDownCallback(e, handleCSVClick, false)}
                       className={`
                         flex
-                        inline-block
                         items-center
                         hover:bg-[color:--embeddable-downloadMenu-hover-backgroundColor]
                         hover:text-[color:--embeddable-downloadMenu-hover-fontColor]
