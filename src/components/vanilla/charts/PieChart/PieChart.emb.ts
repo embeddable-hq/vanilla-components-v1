@@ -120,7 +120,7 @@ export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
-      granularity:  inputs.slice?.inputs?.granularity,
+      granularity: inputs.slice?.inputs?.granularity,
       results: loadData({
         from: inputs.ds,
         select: [inputs.slice, inputs.metric],
