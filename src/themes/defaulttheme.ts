@@ -268,6 +268,30 @@ export const defaultTheme: Theme = {
     minute: 'eee HH:mm',
     second: 'HH:mm:ss',
   },
+  downloadMenu: {
+    backgroundColor: '#FFFFFF',
+    border: '0px solid #EEEEEE',
+    borderRadius: '4px',
+    boxShadow: '0 4px 6px -1px rgb(0,0,0,0.1), 0 2px 4px -2px rgb(0,0,0,0.1)',
+    font: {
+      color: '#BBBBBB',
+      family:
+        '-apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      size: '14px',
+      weight: 300,
+    },
+    hover: {
+      backgroundColor: '#FFFFFF',
+      fontColor: '#888888',
+      svgColor: '#888888',
+    },
+    paddingOuter: 0,
+    paddingInner: '.5rem',
+    svg: {
+      width: '24px',
+      height: '24px',
+    },
+  },
   font: {
     color: '#888888',
     colorNormal: '#333942',
