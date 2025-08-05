@@ -1,5 +1,47 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.20
+
+### Patch Changes
+
+- 2415970: Makes chart labels respond to theme
+
+## 1.0.19
+
+### Patch Changes
+
+- 6fc32fe: Updates table components to display booleans
+
+## 1.0.18
+
+### Patch Changes
+
+- 89e03a1: Fix labels for non-time dimensions on Bar Chart
+
+## 1.0.17
+
+### Patch Changes
+
+- 7d0f4bb: improve theming of index.css, fix bar chart date handling
+
+## 1.0.16
+
+### Patch Changes
+
+- 828441c: Allows linking in table items, makes multiselect buttons themeable
+
+## 1.0.15
+
+### Patch Changes
+
+- 3ac2a6d: Improve dimensions/measures as variables, change a CSS filename
+
+## 1.0.14
+
+### Patch Changes
+
+- 44f935b: numerous updates (see patch notes page in the docs)
+
 ## 1.0.13
 
 ### Patch Changes

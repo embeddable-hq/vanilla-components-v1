@@ -50,7 +50,6 @@ type Props = {
   xAxis: Dimension;
   xAxisTitle?: string;
   yAxisTitle?: string;
-  granularity?: Granularity;
   showSecondYAxis?: boolean;
   secondAxisTitle?: string;
   theme: Theme;
@@ -68,7 +67,8 @@ export default function BarChart({ ...props }: Props): React.JSX.Element {
 }
 
 function chartData(props: Props): ChartData<'bar' | 'line'> {
-  const { results, xAxis, metrics, granularity, lineMetrics, showSecondYAxis, theme } = props;
+  const { results, xAxis, metrics, lineMetrics, showSecondYAxis, theme } = props;
+  const granularity = xAxis?.inputs?.granularity;
   const {
     charts: { colors },
     dateFormats,
@@ -80,19 +80,18 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   if (theme.charts.bar.colors) {
     chartColors = theme.charts.bar.colors;
   }
+const isTimeDimension = xAxis?.nativeType === 'time';
 
-  let dateFormat: string | undefined;
-  if (xAxis.nativeType === 'time' && granularity) {
-    dateFormat = dateFormats[granularity];
-  }
+  const dateFormat: string =
+    isTimeDimension && granularity ? dateFormats[granularity] : 'yyyy-mm-dd';
 
   const labels = [
     ...new Set(
       results?.data?.map((d: { [p: string]: string }) => {
         const value = d[xAxis?.name];
-        return formatValue(value === null ? '' : value, {
+        return formatValue(value ?? '', {
           meta: xAxis?.meta,
-          dateFormat: dateFormat,
+          ...(isTimeDimension ? { dateFormat } : {}),
         });
       }),
     ),

@@ -13,6 +13,16 @@ type BarChartBorderRadius = {
   bottomLeft: number;
 };
 
+type ChartLabels = {
+  backgroundColor: string;
+  borderRadius: number;
+  color: string;
+  font: {
+    size: number;
+    weight: number | 'normal' | 'bold' | 'bolder' | 'lighter' | undefined;
+  };
+};
+
 export type Theme = {
   brand: {
     primary: string;
@@ -24,6 +34,12 @@ export type Theme = {
       toolTipEnabled: boolean;
       usePointStyle: boolean;
     };
+    fontWeights: {
+      description: number;
+      kpiNumber: number;
+      pagination: number;
+      title: number;
+    };
     textJustify:
       | 'start'
       | 'end'
@@ -34,12 +50,6 @@ export type Theme = {
       | 'stretch'
       | 'baseline'
       | 'normal';
-    fontWeights: {
-      description: number;
-      kpiNumber: number;
-      pagination: number;
-      title: number;
-    };
     bar: {
       borderRadius: number | BarChartBorderRadius;
       borderSkipped:
@@ -58,6 +68,10 @@ export type Theme = {
       font: {
         size: number;
       };
+      labels: {
+        total: ChartLabels;
+        value: ChartLabels;
+      };
       lineTension: number;
     };
     bubble: {
@@ -65,6 +79,7 @@ export type Theme = {
       font: {
         size: number;
       };
+      labels: ChartLabels;
     };
     kpi: {
       alignment: string;
@@ -80,6 +95,7 @@ export type Theme = {
       font: {
         size: number;
       };
+      labels: ChartLabels;
       lineTension: number;
     };
     pie: {
@@ -89,6 +105,7 @@ export type Theme = {
       font: {
         size: number;
       };
+      labels: ChartLabels;
       weight: number;
     };
     scatter: {
@@ -96,9 +113,14 @@ export type Theme = {
       font: {
         size: number;
       };
+      labels: ChartLabels;
     };
     stackedArea: {
       cubicInterpolationMode: 'monotone' | 'default';
+      font: {
+        size: number;
+      };
+      labels: ChartLabels;
       lineTension: number;
     };
   };
@@ -124,6 +146,14 @@ export type Theme = {
       pressed: ButtonSettings;
       fontSize: string;
       height: string;
+      multiSelect: {
+        active: ButtonSettings;
+        inactive: ButtonSettings;
+        margin: string;
+        maxWidth: string;
+        padding: string;
+        radius: string;
+      };
       paddingY: string;
       paddingX: string;
       radius: string;
@@ -170,6 +200,10 @@ export type Theme = {
         selected: string;
       };
     };
+    skeletonBox: {
+      animation: string;
+      backgroundImage: string;
+    };
     tooltips: {
       radius: string;
     };
@@ -183,6 +217,29 @@ export type Theme = {
     hour: string;
     minute: string;
     second: string;
+  };
+  downloadMenu: {
+    backgroundColor: string;
+    border: string;
+    borderRadius: string;
+    boxShadow: string;
+    font: {
+      color: string;
+      family: string;
+      size: string;
+      weight: number;
+    };
+    hover?: {
+      backgroundColor: string;
+      fontColor: string;
+      svgColor: string;
+    };
+    paddingOuter: number | string;
+    paddingInner: number | string;
+    svg?: {
+      width?: number | string;
+      height?: number | string;
+    };
   };
   font: {
     color: string;

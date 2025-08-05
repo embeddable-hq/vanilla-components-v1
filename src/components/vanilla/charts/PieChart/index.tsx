@@ -1,4 +1,5 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { useTheme } from '@embeddable.com/react';
 import {
   ArcElement,
   CategoryScale,
@@ -18,7 +19,6 @@ import { Pie, getElementAtEvent } from 'react-chartjs-2';
 
 import formatValue from '../../../util/format';
 import Container from '../../Container';
-import { useTheme } from '@embeddable.com/react';
 import { setChartJSDefaults } from '../../../util/chartjs/common';
 import { Theme } from '../../../../themes/theme';
 
@@ -108,7 +108,7 @@ export default (props: Props) => {
     <Container {...props} className="overflow-y-hidden">
       <Pie
         height="100%"
-        options={chartOptions(updatedProps)}
+        options={chartOptions(updatedProps, theme)}
         data={chartData(updatedProps, chartColors)}
         ref={chartRef}
         onClick={handleClick}
@@ -117,7 +117,7 @@ export default (props: Props) => {
   );
 };
 
-function chartOptions(props: Props): ChartOptions<'pie'> {
+function chartOptions(props: Props, theme: Theme): ChartOptions<'pie'> {
   return {
     responsive: true,
     maintainAspectRatio: false,
@@ -129,11 +129,13 @@ function chartOptions(props: Props): ChartOptions<'pie'> {
     plugins: {
       datalabels: {
         // Great resource: https://quickchart.io/documentation/chart-js/custom-pie-doughnut-chart-labels/
+        backgroundColor: theme.charts.pie.labels.backgroundColor,
+        borderRadius: theme.charts.pie.labels.borderRadius,
+        color: theme.charts.pie.labels.color,
         display: props.showLabels ? 'auto' : false,
-        backgroundColor: '#fff',
-        borderRadius: 8,
         font: {
-          weight: 'normal',
+          size: theme.charts.pie.labels.font.size,
+          weight: theme.charts.pie.labels.font.weight,
         },
         formatter: (v) => {
           const val = v
