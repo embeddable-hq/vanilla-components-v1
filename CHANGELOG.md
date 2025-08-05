@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.21
+
+### Patch Changes
+
+- e55bea2: Improves ability to theme download menu
+
 ## 1.0.20
 
 ### Patch Changes
