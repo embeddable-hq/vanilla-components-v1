@@ -33,7 +33,6 @@ export const meta = {
       config: {
         dataset: 'ds',
         hideGranularity: true,
-      
       },
       category: 'Chart data',
     },
