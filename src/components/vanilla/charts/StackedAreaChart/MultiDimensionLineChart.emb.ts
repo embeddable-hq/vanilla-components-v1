@@ -32,7 +32,7 @@ export const meta = {
       label: 'Grouping',
       config: {
         dataset: 'ds',
-        hideGranularity: true, 
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
