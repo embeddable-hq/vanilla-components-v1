@@ -61,7 +61,7 @@ export default (props: Props) => {
   const mappedData = useMemo(() => {
     let dateFormat: string | undefined;
     if (slice?.nativeType === 'time' && granularity && granularity in theme.dateFormats) {
-      dateFormat = theme.dateFormats[granularity];
+      dateFormat = theme.dateFormats[granularity as keyof typeof theme.dateFormats];
     }
     
     return results?.data?.map((d) => ({
