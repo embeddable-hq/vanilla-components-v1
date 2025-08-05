@@ -220,22 +220,33 @@ const DownloadMenu: React.FC<Props> = (props) => {
                 flex
                 items-center
                 max-w-100
-                p-4
                 right-0
-                rounded
-                shadow-md
                 top-6
                 whitespace-nowrap
-                bg-[color:--embeddable-controls-backgrounds-colors-soft]
+                bg-[color:--embeddable-downloadMenu-backgroundColor]
+                p-[--embeddable-downloadMenu-paddingOuter]
+                rounded-[--embeddable-downloadMenu-borderRadius]
               `}
+                style={{
+                  border: theme.downloadMenu.border,
+                  boxShadow: theme.downloadMenu.boxShadow,
+                }}
               >
                 <ul>
-                  <li className="mb-2">
+                  <li>
                     <a
                       href="#"
                       onClick={handleCSVClick}
                       onKeyDown={(e) => handleKeyDownCallback(e, handleCSVClick, false)}
-                      className="inline-block flex items-center hover:opacity-100 opacity-60"
+                      className={`
+                        flex
+                        inline-block
+                        items-center
+                        hover:bg-[color:--embeddable-downloadMenu-hover-backgroundColor]
+                        hover:text-[color:--embeddable-downloadMenu-hover-fontColor]
+                        p-[--embeddable-downloadMenu-paddingInner]
+                        text-[color:--embeddable-downloadMenu-font-color]
+                      `}
                       tabIndex={0}
                       ref={refFocus}
                       onFocus={() => setFocusedMenuItem('csv')}
@@ -245,7 +256,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
                     </a>
                   </li>
                   {downloadAllFunction && (
-                    <li className="mb-2">
+                    <li>
                       <a
                         href="#"
                         onClick={(e) => {
@@ -253,7 +264,15 @@ const DownloadMenu: React.FC<Props> = (props) => {
                           downloadAllFunction();
                         }}
                         onKeyDown={(e) => handleKeyDownCallback(e, downloadAllFunction, false)}
-                        className="inline-block flex items-center hover:opacity-100 opacity-60"
+                        className={`
+                        flex
+                        inline-block
+                        items-center
+                        hover:bg-[color:--embeddable-downloadMenu-hover-backgroundColor]
+                        hover:text-[color:--embeddable-downloadMenu-hover-fontColor]
+                        p-[--embeddable-downloadMenu-paddingInner]
+                        text-[color:--embeddable-downloadMenu-font-color]
+                      `}
                         tabIndex={0}
                         onFocus={() => setFocusedMenuItem('downloadAll')}
                         onBlur={() => setFocusedMenuItem('')}
@@ -268,7 +287,15 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       href="#"
                       onClick={handlePNGClick}
                       onKeyDown={(e) => handleKeyDownCallback(e, handlePNGClick, false)}
-                      className="inline-block flex items-center hover:opacity-100 opacity-60"
+                      className={`
+                        flex
+                        inline-block
+                        items-center
+                        hover:bg-[color:--embeddable-downloadMenu-hover-backgroundColor]
+                        hover:text-[color:--embeddable-downloadMenu-hover-fontColor]
+                        p-[--embeddable-downloadMenu-paddingInner]
+                        text-[color:--embeddable-downloadMenu-font-color]
+                      `}
                       tabIndex={0}
                       onFocus={() => setFocusedMenuItem('png')}
                       onBlur={() => setFocusedMenuItem('')}
