@@ -65,7 +65,7 @@ export default (props: Props): React.JSX.Element => {
           : d?.[props.xAxis.name],
       }),
     })) ?? [];
-  }, [isTSBarChart, results?.data, fillGaps, props.xAxis, props.granularity, theme.dateFormats]);
+  }, [isTSBarChart, results?.data, fillGaps, props.xAxis, props.granularity, theme]);
 
   // Update props with theme and mapped data
   const updatedProps: PropsWithRequiredtheme = {
