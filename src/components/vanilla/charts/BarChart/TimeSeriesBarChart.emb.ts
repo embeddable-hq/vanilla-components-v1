@@ -24,6 +24,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -154,21 +155,22 @@ export const meta = {
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {
+
     return {
       ...inputs,
       isTSBarChart: true,
       reverseXAxis: true,
-      useCustomDateFormat: true,
       results: loadData({
         from: inputs.ds,
         limit: inputs.limit || 500,
-        timeDimensions: [
+        select: [
           {
             dimension: inputs.xAxis?.name,
             granularity: inputs.granularity,
           },
+          inputs.metrics,
+          inputs.lineMetrics
         ],
-        measures: [...(inputs.metrics || []), ...(inputs.lineMetrics || [])],
         orderBy: [
           {
             property: inputs.xAxis,

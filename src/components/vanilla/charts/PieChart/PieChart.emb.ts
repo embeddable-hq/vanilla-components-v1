@@ -19,6 +19,7 @@ export const meta = {
       name: 'slice',
       type: 'dimension',
       label: 'Slice',
+      required: true,
       config: {
         dataset: 'ds',
       },
@@ -28,6 +29,7 @@ export const meta = {
       name: 'metric',
       type: 'measure',
       label: 'Metric',
+      required: true,
       config: {
         dataset: 'ds',
       },
@@ -118,10 +120,10 @@ export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
+      granularity: inputs.slice?.inputs?.granularity,
       results: loadData({
         from: inputs.ds,
-        dimensions: [inputs.slice],
-        measures: [inputs.metric],
+        select: [inputs.slice, inputs.metric],
       }),
     };
   },
