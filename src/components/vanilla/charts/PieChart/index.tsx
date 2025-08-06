@@ -71,7 +71,6 @@ export default (props: Props) => {
           ? formatValue(d?.[slice.name], {
               meta: slice?.meta,
               dateFormat,
-              granularity,
             })
           : d?.[slice.name],
       }),

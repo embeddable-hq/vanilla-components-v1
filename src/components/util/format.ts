@@ -1,7 +1,6 @@
 import { format as formatDate } from 'date-fns';
 
 import { parseTime } from '../util/timezone';
-import { Granularity } from '@embeddable.com/core';
 
 type Type = 'number' | 'date' | 'string';
 
@@ -10,7 +9,6 @@ type Options = {
   truncate?: number;
   dateFormat?: string;
   meta?: { pretext?: string; posttext?: string };
-  granularity?: Granularity;
   dps?: number;
 };
 
@@ -30,8 +28,11 @@ const dateFormatter = new Intl.DateTimeFormat();
  * Runtime assumptions:
  * - Metrics are always numeric and should be formatted as numbers
  * - Date strings should be in ISO format or end with 'T00:00:00.000'
- * - Time dimensions require granularity for proper formatting
+ * - DateFormat should be pre-calculated based on granularity and theme before calling this function
  * - Meta objects may contain pretext/posttext for value wrapping
+ * 
+ * Note: Granularity-based formatting is handled at the component level where theme is available.
+ * This function expects the dateFormat to be pre-calculated and passed in the options.
  * 
  * @param str - The string value to format
  * @param opt - Formatting options or type

@@ -62,7 +62,6 @@ export default (props: Props) => {
         ? formatValue(d?.[xAxis.name], {
             meta: xAxis?.meta,
             dateFormat,
-            granularity: props.granularity,
           })
         : d?.[xAxis.name],
     }),

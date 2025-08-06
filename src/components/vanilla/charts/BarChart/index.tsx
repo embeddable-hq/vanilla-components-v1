@@ -60,7 +60,6 @@ export default (props: Props): React.JSX.Element => {
           ? formatValue(d?.[props.xAxis.name], {
               meta: props.xAxis?.meta,
               dateFormat,
-              granularity: props.granularity,
             })
           : d?.[props.xAxis.name],
       }),
