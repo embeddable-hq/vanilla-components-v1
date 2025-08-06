@@ -50,7 +50,7 @@ export default (props: Props): React.JSX.Element => {
     const filledData = results?.data?.reduce(fillGaps, []);
     let dateFormat: string | undefined;
     if (props.xAxis?.nativeType === 'time' && props.granularity && props.granularity in theme.dateFormats) {
-      dateFormat = theme.dateFormats[props.granularity];
+      dateFormat = theme.dateFormats[props.granularity as keyof typeof theme.dateFormats];
     }
     
     return filledData?.map((d) => ({

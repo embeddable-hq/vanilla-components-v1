@@ -24,6 +24,19 @@ function numberFormatter(dps: number | undefined | null) {
 
 const dateFormatter = new Intl.DateTimeFormat();
 
+/**
+ * Formats a value according to the specified options
+ * 
+ * Runtime assumptions:
+ * - Metrics are always numeric and should be formatted as numbers
+ * - Date strings should be in ISO format or end with 'T00:00:00.000'
+ * - Time dimensions require granularity for proper formatting
+ * - Meta objects may contain pretext/posttext for value wrapping
+ * 
+ * @param str - The string value to format
+ * @param opt - Formatting options or type
+ * @returns The formatted value as a string
+ */
 export default function formatValue(str: string = '', opt: Type | Options = 'string') {
   if (str === null) return null;
 
