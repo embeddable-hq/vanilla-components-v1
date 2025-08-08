@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.0.22
+
+### Patch Changes
+
+- 92ff82b: adds sorting to dropdown / multiselect dropdown
+
 ## 1.0.21
 
 ### Patch Changes
