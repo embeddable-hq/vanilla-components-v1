@@ -8,23 +8,37 @@ import { useTheme } from '@embeddable.com/react';
 import { DataResponse, Dimension, Measure, TimeRange } from '@embeddable.com/core';
 
 type Props = {
+  baseColor?: string;
+  className?: string;
+  description?: string;
+  displayLegend?: boolean;
+  displayStats?: boolean;
+  enableDownloadAsCSV?: boolean;
+  enableDownloadAsPNG?: boolean;
   metric: Measure;
+  onChange?: (value: string | number) => void;
+  results?: DataResponse;
+  statsPrefix?: string;
+  statsSuffix?: string;
+  style?: React.CSSProperties;
   timeFilter?: TimeRange;
   timeProperty?: Dimension;
   title?: string;
-  description?: string;
   value?: string | number;
-  className?: string;
-  results?: DataResponse;
-  style?: React.CSSProperties;
-  onChange?: (value: string | number) => void;
-  enableDownloadAsCSV?: boolean;
-  enableDownloadAsPNG?: boolean;
 };
 
 export default (props: Props) => {
-  const { metric, results, timeProperty } = props;
-  const { data = [], isLoading } = results || { data: [], isLoading: false };
+  const {
+    baseColor,
+    displayLegend,
+    displayStats,
+    metric,
+    results,
+    statsPrefix,
+    statsSuffix,
+    timeProperty,
+  } = props;
+  const { data = [] } = results || { data: [], isLoading: false };
   const [dataToDisplay, setDataToDisplay] = useState(data);
 
   const theme: Theme = useTheme() as Theme;
@@ -36,8 +50,6 @@ export default (props: Props) => {
   const nonZeroValues = data.filter((item) => item[metric.name] > 0);
   const averageValue = Math.round(totalValue / nonZeroValues.length) || 0;
 
-  // For now assume a 7 day week for a full year. Weeks are horizontal, days are vertical
-  const weeks = 52;
   const days = 7;
   const cellWidth = 12;
   const cellHeight = 12;
@@ -52,9 +64,9 @@ export default (props: Props) => {
   };
 
   const getColor = (value: number) => {
-    const rgb = hexToRgb(theme.brand.primary);
+    const rgb = hexToRgb(baseColor ? baseColor : theme.brand.primary);
 
-    // determine the opacity based on the value. In 20% increments from 0% to 100%. 0% is always a value of 0. 20% is always the lowest value. 100% is always the highest value. Other values should be interpolated between 20% and 100%.
+    // determine the opacity based on the value. In 20% increments from 0% to 100%.
     let opacity = 0;
     if (value < 0) {
       opacity = 0;
@@ -67,7 +79,6 @@ export default (props: Props) => {
     } else {
       const range = highestValue - lowestValue;
       const normalizedValue = (value - lowestValue) / range; // Normalize value between 0 and 1
-      // opacity = 0.4 + normalizedValue * 0.6; // Interpolate between 0.4 and 1
       opacity = 0.2 + normalizedValue * 0.8; // Interpolate between 0.2 and 1
     }
     // Ensure opacity is between 0 and 1
@@ -76,6 +87,7 @@ export default (props: Props) => {
     return `rgba(${value > 0 ? rgb : '0,0,0'} , ${opacity})`;
   };
 
+  // This is how we generate the grid of weeks and days
   useEffect(() => {
     const generateMatrix = () => {
       // Get the start and end dates from the results (array 0 is oldest, array length -1 is newest)
@@ -95,12 +107,11 @@ export default (props: Props) => {
       });
 
       // Doing some juggling to get around time zones here
-      const startDate = new TZDate(cleanedData[0][timeProperty?.name || 'date'], 'UTC');
-      const endDate = new TZDate(
-        cleanedData[cleanedData.length - 1][timeProperty?.name || 'date'],
-        'UTC',
-      );
-      const startOfWeekDate = startOfWeek(new TZDate(startDate, 'UTC'), {
+      const dataStartDate = cleanedData[0][timeProperty?.name || 'date'];
+      const dataEndDate = cleanedData[cleanedData.length - 1][timeProperty?.name || 'date'];
+      const startDate = new TZDate(dataStartDate, 'UTC');
+      const endDate = new TZDate(dataEndDate, 'UTC');
+      const startOfWeekDate = startOfWeek(startDate, {
         weekStartsOn: 1,
       });
 
@@ -110,12 +121,10 @@ export default (props: Props) => {
       while (currentDate <= endDate) {
         const week: string[] = [];
         for (let i = 0; i < days; i++) {
-          // Strip the date to just YYYY-MM-DD format
           const strippedDate = currentDate.toISOString().split('T')[0];
-          // If the currentDate is before the startDate, add the strippedDate to the cleanedData array and give it a value of -1. Do the same if the currentDate is after the endDate
           if (currentDate < startDate || currentDate > endDate) {
             cleanedData.push({
-              [metric.name]: -1,
+              [metric.name]: -1, // used to generate "empty" boxes at start and end of the grid
               [timeProperty?.name || 'date']: strippedDate,
             });
           }
@@ -125,7 +134,7 @@ export default (props: Props) => {
         dateMatrix.push(week);
       }
 
-      // Then iterate through the data, using dimension.name for the date and metric.name for the value. If a date in the array does not exist in the data, give it a value of zero.
+      // Iterate through the data, using dimension.name for the date and metric.name for the value.
       const dataMatrix = dateMatrix.map((week) => {
         const timePropertyName = timeProperty?.name || 'date';
         return week.map((date) => {
@@ -148,34 +157,33 @@ export default (props: Props) => {
 
   return (
     <Container {...props} className="overflow-y-hidden">
-      <div className="flex flex-col items-center">
-        <h2 className="text-lg font-bold mb-2">{props.title || metric.name}</h2>
-        {props.description && <p className="text-sm text-gray-600 mb-4">{props.description}</p>}
-        <div className="flex flex-wrap" style={{ width: '100%' }}>
+      <div className="flex flex-col items-left">
+        <div
+          className={`flex flex-wrap ${displayLegend || displayStats ? 'border-b-2 mb-2 pb-2' : null} border-gray-200 `}
+        >
           <div className="flex flex-col items-center">
-            <div className="text-xs" style={{ ...cellStyle, width: 'auto', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
               Mon
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: 'auto', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
               &nbsp;
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: 'auto', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
               Wed
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: 'auto', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
               &nbsp;
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: 'auto', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
               Fri
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: 'auto', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
               &nbsp;
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: 'auto', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
               Sun
             </div>
           </div>
-          {/* Using the data matrix, generate a grid of weeks and days, getting the appropriate color opacity (using getColor) for each day by iterating over the data and finding data[dimension.name] for the date and data[metric.name] for the value. If a date in the array does not exist in the data, give it a value of zero. important: The weeks should be columns and the days should be rows */}
           {dataToDisplay.length > 0 &&
             dataToDisplay.map((week, weekIndex) => (
               <div key={weekIndex} className="flex flex-col">
@@ -196,9 +204,41 @@ export default (props: Props) => {
               </div>
             ))}
         </div>
-        <div className="mt-4">
-          <span>Highest: {highestValue}</span> |<span> Lowest: {lowestValue}</span> |
-          <span> Average: {averageValue}</span>
+        <div className="flex justify-between items-center w-full">
+          {displayLegend && (
+            <div className="flex justify-between items-center">
+              <div style={{ ...cellStyle, width: '24px' }}>Less</div>
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.2, cellStyle)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.4, cellStyle)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.6, cellStyle)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.8, cellStyle)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 1, cellStyle)}
+              <div style={{ ...cellStyle, width: 'auto' }}>More</div>
+            </div>
+          )}
+          {displayStats && (
+            <div>
+              <span>
+                Highest: {statsPrefix}
+                {highestValue.toLocaleString()}
+                {statsSuffix}
+              </span>{' '}
+              |
+              <span>
+                {' '}
+                Lowest: {statsPrefix}
+                {lowestValue.toLocaleString()}
+                {statsSuffix}
+              </span>{' '}
+              |
+              <span>
+                {' '}
+                Average: {statsPrefix}
+                {averageValue.toLocaleString()}
+                {statsSuffix}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </Container>
@@ -206,8 +246,27 @@ export default (props: Props) => {
 };
 
 const hexToRgb = (hex: string) => {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  // Sanity check: remove leading '#' if present
+  hex = hex.replace(/^#/, '');
+  // Make sure the hex is 6 characters long
+  if (hex.length !== 6) {
+    return [0, 0, 0]; // Return black if invalid
+  }
+
+  const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
     : [0, 0, 0];
+};
+
+const generateBox = (color: string, opacity: number, cellStyle: React.CSSProperties) => {
+  const rgb = hexToRgb(color);
+  return (
+    <div
+      style={{
+        ...cellStyle,
+        backgroundColor: `rgba(${rgb}, ${opacity})`,
+      }}
+    />
+  );
 };
