@@ -1,4 +1,4 @@
-import { Value, loadData } from '@embeddable.com/core';
+import { DimensionOrMeasure, OrderBy, OrderDirection, Value, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component, { Props } from './index';
@@ -16,42 +16,58 @@ export const meta = {
       type: 'dataset',
       label: 'Dataset',
       description: 'Dataset',
-      category: 'Dropdown values'
+      category: 'Dropdown values',
     },
     {
       name: 'property',
       type: 'dimension',
       label: 'Property',
       config: {
-        dataset: 'ds'
+        dataset: 'ds',
       },
-      category: 'Dropdown values'
+      category: 'Dropdown values',
+    },
+    {
+      name: 'sortBy',
+      type: 'dimensionOrMeasure',
+      label: 'Optional Sort By Additional Dimension or Measure',
+      config: {
+        dataset: 'ds',
+      },
+      category: 'Dropdown values',
+    },
+    {
+      name: 'sortByDirection',
+      type: 'string',
+      label: 'Sort By Direction (asc/desc)',
+      defaultValue: 'asc',
+      category: 'Dropdown values',
     },
     {
       name: 'title',
       type: 'string',
       label: 'Title',
-      category: 'Settings'
+      category: 'Settings',
     },
     {
       name: 'defaultValue',
       type: 'string',
       label: 'Default value',
-      category: 'Pre-configured variables'
+      category: 'Pre-configured variables',
     },
     {
       name: 'placeholder',
       type: 'string',
       label: 'Placeholder',
-      category: 'Settings'
+      category: 'Settings',
     },
     {
       name: 'limit',
       type: 'number',
       label: 'Default number of options',
       defaultValue: 100,
-      category: 'Settings'
-    }
+      category: 'Settings',
+    },
   ],
   events: [
     {
@@ -60,10 +76,10 @@ export const meta = {
       properties: [
         {
           name: 'value',
-          type: 'string'
-        }
-      ]
-    }
+          type: 'string',
+        },
+      ],
+    },
   ],
   variables: [
     {
@@ -71,9 +87,9 @@ export const meta = {
       type: 'string',
       defaultValue: Value.noFilter(),
       inputs: ['defaultValue'],
-      events: [{ name: 'onChange', property: 'value' }]
-    }
-  ]
+      events: [{ name: 'onChange', property: 'value' }],
+    },
+  ],
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent<Props, typeof meta, { search: string }>(Component, meta, {
@@ -81,33 +97,53 @@ export default defineComponent<Props, typeof meta, { search: string }>(Component
     if (!inputs.ds)
       return {
         ...inputs,
-        options: [] as never
+        options: [] as never,
       };
+
+    const orderProp: OrderBy[] = [];
+    let sortByDirection = 'asc' as OrderDirection;
+    if (inputs.sortByDirection === 'desc' || inputs.sortByDirection === 'asc') {
+      sortByDirection = inputs.sortByDirection as OrderDirection;
+    }
+    const sortDirection = sortByDirection;
+
+    if (inputs.sortBy) {
+      orderProp.push({
+        property: inputs.sortBy,
+        direction: sortDirection,
+      });
+    }
+
+    const select: DimensionOrMeasure[] = inputs.property ? [inputs.property] : [];
+    if (inputs.sortBy) {
+      select.push(inputs.sortBy);
+    }
 
     return {
       ...inputs,
       options: loadData({
         from: inputs.ds,
-        dimensions: inputs.property ? [inputs.property] : [],
+        select,
         limit: inputs.limit || 1000,
+        orderBy: orderProp,
         filters:
           embState?.search && inputs.property
             ? [
                 {
                   operator: 'contains',
                   property: inputs.property,
-                  value: embState?.search
-                }
+                  value: embState?.search,
+                },
               ]
-            : undefined
-      })
+            : undefined,
+      }),
     };
   },
   events: {
     onChange: (value) => {
       return {
-        value: value || Value.noFilter()
+        value: value || Value.noFilter(),
       };
-    }
-  }
+    },
+  },
 });
