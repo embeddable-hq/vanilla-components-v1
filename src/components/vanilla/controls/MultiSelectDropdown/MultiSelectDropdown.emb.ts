@@ -119,7 +119,7 @@ export default defineComponent<Props, typeof meta, { search: string }>(Component
     }
 
     const select: DimensionOrMeasure[] = inputs.property ? [inputs.property] : [];
-    if (inputs.sortBy) {
+    if (inputs.sortBy && inputs.sortBy !== inputs.property) {
       select.push(inputs.sortBy);
     }
 
