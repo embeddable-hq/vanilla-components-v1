@@ -1,5 +1,7 @@
 import { DimensionOrMeasure, OrderBy, OrderDirection, Value, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import { SortDirection } from '../../../../enums/SortDirection';
+import SortDirectionType from '../../../../types/SortDirection.type.emb';
 
 import Component, { Props } from './index';
 
@@ -37,11 +39,11 @@ export const meta = {
       category: 'Dropdown values',
     },
     {
-      name: 'sortByDirection',
-      type: 'string',
-      label: 'Sort By Direction (asc/desc)',
-      defaultValue: 'asc',
-      category: 'Dropdown values',
+      name: 'sortDirection',
+      type: SortDirectionType,
+      defaultValue: SortDirection.DESCENDING,
+      label: 'Sort direction',
+      category: 'Chart data',
     },
     {
       name: 'title',
@@ -99,18 +101,13 @@ export default defineComponent<Props, typeof meta, { search: string }>(Component
         ...inputs,
         options: [] as never,
       };
-
+    const defaultSortDirection = inputs.sortDirection === 'Ascending' ? 'asc' : 'desc';
     const orderProp: OrderBy[] = [];
-    let sortByDirection = 'asc' as OrderDirection;
-    if (inputs.sortByDirection === 'desc' || inputs.sortByDirection === 'asc') {
-      sortByDirection = inputs.sortByDirection as OrderDirection;
-    }
-    const sortDirection = sortByDirection;
 
     if (inputs.sortBy) {
       orderProp.push({
         property: inputs.sortBy,
-        direction: sortDirection,
+        direction: defaultSortDirection,
       });
     }
 
