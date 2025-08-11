@@ -80,11 +80,12 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   if (theme.charts.bar.colors) {
     chartColors = theme.charts.bar.colors;
   }
-const isTimeDimension = xAxis?.nativeType === 'time';
+  const isTimeDimension = xAxis?.nativeType === 'time';
 
-  const dateFormat: string =
-    isTimeDimension && granularity ? dateFormats[granularity] : 'yyyy-mm-dd';
-
+  let dateFormat: string | undefined;
+  if (granularity && granularity in dateFormats) {
+    dateFormat = dateFormats[granularity];
+  }
   const labels = [
     ...new Set(
       results?.data?.map((d: { [p: string]: string }) => {

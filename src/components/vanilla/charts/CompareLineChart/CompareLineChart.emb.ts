@@ -24,6 +24,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -34,6 +35,7 @@ export const meta = {
       config: {
         dataset: 'ds',
         supportedTypes: ['time'],
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -167,13 +169,13 @@ export default defineComponent(Component, meta, {
         from: inputs.ds,
         limit: 500,
         orderBy: orderProp,
-        timeDimensions: [
+        select: [
           {
             dimension: inputs.xAxis?.name,
             granularity: inputs.granularity,
           },
+          inputs.metrics,
         ],
-        measures: inputs.metrics,
         filters:
           inputs.timeFilter && inputs.xAxis
             ? [
@@ -187,15 +189,15 @@ export default defineComponent(Component, meta, {
       }),
       prevResults: loadData({
         from: inputs.ds,
-        timeDimensions: [
+        select: [
           {
             dimension: inputs.xAxis?.name,
             granularity: inputs.granularity,
           },
+          inputs.metrics,
         ],
         limit: !inputs.prevTimeFilter ? 1 : 500,
         orderBy: orderProp,
-        measures: inputs.metrics,
         filters:
           inputs.prevTimeFilter && inputs.xAxis
             ? [

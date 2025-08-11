@@ -23,6 +23,7 @@ export const meta = {
       label: 'X-Axis',
       config: {
         dataset: 'ds',
+        hideGranularity: true,
       },
       category: 'Chart data',
     },
@@ -152,19 +153,16 @@ export default defineComponent(Component, meta, {
         ? loadData({
             from: inputs.ds,
             orderBy: orderProp,
-            timeDimensions: [
-              {
-                dimension: inputs.xAxis?.name,
-                granularity: inputs.granularity,
-              },
+            select: [
+              { dimension: inputs.xAxis?.name, granularity: inputs.granularity },
+              inputs.yAxis,
+              inputs.bubbleSize,
             ],
-            measures: [inputs.yAxis, inputs.bubbleSize],
             limit: inputs.limit || 50,
           })
         : loadData({
             from: inputs.ds,
-            dimensions: [inputs.xAxis],
-            measures: [inputs.yAxis, inputs.bubbleSize],
+            select: [inputs.xAxis, inputs.yAxis, inputs.bubbleSize],
             limit: inputs.limit || 50,
           }),
     };
