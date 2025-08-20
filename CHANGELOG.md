@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.0
+
+### Minor Changes
+
+- b2c2773: Enable automatic time granularity
+
 ## 1.0.22
 
 ### Patch Changes
