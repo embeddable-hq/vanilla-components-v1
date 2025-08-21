@@ -181,7 +181,7 @@ export default defineComponent<
 
     return {
       ...inputs,
-      limit,
+      limit: limit - 1, // We need to subtract one to make pagination work correctly
       defaultSort,
       results,
       allResults,
