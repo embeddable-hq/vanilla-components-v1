@@ -111,8 +111,7 @@ export default (props: Props) => {
 
   useEffect(() => {
     if (props.results?.data?.length) {
-      console.log(props.results.data.length, props.limit);
-      setHasNextPage(props.limit ? props.results.data.length > props.limit : false);
+      setHasNextPage(props.limit ? props.results.data.length > props.limit - 1 : false);
     }
   }, [props.results, props.limit]);
 
