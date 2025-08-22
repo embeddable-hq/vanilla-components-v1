@@ -187,7 +187,7 @@ export default (props: Props) => {
   );
 };
 
-function formatColumn(text: string | number | boolean, column: DimensionOrMeasure) {
+function formatColumn(text: string | number | boolean | null | undefined, column: DimensionOrMeasure) {
   if (text === null || text === undefined) return '-';
   if (typeof text === 'number' || column.nativeType === 'number') {
     return formatValue(`${text}`, { type: 'number', meta: column?.meta });
