@@ -34,6 +34,7 @@ export default (props: Props) => {
   const [isDownloadingAll, setIsDownloadingAll] = useState(false);
   const [maxRowsFit, setMaxRowFit] = useState(0);
   const [resizing, setResizing] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
   const theme: Theme = useTheme() as Theme;
 
@@ -108,6 +109,12 @@ export default (props: Props) => {
     [meta, setMeta],
   );
 
+  useEffect(() => {
+    if (props.results?.data?.length) {
+      setHasNextPage(props.limit ? props.results.data.length >= props.limit : false);
+    }
+  }, [props.results, props.limit]);
+
   return (
     <Container
       {...props}
@@ -171,9 +178,7 @@ export default (props: Props) => {
 
       <Pagination
         currentPage={meta?.page || 0}
-        hasNextPage={
-          props.limit && results?.data?.length ? results?.data?.length < props.limit : false
-        }
+        hasNextPage={hasNextPage}
         onPageChange={(page) => {
           setMeta((meta) => ({ ...meta, page: page }));
         }}
