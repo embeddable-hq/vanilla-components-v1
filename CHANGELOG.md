@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.2
+
+### Patch Changes
+
+- d7bfa02: Fixed an issue where in rare cases the Table Chart would crash when interpreting strings and getting a `null` value instead of an empty string.
+
 ## 1.1.1
 
 ### Patch Changes
