@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.1
+
+### Patch Changes
+
+- fb6f293: Fixes an issue where table pagination next button would sometimes disable
+
 ## 1.1.0
 
 ### Minor Changes
