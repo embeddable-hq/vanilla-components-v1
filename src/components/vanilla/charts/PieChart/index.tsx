@@ -131,6 +131,8 @@ export default (props: Props) => {
   return (
     <Container {...props} className="overflow-y-hidden">
       <Pie
+        aria-label={title ? `Pie Chart: ${title}` : 'Pie Chart'}
+        aria-roledescription="pie chart"
         height="100%"
         options={chartOptions(updatedProps, theme)}
         data={chartData(updatedProps, chartColors)}

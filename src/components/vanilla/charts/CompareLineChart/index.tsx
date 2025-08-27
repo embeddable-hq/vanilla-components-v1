@@ -290,7 +290,13 @@ export default (propsInitial: Props) => {
 
   return (
     <Container {...props} className="overflow-y-hidden">
-      <Line height="100%" options={chartOptions} data={chartData} />
+      <Line
+        aria-label={props.title ? `Compare Line Chart: ${props.title}` : 'Compare Line Chart'}
+        aria-roledescription="compare line chart"
+        height="100%"
+        options={chartOptions}
+        data={chartData}
+      />
     </Container>
   );
 };
