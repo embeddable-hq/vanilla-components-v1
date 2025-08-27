@@ -169,7 +169,9 @@ export default ({
               chartName: props.title || 'chart',
               props: {
                 ...props,
-                results: { isLoading: false, data: csvData } as DataResponse,
+                results: props.displayAsPercentage
+                  ? ({ isLoading: false, data: csvData } as DataResponse)
+                  : props.results,
                 prevResults: props.prevResults,
               },
             }}
