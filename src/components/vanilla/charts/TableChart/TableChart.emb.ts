@@ -133,9 +133,7 @@ export default defineComponent<
         ? Math.min(inputs.maxPageRows || 1000, Math.max(state?.maxRowsFit, 1) || 1000)
         : 0;
 
-    const defaultSortDirection =
-      // @ts-expect-error - defaultSortDirection.value is added by defineComponent.
-      inputs.defaultSortDirection?.value === 'Ascending' ? 'asc' : 'desc';
+    const defaultSortDirection = inputs.defaultSortDirection === 'Ascending' ? 'asc' : 'desc';
 
     const defaultSort =
       inputs.columns
