@@ -102,7 +102,7 @@ export default ({
       return acc + (!isNaN(val) ? val : 0);
     }, 0);
     csvData = csvData.map((item) => {
-      const val = parseInt(item?.[props.metric!.name], 10);
+      const val = parseFloat(item?.[props.metric!.name]);
       const percent = total > 0 ? (val / total) * 100 : 0;
       const percentString = `${percent.toFixed(2)}%`;
       return {
