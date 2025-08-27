@@ -98,7 +98,7 @@ export default ({
   // If the displayAsPercentage prop is set, convert metric values to percentages
   if (props.metric && props.displayAsPercentage) {
     const total = csvData.reduce((acc, curr) => {
-      const val = parseInt(curr?.[props.metric!.name], 10);
+      const val = parseFloat(curr?.[props.metric!.name]);
       return acc + (typeof val === 'number' ? val : 0);
     }, 0);
     csvData = csvData.map((item) => {
