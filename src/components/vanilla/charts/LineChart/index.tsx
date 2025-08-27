@@ -228,7 +228,13 @@ export default (props: Props) => {
 
   return (
     <Container {...updatedProps} className="overflow-y-hidden">
-      <Line height="100%" options={chartOptions} data={chartData} />
+      <Line
+        aria-label={title ? `Line Chart: ${title}` : 'Line Chart'}
+        aria-roledescription="line chart"
+        height="100%"
+        options={chartOptions}
+        data={chartData}
+      />
     </Container>
   );
 };

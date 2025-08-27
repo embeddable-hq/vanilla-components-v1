@@ -53,7 +53,8 @@ type PropsWithRequiredTheme = Props & { theme: Theme };
 type Record = { [p: string]: string };
 
 export default (props: Props) => {
-  const { results, title, enableDownloadAsCSV, maxSegments, metric, slice, onClick, granularity } = props;
+  const { results, title, enableDownloadAsCSV, maxSegments, metric, slice, onClick, granularity } =
+    props;
 
   const theme: Theme = useTheme() as Theme;
 
@@ -63,18 +64,20 @@ export default (props: Props) => {
     if (slice?.nativeType === 'time' && granularity && granularity in theme.dateFormats) {
       dateFormat = theme.dateFormats[granularity as keyof typeof theme.dateFormats];
     }
-    
-    return results?.data?.map((d) => ({
-      ...d,
-      ...(slice?.name && {
-        [slice.name]: dateFormat
-          ? formatValue(d?.[slice.name], {
-              meta: slice?.meta,
-              dateFormat,
-            })
-          : d?.[slice.name],
-      }),
-    })) ?? [];
+
+    return (
+      results?.data?.map((d) => ({
+        ...d,
+        ...(slice?.name && {
+          [slice.name]: dateFormat
+            ? formatValue(d?.[slice.name], {
+                meta: slice?.meta,
+                dateFormat,
+              })
+            : d?.[slice.name],
+        }),
+      })) ?? []
+    );
   }, [results?.data, slice, granularity, theme.dateFormats]);
   // Set ChartJS defaults
   setChartJSDefaults(theme, 'pie');
@@ -128,6 +131,8 @@ export default (props: Props) => {
   return (
     <Container {...props} className="overflow-y-hidden">
       <Pie
+        aria-label={title ? `Pie Chart: ${title}` : 'Pie Chart'}
+        aria-roledescription="pie chart"
         height="100%"
         options={chartOptions(updatedProps, theme)}
         data={chartData(updatedProps, chartColors)}
@@ -221,7 +226,9 @@ function mergeLongTail(data: any[], slice: Dimension, metric: Measure, maxSegmen
 function chartData(props: PropsWithRequiredTheme, chartColors: string[]) {
   const { maxSegments, results, metric, slice, displayAsPercentage, theme } = props;
   const labelsExceedMaxSegments = maxSegments && maxSegments < (results?.data?.length || 0);
-  const newData = labelsExceedMaxSegments ? mergeLongTail(results.data || [], slice, metric, maxSegments) : results.data;
+  const newData = labelsExceedMaxSegments
+    ? mergeLongTail(results.data || [], slice, metric, maxSegments)
+    : results.data;
 
   // Chart.js pie expects labels like so: ['US', 'UK', 'Germany']
   const labels = newData?.map((d) => d[slice.name]);
