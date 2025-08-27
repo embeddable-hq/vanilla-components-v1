@@ -201,7 +201,7 @@ export default (props: Props) => {
   return (
     <Container {...updatedProps} className="overflow-y-hidden">
       <Line
-        aria-label={`Stacked Area Chart: ${props.title}` || 'Stacked Area Chart'}
+        aria-label={props.title ? `Stacked Area Chart: ${props.title}` : 'Stacked Area Chart'}
         aria-roledescription="stacked area chart"
         height="100%"
         options={chartOptions}
