@@ -84,6 +84,8 @@ export default (props: Props) => {
   return (
     <Container {...props} className="overflow-y-hidden">
       <Bubble
+        aria-label={props.title ? `Bubble Chart: ${props.title}` : 'Bubble Chart'}
+        aria-roledescription="bubble chart"
         height="100%"
         options={chartOptions(updatedProps, updatedData, bubbleData)}
         data={bubbleData}

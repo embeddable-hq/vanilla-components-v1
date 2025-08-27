@@ -58,6 +58,8 @@ type Props = {
 export default function BarChart({ ...props }: Props): React.JSX.Element {
   return (
     <Chart
+      aria-label={props.title ? `Bar Chart: ${props.title}` : 'Bar Chart'}
+      aria-roledescription="bar chart"
       type="bar"
       height="100%"
       options={getBarChartOptions({ ...props, stacked: false })}
