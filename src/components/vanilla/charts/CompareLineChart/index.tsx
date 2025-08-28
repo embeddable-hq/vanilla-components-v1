@@ -53,12 +53,14 @@ type Props = {
   title?: string;
   ds: Dataset;
   xAxis: Dimension;
+  comparisonXAxis?: Dimension;
   granularity: Granularity;
   metrics: Measure[];
   timeFilter?: TimeRange;
   prevTimeFilter?: TimeRange;
   yAxisMin?: number;
   xAxisTitle?: string;
+  comparisonXAxisTitle?: string;
   yAxisTitle?: string;
   applyFill?: boolean;
   showLabels?: boolean;
@@ -104,10 +106,10 @@ export default (propsInitial: Props) => {
           : theme.charts.colors[i % theme.charts.colors.length],
         borderColor: theme.charts.colors[i % theme.charts.colors.length],
         pointRadius: 0,
-        tension: 0.1,
+        tension: theme.charts.line.lineTension,
         pointHoverRadius: 3,
         fill: applyFill,
-        cubicInterpolationMode: 'monotone' as const,
+        cubicInterpolationMode: theme.charts.line.cubicInterpolationMode,
       })) || [];
 
     const datasets = [
@@ -116,14 +118,14 @@ export default (propsInitial: Props) => {
         const c = hexToRgb(theme.charts.colors[i % theme.charts.colors.length], 0.5);
 
         const update: ChartDataset<'line', DefaultDataPoint<'line'>> = {
-          cubicInterpolationMode: 'monotone' as const,
+          cubicInterpolationMode: theme.charts.bar.cubicInterpolationMode,
           showLine: !!props.prevTimeFilter,
           xAxisID: 'comparison',
           label: `Previous ${metrics[i].title}`,
           data: props.prevTimeFilter
             ? prevData?.map((d: Record) => ({
                 y: parseFloat(d[metrics[i].name] || '0'),
-                x: parseTime(d[props.xAxis?.name || '']),
+                x: parseTime(d[props.comparisonXAxis?.name || props.xAxis.name || '']),
               })) || []
             : [],
           backgroundColor: applyFill
@@ -131,7 +133,7 @@ export default (propsInitial: Props) => {
             : c,
           borderColor: c,
           pointRadius: 0,
-          tension: 0.1,
+          tension: theme.charts.line.lineTension,
           pointHoverRadius: 3,
           fill: applyFill && !!props.prevTimeFilter,
           segment: {
@@ -209,7 +211,7 @@ export default (propsInitial: Props) => {
         comparison: {
           min: bounds.comparison?.from?.toJSON(),
           max: bounds.comparison?.to?.toJSON(),
-          display: false,
+          display: !!props.comparisonXAxis,
           grid: {
             display: false,
           },
@@ -221,7 +223,8 @@ export default (propsInitial: Props) => {
             unit: props.granularity,
           },
           title: {
-            display: false,
+            display: !!props.comparisonXAxisTitle,
+            text: props.comparisonXAxisTitle,
           },
         },
       },
@@ -260,6 +263,13 @@ export default (propsInitial: Props) => {
         datalabels: {
           align: 'top',
           display: props.showLabels ? 'auto' : false,
+          backgroundColor: theme.charts.line.labels.backgroundColor,
+          borderRadius: theme.charts.line.labels.borderRadius,
+          color: theme.charts.line.labels.color,
+          font: {
+            size: theme.charts.line.labels.font.size,
+            weight: theme.charts.line.labels.font.weight,
+          },
           formatter: (v, context) => {
             //get metrics index including for comparison datasets
             const metricIndex = context.datasetIndex % props.metrics.length;
@@ -280,7 +290,13 @@ export default (propsInitial: Props) => {
 
   return (
     <Container {...props} className="overflow-y-hidden">
-      <Line height="100%" options={chartOptions} data={chartData} />
+      <Line
+        aria-label={props.title ? `Compare Line Chart: ${props.title}` : 'Compare Line Chart'}
+        aria-roledescription="compare line chart"
+        height="100%"
+        options={chartOptions}
+        data={chartData}
+      />
     </Container>
   );
 };

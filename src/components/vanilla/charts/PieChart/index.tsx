@@ -1,4 +1,4 @@
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { DataResponse, Dimension, Measure, Granularity } from '@embeddable.com/core';
 import {
   ArcElement,
   CategoryScale,
@@ -13,14 +13,14 @@ import {
   Tooltip,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { Pie, getElementAtEvent } from 'react-chartjs-2';
 
 import formatValue from '../../../util/format';
 import Container from '../../Container';
-import { useTheme } from '@embeddable.com/react';
 import { setChartJSDefaults } from '../../../util/chartjs/common';
 import { Theme } from '../../../../themes/theme';
+import { useTheme } from '@embeddable.com/react';
 
 ChartJS.register(
   ChartDataLabels,
@@ -46,16 +46,39 @@ type Props = {
   displayAsPercentage?: boolean;
   enableDownloadAsCSV?: boolean;
   onClick: (args: { slice: string | null; metric: string | null }) => void;
+  granularity?: Granularity;
 };
 
 type PropsWithRequiredTheme = Props & { theme: Theme };
 type Record = { [p: string]: string };
 
 export default (props: Props) => {
-  const { results, title, enableDownloadAsCSV, maxSegments, metric, slice, onClick } = props;
+  const { results, title, enableDownloadAsCSV, maxSegments, metric, slice, onClick, granularity } =
+    props;
 
   const theme: Theme = useTheme() as Theme;
 
+  // Create mapped data with proper date formatting
+  const mappedData = useMemo(() => {
+    let dateFormat: string | undefined;
+    if (slice?.nativeType === 'time' && granularity && granularity in theme.dateFormats) {
+      dateFormat = theme.dateFormats[granularity as keyof typeof theme.dateFormats];
+    }
+
+    return (
+      results?.data?.map((d) => ({
+        ...d,
+        ...(slice?.name && {
+          [slice.name]: dateFormat
+            ? formatValue(d?.[slice.name], {
+                meta: slice?.meta,
+                dateFormat,
+              })
+            : d?.[slice.name],
+        }),
+      })) ?? []
+    );
+  }, [results?.data, slice, granularity, theme.dateFormats]);
   // Set ChartJS defaults
   setChartJSDefaults(theme, 'pie');
 
@@ -69,6 +92,7 @@ export default (props: Props) => {
   const updatedProps: PropsWithRequiredTheme = {
     ...props,
     theme,
+    results: { ...results, data: mappedData },
   };
 
   const [clickedIndex, setClickedIndex] = useState<number | null>(null);
@@ -89,8 +113,8 @@ export default (props: Props) => {
     }
     setClickedIndex(index);
     onClick({
-      slice: results.data?.[index][slice.name],
-      metric: results.data?.[index][metric.name],
+      slice: mappedData?.[index][slice.name],
+      metric: mappedData?.[index][metric.name],
     });
   };
 
@@ -107,8 +131,10 @@ export default (props: Props) => {
   return (
     <Container {...props} className="overflow-y-hidden">
       <Pie
+        aria-label={title ? `Pie Chart: ${title}` : 'Pie Chart'}
+        aria-roledescription="pie chart"
         height="100%"
-        options={chartOptions(updatedProps)}
+        options={chartOptions(updatedProps, theme)}
         data={chartData(updatedProps, chartColors)}
         ref={chartRef}
         onClick={handleClick}
@@ -117,7 +143,7 @@ export default (props: Props) => {
   );
 };
 
-function chartOptions(props: Props): ChartOptions<'pie'> {
+function chartOptions(props: Props, theme: Theme): ChartOptions<'pie'> {
   return {
     responsive: true,
     maintainAspectRatio: false,
@@ -129,11 +155,13 @@ function chartOptions(props: Props): ChartOptions<'pie'> {
     plugins: {
       datalabels: {
         // Great resource: https://quickchart.io/documentation/chart-js/custom-pie-doughnut-chart-labels/
+        backgroundColor: theme.charts.pie.labels.backgroundColor,
+        borderRadius: theme.charts.pie.labels.borderRadius,
+        color: theme.charts.pie.labels.color,
         display: props.showLabels ? 'auto' : false,
-        backgroundColor: '#fff',
-        borderRadius: 8,
         font: {
-          weight: 'normal',
+          size: theme.charts.pie.labels.font.size,
+          weight: theme.charts.pie.labels.font.weight,
         },
         formatter: (v) => {
           const val = v
@@ -151,6 +179,10 @@ function chartOptions(props: Props): ChartOptions<'pie'> {
         callbacks: {
           label: function (context) {
             let label = context.dataset.label || '';
+            // handle labels that are booleans
+            if (typeof context.dataset.label === 'boolean') {
+              label = context.dataset.label ? 'True' : 'False';
+            }
             if (context.parsed !== null) {
               label += `: ${formatValue(`${context.parsed || ''}`, {
                 type: 'number',
@@ -175,14 +207,14 @@ function chartOptions(props: Props): ChartOptions<'pie'> {
   };
 }
 
-function mergeLongTail({ results, slice, metric, maxSegments }: Props) {
-  if (!maxSegments || !metric || !slice) return results?.data;
+function mergeLongTail(data: any[], slice: Dimension, metric: Measure, maxSegments: number) {
+  if (!maxSegments || !metric || !slice) return data;
 
-  const newData = [...(results?.data || [])]
+  const newData = [...(data || [])]
     .sort((a, b) => parseInt(b[metric.name]) - parseInt(a[metric.name]))
     .slice(0, maxSegments - 1);
 
-  const sumLongTail = results?.data
+  const sumLongTail = data
     ?.slice(maxSegments - 1)
     .reduce((accumulator, record: Record) => accumulator + parseInt(record[metric.name]), 0);
 
@@ -194,11 +226,12 @@ function mergeLongTail({ results, slice, metric, maxSegments }: Props) {
 function chartData(props: PropsWithRequiredTheme, chartColors: string[]) {
   const { maxSegments, results, metric, slice, displayAsPercentage, theme } = props;
   const labelsExceedMaxSegments = maxSegments && maxSegments < (results?.data?.length || 0);
-  const newData = labelsExceedMaxSegments ? mergeLongTail(props) : results.data;
+  const newData = labelsExceedMaxSegments
+    ? mergeLongTail(results.data || [], slice, metric, maxSegments)
+    : results.data;
 
   // Chart.js pie expects labels like so: ['US', 'UK', 'Germany']
-  const labels = newData?.map((d) => formatValue(d[slice.name], { meta: slice?.meta }));
-
+  const labels = newData?.map((d) => d[slice.name]);
   const sum = displayAsPercentage
     ? newData?.reduce((accumulator, obj) => accumulator + parseFloat(obj[metric.name]), 0)
     : null;
@@ -215,8 +248,9 @@ function chartData(props: PropsWithRequiredTheme, chartColors: string[]) {
       {
         data: counts,
         backgroundColor: chartColors,
-        borderColor: '#fff',
-        borderWeight: 5,
+        borderColor: theme.charts.pie.borderColor,
+        borderWidth: theme.charts.pie.borderWidth,
+        weight: theme.charts.pie.weight,
       },
     ],
   };

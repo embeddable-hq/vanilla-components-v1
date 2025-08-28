@@ -50,7 +50,6 @@ type Props = {
   xAxis: Dimension;
   xAxisTitle?: string;
   yAxisTitle?: string;
-  granularity?: Granularity;
   showSecondYAxis?: boolean;
   secondAxisTitle?: string;
   theme: Theme;
@@ -59,6 +58,8 @@ type Props = {
 export default function BarChart({ ...props }: Props): React.JSX.Element {
   return (
     <Chart
+      aria-label={props.title ? `Bar Chart: ${props.title}` : 'Bar Chart'}
+      aria-roledescription="bar chart"
       type="bar"
       height="100%"
       options={getBarChartOptions({ ...props, stacked: false })}
@@ -68,7 +69,8 @@ export default function BarChart({ ...props }: Props): React.JSX.Element {
 }
 
 function chartData(props: Props): ChartData<'bar' | 'line'> {
-  const { results, xAxis, metrics, granularity, lineMetrics, showSecondYAxis, theme } = props;
+  const { results, xAxis, metrics, lineMetrics, showSecondYAxis, theme } = props;
+  const granularity = xAxis?.inputs?.granularity;
   const {
     charts: { colors },
     dateFormats,
@@ -80,19 +82,19 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   if (theme.charts.bar.colors) {
     chartColors = theme.charts.bar.colors;
   }
+  const isTimeDimension = xAxis?.nativeType === 'time';
 
   let dateFormat: string | undefined;
-  if (xAxis.nativeType === 'time' && granularity) {
+  if (granularity && granularity in dateFormats) {
     dateFormat = dateFormats[granularity];
   }
-
   const labels = [
     ...new Set(
       results?.data?.map((d: { [p: string]: string }) => {
         const value = d[xAxis?.name];
-        return formatValue(value === null ? '' : value, {
+        return formatValue(value ?? '', {
           meta: xAxis?.meta,
-          dateFormat: dateFormat,
+          ...(isTimeDimension ? { dateFormat } : {}),
         });
       }),
     ),
@@ -118,13 +120,13 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
     lineMetrics?.map((metric, i) => ({
       backgroundColor: chartColors[metrics.length + (i % chartColors.length)],
       borderColor: chartColors[metrics.length + (i % chartColors.length)],
-      cubicInterpolationMode: 'monotone' as const,
+      cubicInterpolationMode: theme.charts.bar.cubicInterpolationMode,
       data: results?.data?.map((d) => parseFloat(d[metric.name] || 0)) || [],
       label: metric.title,
       order: 0,
       pointHoverRadius: 3,
       pointRadius: 2,
-      tension: theme.charts.line.lineTension,
+      tension: theme.charts.bar.lineTension,
       type: 'line' as const,
       yAxisID: showSecondYAxis ? 'y1' : 'y',
     })) || [];

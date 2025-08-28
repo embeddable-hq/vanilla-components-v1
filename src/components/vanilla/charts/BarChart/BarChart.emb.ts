@@ -1,4 +1,11 @@
-import { OrderBy, loadData } from '@embeddable.com/core';
+import {
+  isDimension,
+  isMeasure,
+  OrderBy,
+  loadData,
+  Measure,
+  Dimension,
+} from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 import Component from './index';
 
@@ -20,6 +27,7 @@ export const meta = {
       name: 'xAxis',
       type: 'dimension',
       label: 'X-Axis',
+      required: true,
       config: {
         dataset: 'ds',
       },
@@ -29,6 +37,7 @@ export const meta = {
       name: 'metrics',
       type: 'measure',
       array: true,
+      required: true,
       label: 'Metrics',
       config: {
         dataset: 'ds',
@@ -174,14 +183,23 @@ export default defineComponent(Component, meta, {
       });
     }
 
+    // Allow sorting by any dimension or measure regardless of x-axis
+    const dimensions = [inputs.xAxis];
+    const measures = [...inputs.metrics, ...(inputs.lineMetrics || [])];
+    if (inputs.sortBy && isDimension(inputs.sortBy) && !dimensions.includes(inputs.sortBy)) {
+      dimensions.push(inputs.sortBy as Dimension);
+    }
+    if (inputs.sortBy && isMeasure(inputs.sortBy) && !measures.includes(inputs.sortBy)) {
+      measures.push(inputs.sortBy as Measure);
+    }
+    // No timeDimension logic needed, just ensure select is used
     return {
       ...inputs,
       clientContext,
       reverseXAxis: inputs.reverseXAxis,
       results: loadData({
         from: inputs.ds,
-        dimensions: [inputs.xAxis],
-        measures: [...inputs.metrics, ...(inputs.lineMetrics || [])],
+        select: [...dimensions, ...measures],
         orderBy: orderProp,
         limit: inputs.limit || 50,
       }),

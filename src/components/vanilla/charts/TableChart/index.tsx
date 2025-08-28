@@ -2,45 +2,70 @@ import { DataResponse, DimensionOrMeasure, OrderBy, OrderDirection } from '@embe
 import { useEmbeddableState, useTheme } from '@embeddable.com/react';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { SortDirection } from '../../../../enums/SortDirection';
-import formatValue from '../../../util/format';
 import Container from '../../Container';
 import Pagination from './components/Pagination';
 import TableHead from './components/TableHead';
+import downloadAsCSV from '../../../util/downloadAsCSV';
+import formatValue, { detectAndReturnLinks } from '../../../util/format';
+import { SortDirection } from '../../../../enums/SortDirection';
 import { Theme } from '../../../../themes/theme';
 
 export type Props = {
-  limit?: number;
-  results: DataResponse;
-  defaultSort?: { property: DimensionOrMeasure; direction: string }[];
+  allResults?: DataResponse;
   columns: DimensionOrMeasure[];
-  title: string;
+  defaultSort?: { property: DimensionOrMeasure; direction: string }[];
   fontSize?: number;
+  limit?: number;
   minColumnWidth?: number;
+  results: DataResponse;
+  title: string;
 };
 
 type Meta = {
-  page: number;
+  downloadAll: boolean;
   maxRowsFit: number;
-  sort: OrderBy[];
+  page: number;
   prevVariableValues: Record<string, any>;
+  sort: OrderBy[];
 };
 
 export default (props: Props) => {
-  const { columns, results } = props;
+  const { columns, results, allResults } = props;
+  const [isDownloadingAll, setIsDownloadingAll] = useState(false);
   const [maxRowsFit, setMaxRowFit] = useState(0);
   const [resizing, setResizing] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
   const theme: Theme = useTheme() as Theme;
 
   const [meta, setMeta] = useEmbeddableState({
-    page: 0,
+    downloadAll: false,
     maxRowsFit: 0,
-    sort: props.defaultSort,
+    page: 0,
     prevVariableValues: {},
+    sort: props.defaultSort,
   }) as [Meta, (f: (m: Meta) => Meta) => void];
 
-  const calculateMaxRowFix = useCallback(
+  useEffect(() => {
+    if (!resizing) {
+      setMeta((meta) => ({ ...meta, maxRowsFit }));
+    }
+  }, [props.columns, maxRowsFit, setMeta, resizing]);
+
+  // Catch "download all as csv" events
+  useEffect(() => {
+    if (isDownloadingAll) {
+      if (!allResults || !allResults.data || allResults.data.length === 0) {
+        // We haven't finished the loadData yet, so hang on
+        return;
+      }
+      downloadAsCSV(props, allResults?.data, [], 'downloaded-chart-data');
+      setIsDownloadingAll(false);
+      setMeta((meta) => ({ ...meta, downloadAll: false }));
+    }
+  }, [allResults, isDownloadingAll, props, setMeta]);
+
+  const calculateMaxRowFit = useCallback(
     ({ height }: { height: number }) => {
       let val = 0;
 
@@ -58,11 +83,11 @@ export default (props: Props) => {
     [maxRowsFit, props.results],
   );
 
-  useEffect(() => {
-    if (!resizing) {
-      setMeta((meta) => ({ ...meta, maxRowsFit }));
-    }
-  }, [props.columns, maxRowsFit, setMeta, resizing]);
+  // We pass this to the download menu via the container
+  const handleDownloadAll = useCallback(() => {
+    setMeta((meta) => ({ ...meta, downloadAll: true }));
+    setIsDownloadingAll(true);
+  }, [setMeta]);
 
   const updateSort = useCallback(
     (column: DimensionOrMeasure) => {
@@ -84,15 +109,22 @@ export default (props: Props) => {
     [meta, setMeta],
   );
 
+  useEffect(() => {
+    if (props.results?.data?.length) {
+      setHasNextPage(props.limit ? props.results.data.length >= props.limit : false);
+    }
+  }, [props.results, props.limit]);
+
   return (
     <Container
       {...props}
-      onResize={calculateMaxRowFix}
-      setResizeState={(value) => setResizing(value)}
-      className="overflow-y-auto"
       childContainerClassName="overflow-x-auto"
+      className="overflow-y-auto"
+      downloadAllFunction={handleDownloadAll}
+      onResize={calculateMaxRowFit}
+      setResizeState={(value) => setResizing(value)}
     >
-      <div style={{ minWidth: `${columns.length * (props.minColumnWidth ?? 100)}px` }}>
+      <div style={{ minWidth: `${columns?.length * (props.minColumnWidth ?? 100)}px` }}>
         {!!meta && !(props.results?.isLoading && !props.results?.data?.length) && (
           <table
             className="overflow-visible w-full"
@@ -113,20 +145,30 @@ export default (props: Props) => {
             <tbody>
               {results?.data?.slice(0, maxRowsFit).map((row, index) => (
                 <tr key={index} className="hover:bg-gray-400/5">
-                  {columns.map((column, index) => (
-                    <td
-                      key={index}
-                      className="text-dark p-3 truncate"
-                      style={{
-                        fontSize: props.fontSize ? `${props.fontSize}px` : theme.font.size,
-                        maxWidth: props.minColumnWidth ? `${props.minColumnWidth * 1.2}px` : 'auto',
-                      }}
-                    >
-                      <span title={formatColumn(row[column.name], column) ?? ''}>
-                        {formatColumn(row[column.name], column)}
-                      </span>
-                    </td>
-                  ))}
+                  {columns.map((column, index) => {
+                    const formattedValue = formatColumn(row[column.name], column);
+                    let title = '';
+                    if (typeof formattedValue === 'object') {
+                      // It's a link, so we just want the link text as the title
+                      title = (formattedValue as React.ReactElement).props.children;
+                    } else {
+                      title = formattedValue;
+                    }
+                    return (
+                      <td
+                        key={index}
+                        className="text-dark p-3 truncate"
+                        style={{
+                          fontSize: props.fontSize ? `${props.fontSize}px` : theme.font.size,
+                          maxWidth: props.minColumnWidth
+                            ? `${props.minColumnWidth * 1.2}px`
+                            : 'auto',
+                        }}
+                      >
+                        <span title={title}>{formattedValue}</span>
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>
@@ -136,9 +178,7 @@ export default (props: Props) => {
 
       <Pagination
         currentPage={meta?.page || 0}
-        hasNextPage={
-          props.limit && results?.data?.length ? results?.data?.length < props.limit : false
-        }
+        hasNextPage={hasNextPage}
         onPageChange={(page) => {
           setMeta((meta) => ({ ...meta, page: page }));
         }}
@@ -147,12 +187,30 @@ export default (props: Props) => {
   );
 };
 
-function formatColumn(text: string | number, column: DimensionOrMeasure) {
+function formatColumn(
+  text: string | number | boolean | null | undefined,
+  column: DimensionOrMeasure,
+) {
+  if (text === null || text === undefined) return '-';
   if (typeof text === 'number' || column.nativeType === 'number') {
     return formatValue(`${text}`, { type: 'number', meta: column?.meta });
   }
+  if (typeof text === 'boolean') {
+    // don't use formatValue for booleans, just return the string representation
+    return text ? 'True' : 'False';
+  }
 
   if (text && column.nativeType === 'time') return formatValue(text, 'date');
+
+  // detect links - we can't do this in the format function because it returns a dom element
+  const { linkText, linkUrl } = detectAndReturnLinks(text);
+  if (linkText && linkUrl) {
+    return (
+      <a href={linkUrl} target="_blank" rel="noopener noreferrer">
+        {linkText}
+      </a>
+    );
+  }
 
   return formatValue(text);
 }

@@ -1,4 +1,4 @@
-export type ChartType = 'bar' | 'bubble' | 'kpi' | 'line' | 'pie' | 'scatter';
+export type ChartType = 'bar' | 'bubble' | 'kpi' | 'line' | 'pie' | 'scatter' | 'stackedArea';
 
 type ButtonSettings = {
   background: string;
@@ -13,6 +13,16 @@ type BarChartBorderRadius = {
   bottomLeft: number;
 };
 
+type ChartLabels = {
+  backgroundColor: string;
+  borderRadius: number;
+  color: string;
+  font: {
+    size: number;
+    weight: number | 'normal' | 'bold' | 'bolder' | 'lighter' | undefined;
+  };
+};
+
 export type Theme = {
   brand: {
     primary: string;
@@ -24,6 +34,12 @@ export type Theme = {
       toolTipEnabled: boolean;
       usePointStyle: boolean;
     };
+    fontWeights: {
+      description: number;
+      kpiNumber: number;
+      pagination: number;
+      title: number;
+    };
     textJustify:
       | 'start'
       | 'end'
@@ -34,12 +50,6 @@ export type Theme = {
       | 'stretch'
       | 'baseline'
       | 'normal';
-    fontWeights: {
-      description: number;
-      kpiNumber: number;
-      pagination: number;
-      title: number;
-    };
     bar: {
       borderRadius: number | BarChartBorderRadius;
       borderSkipped:
@@ -54,15 +64,22 @@ export type Theme = {
         | true;
       borderWidth: number;
       colors?: string[];
+      cubicInterpolationMode: 'monotone' | 'default';
       font: {
         size: number;
       };
+      labels: {
+        total: ChartLabels;
+        value: ChartLabels;
+      };
+      lineTension: number;
     };
     bubble: {
       colors?: string[];
       font: {
         size: number;
       };
+      labels: ChartLabels;
     };
     kpi: {
       alignment: string;
@@ -74,22 +91,37 @@ export type Theme = {
     };
     line: {
       colors?: string[];
+      cubicInterpolationMode: 'monotone' | 'default';
       font: {
         size: number;
       };
+      labels: ChartLabels;
       lineTension: number;
     };
     pie: {
       colors?: string[];
+      borderColor: string;
+      borderWidth: number;
       font: {
         size: number;
       };
+      labels: ChartLabels;
+      weight: number;
     };
     scatter: {
       colors?: string[];
       font: {
         size: number;
       };
+      labels: ChartLabels;
+    };
+    stackedArea: {
+      cubicInterpolationMode: 'monotone' | 'default';
+      font: {
+        size: number;
+      };
+      labels: ChartLabels;
+      lineTension: number;
     };
   };
   container: {
@@ -114,6 +146,14 @@ export type Theme = {
       pressed: ButtonSettings;
       fontSize: string;
       height: string;
+      multiSelect: {
+        active: ButtonSettings;
+        inactive: ButtonSettings;
+        margin: string;
+        maxWidth: string;
+        padding: string;
+        radius: string;
+      };
       paddingY: string;
       paddingX: string;
       radius: string;
@@ -148,6 +188,7 @@ export type Theme = {
       };
       outsideOpacity: number;
       radiuses: {
+        button: string;
         buttonEnd: string;
         buttonStart: string;
         weekNumber: string;
@@ -167,6 +208,10 @@ export type Theme = {
         selected: string;
       };
     };
+    skeletonBox: {
+      animation: string;
+      backgroundImage: string;
+    };
     tooltips: {
       radius: string;
     };
@@ -181,13 +226,47 @@ export type Theme = {
     minute: string;
     second: string;
   };
+  downloadMenu: {
+    backgroundColor: string;
+    border: string;
+    borderRadius: string;
+    boxShadow: string;
+    font: {
+      color: string;
+      family: string;
+      size: string;
+      weight: number;
+    };
+    hover?: {
+      backgroundColor: string;
+      fontColor: string;
+      svgColor: string;
+    };
+    paddingOuter: number | string;
+    paddingInner: number | string;
+    svg?: {
+      width?: number | string;
+      height?: number | string;
+    };
+  };
   font: {
     color: string;
     colorNormal: string;
     colorSoft: string;
+    description: {
+      color: string;
+      family: string;
+      size: string;
+    };
     family: string;
     size: string;
     weight: number;
+    title: {
+      color: string;
+      family: string;
+      size: string;
+    };
+    urls: string[];
   };
   png: {
     backgroundColor: string;

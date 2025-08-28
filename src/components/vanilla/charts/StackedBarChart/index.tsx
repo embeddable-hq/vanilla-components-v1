@@ -94,8 +94,10 @@ export default (props: Props) => {
   return (
     <Container {...props} className="overflow-y-hidden">
       <Bar
+        aria-label={props.title ? `Stacked Bar Chart: ${props.title}` : 'Stacked Bar Chart'}
+        aria-roledescription="stacked bar chart"
         height="100%"
-        options={getBarChartOptions({ ...updatedProps, stacked: props.stackBars })}
+        options={getBarChartOptions({ ...updatedProps, stacked: props.stackBars, theme })}
         data={
           getStackedChartData(updatedProps, datasetsMeta) as ChartData<'bar', number[], unknown>
         }

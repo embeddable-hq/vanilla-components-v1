@@ -103,7 +103,7 @@ export default (props: Props) => {
           tension: theme.charts.line.lineTension,
           pointHoverRadius: 3,
           fill: applyFill,
-          cubicInterpolationMode: 'monotone' as const,
+          cubicInterpolationMode: theme.charts.bar.cubicInterpolationMode,
         })) || [],
     };
   }, [updatedProps, fillGaps]);
@@ -180,6 +180,13 @@ export default (props: Props) => {
         datalabels: {
           align: 'top',
           display: updatedProps.showLabels ? 'auto' : false,
+          backgroundColor: theme.charts.line.labels.backgroundColor,
+          borderRadius: theme.charts.line.labels.borderRadius,
+          color: theme.charts.line.labels.color,
+          font: {
+            size: theme.charts.line.labels.font.size,
+            weight: theme.charts.line.labels.font.weight,
+          },
           formatter: (v, context) => {
             //metric needed for formatting
             const metricIndex = context.datasetIndex;
@@ -221,7 +228,13 @@ export default (props: Props) => {
 
   return (
     <Container {...updatedProps} className="overflow-y-hidden">
-      <Line height="100%" options={chartOptions} data={chartData} />
+      <Line
+        aria-label={title ? `Line Chart: ${title}` : 'Line Chart'}
+        aria-roledescription="line chart"
+        height="100%"
+        options={chartOptions}
+        data={chartData}
+      />
     </Container>
   );
 };

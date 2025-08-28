@@ -153,56 +153,56 @@ export const CalendarIcon = ({
       <g clipPath="url(#clip0_137_1694)">
         <path
           d="M2.70446 3.36737C2.35264 3.36737 2.01523 3.50713 1.76646 3.7559C1.51769 4.00468 1.37793 4.34208 1.37793 4.6939V17.2959C1.37793 17.6477 1.51769 17.9852 1.76646 18.2339C2.01523 18.4827 2.35264 18.6225 2.70446 18.6225H17.2963C17.6481 18.6225 17.9856 18.4827 18.2343 18.2339C18.483 17.9852 18.6228 17.6477 18.6228 17.2959V4.6939C18.6228 4.34208 18.483 4.00468 18.2343 3.7559C17.9856 3.50713 17.6481 3.36737 17.2963 3.36737H14.6432"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M5.35742 1.37756V5.35716"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M14.6436 1.37756V5.35716"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M5.35742 3.36737H11.9901"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M13.3164 8.67349V14.6426"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M11.3271 10.1658H11.8246C12.6487 10.1658 13.3168 9.49765 13.3168 8.67349"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M15.3066 14.6429H11.3271"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M4.69434 13.648C4.89921 14.2275 5.45198 14.6429 6.10177 14.6429H7.09666C7.92086 14.6429 8.589 13.9747 8.589 13.1505V12.9018C8.589 12.0776 7.92086 11.4095 7.09666 11.4095H6.59922H6.97231C7.72782 11.4095 8.34028 10.797 8.34028 10.0415C8.34028 9.28595 7.72781 8.67348 6.97229 8.67349H6.22612C5.59996 8.67351 5.07205 9.09421 4.90964 9.66839"
-          stroke={theme.svg.strokeStrong}
+          stroke={theme.svg.strokeNormal}
           strokeWidth="1.3"
           strokeLinecap="round"
           strokeLinejoin="round"

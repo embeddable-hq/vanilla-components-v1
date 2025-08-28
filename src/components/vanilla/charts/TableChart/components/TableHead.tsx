@@ -19,7 +19,7 @@ const TableHead = ({ columns, sortBy, sortDirection, onSortingChange, minColumnW
   return (
     <thead className={`border-y border-[color:--embeddable-controls-boders-colors-primary]`}>
       <tr>
-        {columns.map((column) => {
+        {columns?.map((column) => {
           const isSorted = sortBy?.name === column.name;
           const newSortDirection = isSorted
             ? sortDirection === SortDirection.ASCENDING
@@ -47,7 +47,10 @@ const TableHead = ({ columns, sortBy, sortDirection, onSortingChange, minColumnW
               onClick={() => onSortingChange?.(column, newSortDirection)}
             >
               <div className="flex items-center gap-1 hover:text-black">
-                <span className="embeddable-table-header mr-1 truncate">{column.title}</span>
+                <span className="embeddable-table-header mr-1 truncate">
+                  {/* Use the label from inputs if available, otherwise use the title */}
+                  {column?.inputs?.customColumnLabel ?? column.title}
+                </span>
 
                 {isSorted ? (
                   <span className="w-3">

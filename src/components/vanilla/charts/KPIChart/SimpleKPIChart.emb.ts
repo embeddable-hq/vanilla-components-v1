@@ -81,7 +81,7 @@ export const meta = {
       type: 'boolean',
       label: 'Show download as PNG',
       category: 'Export options',
-      defaultValue: true,
+      defaultValue: false,
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
@@ -92,7 +92,7 @@ export default defineComponent(Component, meta, {
       ...inputs,
       results: loadData({
         from: inputs.ds,
-        measures: [inputs.metric],
+        select: [inputs.metric],
       }),
     };
   },

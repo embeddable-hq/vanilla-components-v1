@@ -7,6 +7,17 @@
 .font-embeddable {
   color: var(--embeddable-font-color);
   font-family: var(--embeddable-font-family);
+  font-size: var(--embeddable-font-size);
+}
+.font-family-embeddable-title {
+  font-family: var(--embeddable-font-title-family);
+  font-size: var(--embeddable-font-title-size);
+  color: var(--embeddable-font-title-color);
+}
+.font-family-embeddable-description {
+  font-family: var(--embeddable-font-description-family);
+  font-size: var(--embeddable-font-description-size);
+  color: var(--embeddable-font-description-color);
 }
 .embeddable-table-header {
   color: var(--embeddable-table-header-color);
@@ -57,6 +68,7 @@
 .rdp-range_start .rdp-day_button {
   background-color: var(--embeddable-controls-datepicker-backgrounds-colors-rangeStart) !important;
   color: var(--embeddable-controls-datepicker-font-colors-rangeStart) !important;
+  border-radius: var(--embeddable-controls-datepicker-radiuses-buttonStart) !important;
 }
 
 .rdp-range_middle {
@@ -73,8 +85,9 @@
 }
 
 .rdp-range_end .rdp-day_button {
-  color: var(--embeddable-controls-datepicker-font-colors-rangeStart) !important;
+  color: var(--embeddable-controls-datepicker-font-colors-rangeEnd) !important;
   background-color: var(--embeddable-controls-datepicker-backgrounds-colors-rangeEnd) !important;
+  border-radius: var(--embeddable-controls-datepicker-radiuses-buttonEnd) !important;
 }
 
 .rdp-day.rdp-range_end {
@@ -83,6 +96,11 @@
 
 .rdp-day.rdp-range_start {
   border-radius: var(--embeddable-controls-datepicker-radiuses-buttonStart) !important;
+}
+
+.rdp-day.rdp-range_start.rdp-range_end,
+.rdp-day.rdp-range_start.rdp-range_end .rdp-day_button {
+  border-radius: var(--embeddable-controls-datepicker-radiuses-button) !important;
 }
 
 /* Spinner */
@@ -104,14 +122,8 @@
   bottom: 0;
   left: 0;
   transform: translateX(-100%);
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.2) 20%,
-    rgba(255, 255, 255, 0.5) 60%,
-    rgba(255, 255, 255, 0)
-  );
-  animation: shimmer 2s infinite;
+  background-image: var(--embeddable-controls-skeletonBox-backgroundImage);
+  animation: var(--embeddable-controls-skeletonBox-animation);
   content: '';
 }
 @keyframes shimmer {
@@ -158,16 +170,14 @@
   flex-wrap: wrap;
 }
 .multiselectItem {
-  margin-left: 4px;
-  background: #f1f1f1;
   cursor: pointer;
-  border-radius: 100px;
-  padding: 4px 8px;
   display: flex;
   align-items: center;
-  max-width: 150px;
-  margin: 0px 4px 4px 0px;
   justify-content: center;
+  margin: var(--embeddable-controls-buttons-multiSelect-margin);
+  max-width: var(--embeddable-controls-buttons-multiSelect-maxWidth);
+  padding: var(--embeddable-controls-buttons-multiSelect-padding);
+  border-radius: var(--embeddable-controls-buttons-multiSelect-radius);
 }
 .multiSelectInner {
   white-space: nowrap;

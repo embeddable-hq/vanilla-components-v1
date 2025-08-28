@@ -68,9 +68,9 @@ export default (props: Props) => {
 
     const datasetsMeta = {
       fill: !isMultiDimensionLine,
-      cubicInterpolationMode: 'monotone' as const,
+      cubicInterpolationMode: theme.charts.stackedArea.cubicInterpolationMode,
       pointRadius: 0,
-      tension: 0.1,
+      tension: theme.charts.stackedArea.lineTension,
       pointHoverRadius: 3,
     };
 
@@ -200,7 +200,13 @@ export default (props: Props) => {
 
   return (
     <Container {...updatedProps} className="overflow-y-hidden">
-      <Line height="100%" options={chartOptions} data={chartData} />
+      <Line
+        aria-label={props.title ? `Stacked Area Chart: ${props.title}` : 'Stacked Area Chart'}
+        aria-roledescription="stacked area chart"
+        height="100%"
+        options={chartOptions}
+        data={chartData}
+      />
     </Container>
   );
 };
