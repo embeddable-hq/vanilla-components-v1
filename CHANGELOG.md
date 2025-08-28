@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.3
+
+### Patch Changes
+
+- 351a5f2: Fixes multiple small bugs in the chart components
+
 ## 1.1.2
 
 ### Patch Changes
