@@ -208,6 +208,7 @@ export default (props: Props) => {
             w-full
             bg-[color:--embeddable-controls-backgrounds-colors-transparent]
             rounded-[--embeddable-controls-borders-radius]
+            text-[color:--embeddable-controls-font-colors-normal]
           `}
         />
 
@@ -227,6 +228,7 @@ export default (props: Props) => {
               w-[calc(100%-2.5rem)]
               whitespace-nowrap
               rounded-[--embeddable-controls-borders-radius]
+              text-[color:--embeddable-controls-font-colors-normal]
             `}
           >
             {value}
@@ -250,6 +252,7 @@ export default (props: Props) => {
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
               border-[color:--embeddable-controls-borders-colors-normal]
               rounded-[--embeddable-controls-borders-radius]
+              text-[color:--embeddable-controls-font-colors-normal]
             `}
             onMouseDown={(e) => {
               e.preventDefault();

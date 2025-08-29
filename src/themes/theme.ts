@@ -194,6 +194,14 @@ export type Theme = {
         weekNumber: string;
       };
     };
+    font: {
+      colors: {
+        normal: string;
+        soft: string;
+        strong: string;
+      };
+      size: string;
+    };
     inputs: {
       colors: {
         hover: string;

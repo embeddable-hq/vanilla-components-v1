@@ -138,9 +138,20 @@ export default (props: Props) => {
             onBlur={() => {
               setIsDropdownOrItemFocused(false);
             }}
-            className={`flex items-left items-center min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal ${
-              value?.includes(option.value) ? 'bg-black/5' : ''
-            } truncate`}
+            className={`
+              cursor-pointer
+              flex
+              font-normal
+              hover:bg-black/5
+              items-center
+              items-left
+              min-h-[36px]
+              px-3
+              py-2
+              truncate
+              text-[color:--embeddable-controls-font-colors-normal]
+              ${value?.includes(option.value) ? 'bg-black/5' : ''}
+            `}
             tabIndex={0}
           >
             {value?.includes(option.value) ? <Checkbox /> : <CheckboxEmpty />}
@@ -178,16 +189,40 @@ export default (props: Props) => {
             setIsDropdownOrItemFocused(false);
           }}
           onChange={(e) => performSearch(e.target.value)}
-          className={`outline-none bg-transparent leading-9 h-9 border-0 px-3 w-full cursor-pointer text-sm ${
-            focus || !value ? '' : 'opacity-0'
-          }`}
+          className={`
+            bg-transparent
+            border-0
+            cursor-pointer
+            h-9
+            leading-9
+            outline-none
+            px-3
+            text-sm
+            w-full
+            ${focus || !value ? '' : 'opacity-0'}
+            text-[color:--embeddable-controls-font-colors-normal]
+          `}
         />
 
         {!!value && (
           <span
-            className={`absolute w-[calc(100%-2rem)] whitespace-nowrap overflow-hidden truncate rounded-xl left-3 top-1 h-8 leading-8 block pointer-events-none text-sm ${
-              focus ? 'hidden' : ''
-            }`}
+            className={`
+              absolute
+              block
+              h-8
+              leading-8
+              left-3
+              overflow-hidden
+              pointer-events-none
+              rounded-xl
+              text-sm
+              top-1
+              truncate
+              w-[calc(100%-2rem)]
+              whitespace-nowrap
+              text-[color:--embeddable-controls-font-colors-normal]
+              ${focus ? 'hidden' : ''}
+            `}
           >
             Selected {value.length} {value.length === 1 ? 'option' : 'options'}
           </span>

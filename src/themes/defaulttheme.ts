@@ -238,6 +238,14 @@ export const defaultTheme: Theme = {
         weekNumber: '4px',
       },
     },
+    font: {
+      colors: {
+        normal: '#888888',
+        soft: '#e3e3e3',
+        strong: '#101010',
+      },
+      size: '14px',
+    },
     inputs: {
       colors: {
         hover: '#F3F4F6',
