@@ -115,14 +115,14 @@ export const meta = {
     {
       name: 'rowSortDirection',
       type: SortDirectionType,
-      defaultValue: { value: SortDirection.ASCENDING },
+      defaultValue: SortDirection.NONE,
       label: 'Default Row Sort Direction',
       category: 'Chart settings',
     },
     {
       name: 'columnSortDirection',
       type: SortDirectionType,
-      defaultValue: { value: SortDirection.ASCENDING },
+      defaultValue: SortDirection.NONE,
       label: 'Default Column Sort Direction',
       category: 'Chart settings',
     },
@@ -197,17 +197,19 @@ export default defineComponent(Component, meta, {
               [`resultsDimension${index}`]: loadData({
                 from: inputs.ds,
                 select: [
-                  ...dimensionsToFetch.filter(
-                    (dimension) => dimension.nativeType !== 'time',
-                  ),
-                  ...dimensionsToFetch.filter((dimension) => dimension.nativeType === 'time')
-                  .map((timeDimension) => ({
-                    dimension: timeDimension.name,
-                    granularity: inputs.granularity,
-                  })),
+                  ...dimensionsToFetch.filter((dimension) => dimension.nativeType !== 'time'),
+                  ...dimensionsToFetch
+                    .filter((dimension) => dimension.nativeType === 'time')
+                    .map((timeDimension) => ({
+                      dimension: timeDimension.name,
+                      granularity: inputs.granularity,
+                    })),
                   ...measures,
                 ],
-                orderBy: sort.slice(0, index + 1),
+                orderBy:
+                  inputs.rowSortDirection === SortDirection.NONE
+                    ? undefined
+                    : sort.slice(0, index + 1),
                 limit: 10_000,
               }),
             };
@@ -218,11 +220,11 @@ export default defineComponent(Component, meta, {
               select: [
                 {
                   ...[...(filteredRowDimensions || []), ...columnDimensions]
-                  .filter((dimension) => dimension.nativeType === 'time')
-                  .map((timeDimension) => ({
-                    dimension: timeDimension.name,
-                    granularity: inputs.granularity,
-                  })),
+                    .filter((dimension) => dimension.nativeType === 'time')
+                    .map((timeDimension) => ({
+                      dimension: timeDimension.name,
+                      granularity: inputs.granularity,
+                    })),
                 },
                 ...measures,
               ],
@@ -234,10 +236,8 @@ export default defineComponent(Component, meta, {
       ...inputs,
       rowValues: rowValuesInputData,
       columnValues: columnDimensions,
-      // @ts-expect-error - value is set by defineComponent, may need to adjust typing in that module
-      rowSortDirection: inputs.rowSortDirection?.value,
-      // @ts-expect-error - value is set by defineComponent, may need to adjust typing in that module
-      columnSortDirection: inputs.columnSortDirection?.value,
+      rowSortDirection: inputs.rowSortDirection as SortDirection,
+      columnSortDirection: inputs.columnSortDirection as SortDirection,
       // measureVisualizationFormat: inputs.measureVisualizationFormat?.value, // Enable this after Bars mode will be fixed
       measureVisualizationFormat: MeasureVisualizationFormat.NUMERIC_VALUES_ONLY,
       aggregateRowDimensions,

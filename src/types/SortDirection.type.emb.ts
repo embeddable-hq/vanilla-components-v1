@@ -7,6 +7,8 @@ const SortDirectionType = defineType('sortDirection', {
   optionLabel: (direction: string) => direction,
 });
 
+defineOption(SortDirectionType, SortDirection.NONE);
+
 defineOption(SortDirectionType, SortDirection.ASCENDING);
 
 defineOption(SortDirectionType, SortDirection.DESCENDING);
