@@ -26,6 +26,7 @@ export const meta = {
       description: 'Used by time filters',
       config: {
         dataset: 'ds',
+        hideGranularity: true,
         supportedTypes: ['time'],
       },
       category: 'Chart data',
