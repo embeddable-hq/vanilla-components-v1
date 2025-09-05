@@ -15,6 +15,7 @@ type Props = {
   displayStats?: boolean;
   enableDownloadAsCSV?: boolean;
   enableDownloadAsPNG?: boolean;
+  includeZeroValues?: boolean;
   metric: Measure;
   onChange?: (value: string | number) => void;
   results?: DataResponse;
@@ -27,11 +28,52 @@ type Props = {
   value?: string | number;
 };
 
-export default (props: Props) => {
+const DAYS = 7;
+const CELL_WIDTH = 12;
+const CELL_HEIGHT = 12;
+const CELL_STYLE: React.CSSProperties = {
+  width: CELL_WIDTH,
+  height: CELL_HEIGHT,
+  display: 'inline-block',
+  margin: '2px',
+  borderRadius: '2px',
+  lineHeight: 1,
+  fontSize: '11px',
+};
+
+// Helper Functions
+const hexToRgb = (hex: string) => {
+  // Sanity check: remove leading '#' if present
+  hex = hex.replace(/^#/, '');
+  // Make sure the hex is 6 characters long
+  if (hex.length !== 6) {
+    return [0, 0, 0]; // Return black if invalid
+  }
+  const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
+    : [0, 0, 0];
+};
+
+const generateBox = (color: string, opacity: number, cellStyle: React.CSSProperties) => {
+  const rgb = hexToRgb(color);
+  return (
+    <div
+      style={{
+        ...cellStyle,
+        backgroundColor: `rgba(${rgb}, ${opacity})`,
+      }}
+    />
+  );
+};
+
+// Main Component
+const HeatGrid: React.FC<Props> = (props) => {
   const {
     baseColor,
     displayLegend,
     displayStats,
+    includeZeroValues,
     metric,
     results,
     statsPrefix,
@@ -40,6 +82,7 @@ export default (props: Props) => {
   } = props;
   const { data = [] } = results || { data: [], isLoading: false };
   const [dataToDisplay, setDataToDisplay] = useState(data);
+  const [averageValue, setAverageValue] = useState(0);
 
   const theme: Theme = useTheme() as Theme;
 
@@ -48,20 +91,12 @@ export default (props: Props) => {
   const lowestValue = data.reduce((min, item) => Math.min(min, item[metric.name]), Infinity);
   const totalValue = data.reduce((sum, item) => sum + parseInt(item[metric.name], 10), 0);
   const nonZeroValues = data.filter((item) => item[metric.name] > 0);
-  const averageValue = Math.round(totalValue / nonZeroValues.length) || 0;
 
-  const days = 7;
-  const cellWidth = 12;
-  const cellHeight = 12;
-  const cellStyle: React.CSSProperties = {
-    width: cellWidth,
-    height: cellHeight,
-    display: 'inline-block',
-    margin: '2px',
-    borderRadius: '2px',
-    lineHeight: 1,
-    fontSize: '11px',
-  };
+  // We may need to update the average later so we use a useEffect
+  useEffect(() => {
+    const avg = Math.round(totalValue / nonZeroValues.length);
+    setAverageValue(avg);
+  }, [totalValue, nonZeroValues.length]);
 
   const getColor = (value: number) => {
     const rgb = hexToRgb(baseColor ? baseColor : theme.brand.primary);
@@ -120,7 +155,7 @@ export default (props: Props) => {
       let currentDate = startOfWeekDate;
       while (currentDate <= endDate) {
         const week: string[] = [];
-        for (let i = 0; i < days; i++) {
+        for (let i = 0; i < DAYS; i++) {
           const strippedDate = currentDate.toISOString().split('T')[0];
           if (currentDate < startDate || currentDate > endDate) {
             cleanedData.push({
@@ -147,13 +182,23 @@ export default (props: Props) => {
         });
       });
 
+      // If includeZeroValues is true, we need to recalculate the average
+      if (includeZeroValues) {
+        const total = dataMatrix
+          .flat()
+          .reduce((sum, item) => sum + (item.value > 0 ? item.value : 0), 0);
+        const count = dataMatrix.flat().filter((item) => item.value >= 0).length;
+        const avg = Math.round(total / count);
+        setAverageValue(avg);
+      }
+
       setDataToDisplay(dataMatrix);
     };
 
     if (data.length > 0) {
       generateMatrix();
     }
-  }, [data, props.timeFilter, metric.name, timeProperty?.name]);
+  }, [data, props.timeFilter, metric.name, timeProperty?.name, includeZeroValues]);
 
   return (
     <Container {...props} className="overflow-y-hidden">
@@ -162,25 +207,25 @@ export default (props: Props) => {
           className={`flex flex-wrap ${displayLegend || displayStats ? 'border-b-2 mb-2 pb-2' : null} border-gray-200 `}
         >
           <div className="flex flex-col items-center">
-            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
               Mon
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
               &nbsp;
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
               Wed
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
               &nbsp;
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
               Fri
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
               &nbsp;
             </div>
-            <div className="text-xs" style={{ ...cellStyle, width: '24px', textAlign: 'right' }}>
+            <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
               Sun
             </div>
           </div>
@@ -191,7 +236,7 @@ export default (props: Props) => {
                   <div
                     key={`${weekIndex}-${dayIndex}`}
                     style={{
-                      ...cellStyle,
+                      ...CELL_STYLE,
                       backgroundColor: getColor(day.value),
                       border:
                         day.value < 0
@@ -207,13 +252,13 @@ export default (props: Props) => {
         <div className="flex justify-between items-center w-full">
           {displayLegend && (
             <div className="flex justify-between items-center">
-              <div style={{ ...cellStyle, width: '24px' }}>Less</div>
-              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.2, cellStyle)}
-              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.4, cellStyle)}
-              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.6, cellStyle)}
-              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.8, cellStyle)}
-              {generateBox(baseColor ? baseColor : theme.brand.primary, 1, cellStyle)}
-              <div style={{ ...cellStyle, width: 'auto' }}>More</div>
+              <div style={{ ...CELL_STYLE, width: '24px' }}>Less</div>
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.2, CELL_STYLE)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.4, CELL_STYLE)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.6, CELL_STYLE)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.8, CELL_STYLE)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, 1, CELL_STYLE)}
+              <div style={{ ...CELL_STYLE, width: 'auto' }}>More</div>
             </div>
           )}
           {displayStats && (
@@ -245,28 +290,4 @@ export default (props: Props) => {
   );
 };
 
-const hexToRgb = (hex: string) => {
-  // Sanity check: remove leading '#' if present
-  hex = hex.replace(/^#/, '');
-  // Make sure the hex is 6 characters long
-  if (hex.length !== 6) {
-    return [0, 0, 0]; // Return black if invalid
-  }
-
-  const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
-    : [0, 0, 0];
-};
-
-const generateBox = (color: string, opacity: number, cellStyle: React.CSSProperties) => {
-  const rgb = hexToRgb(color);
-  return (
-    <div
-      style={{
-        ...cellStyle,
-        backgroundColor: `rgba(${rgb}, ${opacity})`,
-      }}
-    />
-  );
-};
+export default HeatGrid;

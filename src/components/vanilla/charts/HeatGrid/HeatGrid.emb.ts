@@ -84,6 +84,14 @@ export const meta = {
       category: 'Chart settings',
     },
     {
+      name: 'includeZeroValues',
+      type: 'boolean',
+      label: 'Include Zero Values in Average',
+      description: 'Whether to include zero values in the statistics calculations',
+      defaultValue: false,
+      category: 'Chart settings',
+    },
+    {
       name: 'statsPrefix',
       type: 'string',
       label: 'Statistics Prefix',
@@ -128,28 +136,3 @@ export default defineComponent(Component, meta, {
     };
   },
 });
-
-/*
-export default defineComponent(Component, meta, {
-  props: (inputs: Inputs<typeof meta>) => {
-    return {
-      ...inputs,
-      results: loadData({
-        from: inputs.ds,
-        measures: [inputs.metric],
-        filters:
-          inputs.timeFilter?.from && inputs.timeProperty
-            ? [
-                {
-                  property: inputs.timeProperty,
-                  operator: 'inDateRange',
-                  value: inputs.timeFilter,
-                },
-              ]
-            : undefined,
-      }),
-    };
-  },
-});
-
-*/
