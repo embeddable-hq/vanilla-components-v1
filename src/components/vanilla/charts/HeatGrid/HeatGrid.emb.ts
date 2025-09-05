@@ -41,13 +41,6 @@ export const meta = {
       category: 'Chart data',
     },
     {
-      name: 'granularity',
-      type: 'granularity',
-      label: 'Granularity',
-      defaultValue: 'day',
-      category: 'Chart data',
-    },
-    {
       name: 'title',
       type: 'string',
       label: 'Title',

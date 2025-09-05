@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { addDays, endOfWeek, startOfWeek } from 'date-fns';
-import { tz, TZDate } from '@date-fns/tz';
+import React, { useEffect, useState } from 'react';
+import { DataResponse, Dimension, Measure, TimeRange } from '@embeddable.com/core';
+import { addDays, format, startOfWeek } from 'date-fns';
+import { TZDate } from '@date-fns/tz';
 
 import Container from '../../Container';
 import { Theme } from '../../../../themes/theme';
 import { useTheme } from '@embeddable.com/react';
-import { DataResponse, Dimension, Measure, TimeRange } from '@embeddable.com/core';
+import hexToRgb from '../../../util/hexToRgb';
 
 type Props = {
   baseColor?: string;
@@ -41,27 +42,14 @@ const CELL_STYLE: React.CSSProperties = {
   fontSize: '11px',
 };
 
-// Helper Functions
-const hexToRgb = (hex: string) => {
-  // Sanity check: remove leading '#' if present
-  hex = hex.replace(/^#/, '');
-  // Make sure the hex is 6 characters long
-  if (hex.length !== 6) {
-    return [0, 0, 0]; // Return black if invalid
-  }
-  const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result
-    ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
-    : [0, 0, 0];
-};
-
+// Helper Function
 const generateBox = (color: string, opacity: number, cellStyle: React.CSSProperties) => {
-  const rgb = hexToRgb(color);
+  const shade = hexToRgb(color, opacity);
   return (
     <div
       style={{
         ...cellStyle,
-        backgroundColor: `rgba(${rgb}, ${opacity})`,
+        backgroundColor: shade,
       }}
     />
   );
@@ -94,32 +82,30 @@ const HeatGrid: React.FC<Props> = (props) => {
 
   // We may need to update the average later so we use a useEffect
   useEffect(() => {
-    const avg = Math.round(totalValue / nonZeroValues.length);
+    const avg = nonZeroValues.length > 0 ? Math.round(totalValue / nonZeroValues.length) : 0;
     setAverageValue(avg);
   }, [totalValue, nonZeroValues.length]);
 
   const getColor = (value: number) => {
-    const rgb = hexToRgb(baseColor ? baseColor : theme.brand.primary);
-
     // determine the opacity based on the value. In 20% increments from 0% to 100%.
     let opacity = 0;
     if (value < 0) {
-      opacity = 0;
+      opacity = 0.00001; // effectively transparent for "no data"
     } else if (value === 0) {
       opacity = 0.2;
-    } else if (value === lowestValue) {
-      opacity = 0.4; // 40%
-    } else if (value === highestValue) {
-      opacity = 1; // 100%
     } else {
       const range = highestValue - lowestValue;
       const normalizedValue = (value - lowestValue) / range; // Normalize value between 0 and 1
-      opacity = 0.2 + normalizedValue * 0.8; // Interpolate between 0.2 and 1
+      // Interpolate between 0.2 and 1 but only in 20% increments
+      opacity = 0.2 + Math.ceil(normalizedValue * 5) * 0.2;
+      if (opacity < 0.2) opacity = 0.2;
+      if (opacity > 1) opacity = 1;
     }
-    // Ensure opacity is between 0 and 1
-    opacity = Math.max(0, Math.min(1, opacity));
-
-    return `rgba(${value > 0 ? rgb : '0,0,0'} , ${opacity})`;
+    const mainColor = baseColor ? baseColor : theme.brand.primary;
+    const zeroValueColor = '#000000';
+    const colorToUse = value > 0 ? mainColor : zeroValueColor;
+    const rgb = hexToRgb(colorToUse, opacity);
+    return rgb;
   };
 
   // This is how we generate the grid of weeks and days
@@ -132,7 +118,8 @@ const HeatGrid: React.FC<Props> = (props) => {
 
       // strip out the time from item[timeProperty?.name || 'date'] - we just want the date
       const cleanedData = data.map((item) => {
-        const strippedDate = item[timeProperty?.name || 'date'].replace('T', ' ').split(' ')[0];
+        // Instead use date-fns instead to generate the date only
+        const strippedDate = format(new Date(item[timeProperty?.name || 'date']), 'yyyy-MM-dd');
         return {
           [metric.name]: item[metric.name],
           [timeProperty?.name || 'date']: strippedDate,
@@ -238,7 +225,7 @@ const HeatGrid: React.FC<Props> = (props) => {
                       backgroundColor: getColor(day.value),
                       border:
                         day.value < 0
-                          ? `1px solid rgba(${hexToRgb(theme.brand.primary)}, 0.2)`
+                          ? `1px solid ${hexToRgb(baseColor ? baseColor : theme.brand.primary, 0.2)}`
                           : 'none',
                     }}
                     title={`${day.date}: ${day.value}`}
