@@ -29,9 +29,9 @@ type Props = {
   value?: string | number;
 };
 
-const DAYS = 7;
-const CELL_WIDTH = 12;
+const BASE_OPACITY = 0.2;
 const CELL_HEIGHT = 12;
+const CELL_WIDTH = 12;
 const CELL_STYLE: React.CSSProperties = {
   width: CELL_WIDTH,
   height: CELL_HEIGHT,
@@ -41,6 +41,7 @@ const CELL_STYLE: React.CSSProperties = {
   lineHeight: 1,
   fontSize: '11px',
 };
+const DAYS = 7;
 
 // Helper Function
 const generateBox = (color: string, opacity: number, cellStyle: React.CSSProperties) => {
@@ -92,13 +93,13 @@ const HeatGrid: React.FC<Props> = (props) => {
     if (value < 0) {
       opacity = 0.00001; // effectively transparent for "no data"
     } else if (value === 0) {
-      opacity = 0.2;
+      opacity = BASE_OPACITY;
     } else {
       const range = highestValue - lowestValue;
       const normalizedValue = (value - lowestValue) / range; // Normalize value between 0 and 1
       // Interpolate between 0.2 and 1 but only in 20% increments
-      opacity = 0.2 + Math.ceil(normalizedValue * 5) * 0.2;
-      if (opacity < 0.2) opacity = 0.2;
+      opacity = BASE_OPACITY + Math.ceil(normalizedValue * 5) * BASE_OPACITY;
+      if (opacity < BASE_OPACITY) opacity = BASE_OPACITY;
       if (opacity > 1) opacity = 1;
     }
     const mainColor = baseColor ? baseColor : theme.brand.primary;
@@ -225,7 +226,7 @@ const HeatGrid: React.FC<Props> = (props) => {
                       backgroundColor: getColor(day.value),
                       border:
                         day.value < 0
-                          ? `1px solid ${hexToRgb(baseColor ? baseColor : theme.brand.primary, 0.2)}`
+                          ? `1px solid ${hexToRgb(baseColor ? baseColor : theme.brand.primary, BASE_OPACITY)}`
                           : 'none',
                     }}
                     title={`${day.date}: ${day.value}`}
@@ -238,7 +239,7 @@ const HeatGrid: React.FC<Props> = (props) => {
           {displayLegend && (
             <div className="flex justify-between items-center">
               <div style={{ ...CELL_STYLE, width: '24px' }}>Less</div>
-              {generateBox(baseColor ? baseColor : theme.brand.primary, 0.2, CELL_STYLE)}
+              {generateBox(baseColor ? baseColor : theme.brand.primary, BASE_OPACITY, CELL_STYLE)}
               {generateBox(baseColor ? baseColor : theme.brand.primary, 0.4, CELL_STYLE)}
               {generateBox(baseColor ? baseColor : theme.brand.primary, 0.6, CELL_STYLE)}
               {generateBox(baseColor ? baseColor : theme.brand.primary, 0.8, CELL_STYLE)}
