@@ -86,7 +86,7 @@ const HeatGrid: React.FC<Props> = (props) => {
 
   const theme: Theme = useTheme() as Theme;
 
-  // Find the highest value in the data, the lowest value, and the average value
+  // Find the highest value in the data and the lowest value
   const highestValue = data.reduce((max, item) => Math.max(max, item[metric.name]), -Infinity);
   const lowestValue = data.reduce((min, item) => Math.min(min, item[metric.name]), Infinity);
   const totalValue = data.reduce((sum, item) => sum + parseInt(item[metric.name], 10), 0);
@@ -125,8 +125,6 @@ const HeatGrid: React.FC<Props> = (props) => {
   // This is how we generate the grid of weeks and days
   useEffect(() => {
     const generateMatrix = () => {
-      // Get the start and end dates from the results (array 0 is oldest, array length -1 is newest)
-
       if (data.length === 0) {
         setDataToDisplay([]);
         return;
