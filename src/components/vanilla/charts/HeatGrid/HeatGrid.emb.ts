@@ -131,7 +131,13 @@ export default defineComponent(Component, meta, {
       ...inputs,
       results: loadData({
         from: inputs.ds,
-        select: [inputs.metric, inputs.timeProperty],
+        select: [
+          {
+            dimension: inputs.timeProperty?.name as string,
+            granularity: 'day',
+          },
+          inputs.metric,
+        ],
         limit: 10_000,
       }),
     };
