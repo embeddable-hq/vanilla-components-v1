@@ -58,6 +58,8 @@ type Props = {
 export default function BarChart({ ...props }: Props): React.JSX.Element {
   return (
     <Chart
+      aria-label={props.title ? `Bar Chart: ${props.title}` : 'Bar Chart'}
+      aria-roledescription="bar chart"
       type="bar"
       height="100%"
       options={getBarChartOptions({ ...props, stacked: false })}
@@ -80,11 +82,12 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   if (theme.charts.bar.colors) {
     chartColors = theme.charts.bar.colors;
   }
-const isTimeDimension = xAxis?.nativeType === 'time';
+  const isTimeDimension = xAxis?.nativeType === 'time';
 
-  const dateFormat: string =
-    isTimeDimension && granularity ? dateFormats[granularity] : 'yyyy-mm-dd';
-
+  let dateFormat: string | undefined;
+  if (granularity && granularity in dateFormats) {
+    dateFormat = dateFormats[granularity];
+  }
   const labels = [
     ...new Set(
       results?.data?.map((d: { [p: string]: string }) => {

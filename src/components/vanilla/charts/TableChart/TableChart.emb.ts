@@ -32,6 +32,7 @@ export const meta = {
       type: 'dimensionOrMeasure',
       label: 'Columns',
       array: true,
+      required: true,
       config: {
         dataset: 'ds',
       },
@@ -132,9 +133,7 @@ export default defineComponent<
         ? Math.min(inputs.maxPageRows || 1000, Math.max(state?.maxRowsFit, 1) || 1000)
         : 0;
 
-    const defaultSortDirection =
-      // @ts-expect-error - defaultSortDirection.value is added by defineComponent.
-      inputs.defaultSortDirection?.value === 'Ascending' ? 'asc' : 'desc';
+    const defaultSortDirection = inputs.defaultSortDirection === 'Ascending' ? 'asc' : 'desc';
 
     const defaultSort =
       inputs.columns
@@ -163,8 +162,7 @@ export default defineComponent<
         ? { isLoading: true }
         : loadData({
             from: inputs.ds,
-            dimensions: (inputs.columns?.filter((c) => isDimension(c)) as Dimension[]) || [],
-            measures: (inputs.columns?.filter((c) => isMeasure(c)) as Measure[]) || [],
+            select: inputs.columns,
             limit,
             offset: limit * (state?.page || 0),
             orderBy: state?.sort || defaultSort,
@@ -173,8 +171,7 @@ export default defineComponent<
     // All results get loaded when the download all button is clicked (otherwise they return empty)
     const allResults = loadData({
       from: inputs.ds,
-      dimensions: (inputs.columns?.filter((c) => isDimension(c)) as Dimension[]) || [],
-      measures: (inputs.columns?.filter((c) => isMeasure(c)) as Measure[]) || [],
+      select: inputs.columns,
       limit: state?.downloadAll ? 10_000 : 0,
       offset: 0,
       orderBy: state?.sort || defaultSort,

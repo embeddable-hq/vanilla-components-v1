@@ -231,6 +231,7 @@ export default (props: Props) => {
             w-full
             rounded-[--embeddable-controls-borders-radius]
             bg-[color:--embeddable-controls-backgrounds-colors-transparent]
+            text-[color:--embeddable-controls-font-colors-normal]
           `}
         />
 
@@ -252,6 +253,7 @@ export default (props: Props) => {
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
               border-[color:--embeddable-controls-borders-colors-normal]
               rounded-[--embeddable-controls-borders-radius]
+              text-[color:--embeddable-controls-font-colors-normal]
               ${focus ? 'hidden' : ''}
             `}
           >
@@ -275,6 +277,7 @@ export default (props: Props) => {
               z-50
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
               rounded-[--embeddable-controls-borders-radius]
+              text-[color:--embeddable-controls-font-colors-normal]
             `}
             onFocus={() => {
               setIsDropdownOrItemFocused(true);

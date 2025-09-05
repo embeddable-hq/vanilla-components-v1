@@ -50,6 +50,7 @@ export default (props: Props) => {
             w-full
             bg-[color:--embeddable-controls-backgrounds-colors-transparent]
             rounded-[--embeddable-controls-borders-radius]
+            text-[color:--embeddable-controls-font-colors-normal]
           `}
           onChange={(e) => {
             setValue(e.target.value);
@@ -70,7 +71,21 @@ export default (props: Props) => {
               ref.current!.value = '';
               ref.current?.focus();
             }}
-            className="opacity-50 hover:opacity-100 absolute w-10 right-0 top-0 h-full cursor-pointer group flex items-center justify-center"
+            className={`
+              opacity-50
+              hover:opacity-100
+              absolute
+              w-10
+              right-0
+              top-0
+              h-full
+              cursor-pointer
+              group
+              flex
+              items-center
+              justify-center
+              text-[color:--embeddable-controls-font-colors-normal]
+            `}
           >
             <ClearIcon />
           </div>

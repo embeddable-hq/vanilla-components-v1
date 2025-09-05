@@ -1,5 +1,41 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.3
+
+### Patch Changes
+
+- 351a5f2: Fixes multiple small bugs in the chart components
+
+## 1.1.2
+
+### Patch Changes
+
+- d7bfa02: Fixed an issue where in rare cases the Table Chart would crash when interpreting strings and getting a `null` value instead of an empty string.
+
+## 1.1.1
+
+### Patch Changes
+
+- fb6f293: Fixes an issue where table pagination next button would sometimes disable
+
+## 1.1.0
+
+### Minor Changes
+
+- b2c2773: Enable automatic time granularity
+
+## 1.0.22
+
+### Patch Changes
+
+- 92ff82b: adds sorting to dropdown / multiselect dropdown
+
+## 1.0.21
+
+### Patch Changes
+
+- e55bea2: Improves ability to theme download menu
+
 ## 1.0.20
 
 ### Patch Changes

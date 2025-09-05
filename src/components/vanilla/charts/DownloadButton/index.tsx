@@ -42,10 +42,21 @@ export default (props: Props) => {
         // We haven't finished the loadData yet, so hang on
         return;
       }
+      const cleanData = (row: DataResponseData) =>
+        Object.fromEntries(
+          Object.entries(row).map(([key, value]) => [
+            key,
+            value === null || value === 'No Value' ? '' : value,
+          ]),
+        );
+
+      const dataCleaned = results.data.map(cleanData);
+      const prevDataCleaned = results.prevData?.map(cleanData);
+
       downloadAsCSV(
         props,
-        results?.data,
-        results?.prevData,
+        dataCleaned,
+        prevDataCleaned || [],
         'downloaded-chart-data',
         setIsPreppingDownload,
       );

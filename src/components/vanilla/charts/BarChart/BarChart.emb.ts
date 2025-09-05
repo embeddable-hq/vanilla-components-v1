@@ -27,6 +27,7 @@ export const meta = {
       name: 'xAxis',
       type: 'dimension',
       label: 'X-Axis',
+      required: true,
       config: {
         dataset: 'ds',
       },
@@ -36,6 +37,7 @@ export const meta = {
       name: 'metrics',
       type: 'measure',
       array: true,
+      required: true,
       label: 'Metrics',
       config: {
         dataset: 'ds',
@@ -190,15 +192,14 @@ export default defineComponent(Component, meta, {
     if (inputs.sortBy && isMeasure(inputs.sortBy) && !measures.includes(inputs.sortBy)) {
       measures.push(inputs.sortBy as Measure);
     }
-
+    // No timeDimension logic needed, just ensure select is used
     return {
       ...inputs,
       clientContext,
       reverseXAxis: inputs.reverseXAxis,
       results: loadData({
         from: inputs.ds,
-        dimensions,
-        measures,
+        select: [...dimensions, ...measures],
         orderBy: orderProp,
         limit: inputs.limit || 50,
       }),

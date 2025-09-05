@@ -82,7 +82,13 @@ export default (props: Props) => {
 
   return (
     <Container {...updatedProps} className="overflow-y-hidden">
-      <Scatter height="100%" options={chartOptions(updatedProps, scatterData)} data={scatterData} />
+      <Scatter
+        aria-label={props.title ? `Scatter Chart: ${props.title}` : 'Scatter Chart'}
+        aria-roledescription="scatter chart"
+        height="100%"
+        options={chartOptions(updatedProps, scatterData)}
+        data={scatterData}
+      />
     </Container>
   );
 };

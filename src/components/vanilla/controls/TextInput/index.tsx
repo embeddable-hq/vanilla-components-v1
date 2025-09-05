@@ -18,8 +18,6 @@ export default (props: Props) => {
   const ref = useRef<HTMLInputElement | null>(null);
   const [value, setValue] = useState(props.value);
 
-  const theme: Theme = useTheme() as Theme;
-
   useEffect(() => {
     setValue(props.value);
   }, [props.value]);
@@ -60,6 +58,7 @@ export default (props: Props) => {
             w-full
             bg-[color:--embeddable-controls-backgrounds-colors-transparent]
             rounded-[--embeddable-controls-borders-radius]
+            text-[color:--embeddable-controls-font-colors-normal]
           `}
           onChange={handleChange}
           defaultValue={value}
@@ -72,7 +71,21 @@ export default (props: Props) => {
               ref.current!.value = '';
               ref.current?.focus();
             }}
-            className="opacity-50 hover:opacity-100 absolute w-10 right-0 top-0 h-full cursor-pointer group flex items-center justify-center"
+            className={`
+              absolute
+              cursor-pointer
+              flex
+              group
+              h-full
+              hover:opacity-100
+              items-center
+              justify-center
+              opacity-50
+              right-0
+              top-0
+              w-10
+              text-[color:--embeddable-controls-font-colors-normal]
+            `}
           >
             <ClearIcon />
           </div>

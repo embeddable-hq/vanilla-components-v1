@@ -1,4 +1,4 @@
-import { DataResponse } from '@embeddable.com/core';
+import { DataResponse, Measure } from '@embeddable.com/core';
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useTheme } from '@embeddable.com/react';
@@ -12,14 +12,23 @@ import { WarningIcon } from './icons';
 import './index.css';
 import { Theme } from '../../themes/theme';
 
+type DataResponseData = (
+  | {
+      [key: string]: any;
+    }
+  | undefined
+)[];
+
 export type ContainerProps = {
   childContainerClassName?: string;
   className?: string;
   clientContext?: any;
   downloadAllFunction?: () => void;
   description?: string;
+  displayAsPercentage?: boolean;
   enableDownloadAsCSV?: boolean;
   enableDownloadAsPNG?: boolean;
+  metric?: Measure;
   onResize?: (size: Size) => void;
   prevResults?: DataResponse;
   results?: DataResponse | DataResponse[];
@@ -84,6 +93,25 @@ export default ({
     : props.results || {};
   const noData = !isLoading && !data?.length;
 
+  let csvData: DataResponseData = data ? [...data] : [];
+
+  // If the displayAsPercentage prop is set, convert metric values to percentages
+  if (props.metric && props.displayAsPercentage) {
+    const total = csvData.reduce((acc, curr) => {
+      const val = parseInt(curr?.[props.metric!.name], 10);
+      return acc + (!isNaN(val) ? val : 0);
+    }, 0);
+    csvData = csvData.map((item) => {
+      const val = parseFloat(item?.[props.metric!.name]);
+      const percent = total > 0 ? (val / total) * 100 : 0;
+      const percentString = `${percent.toFixed(2)}%`;
+      return {
+        ...item,
+        [props.metric!.name]: percentString,
+      };
+    });
+  }
+
   return (
     <>
       <div className="h-full relative font-embeddable text-sm flex flex-col">
@@ -141,7 +169,9 @@ export default ({
               chartName: props.title || 'chart',
               props: {
                 ...props,
-                results: props.results,
+                results: props.displayAsPercentage
+                  ? ({ isLoading: false, data: csvData } as DataResponse)
+                  : props.results,
                 prevResults: props.prevResults,
               },
             }}
