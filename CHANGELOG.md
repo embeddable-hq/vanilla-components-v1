@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.4
+
+### Patch Changes
+
+- a8946df: Improve control font theming, update to latest SDKs, fix pivot table sort, add heat grid component
+
 ## 1.1.3
 
 ### Patch Changes
