@@ -42,26 +42,27 @@ ChartJS.register(
 );
 
 type Props = {
-  results: DataResponse;
-  title?: string;
-  dps?: number;
-  xAxis: Dimension;
-  metrics: Measure[];
   applyFill?: boolean;
-  showLabels?: boolean;
-  showLegend?: boolean;
-  yAxisMin?: number;
-  yAxisTitle?: string;
-  xAxisTitle?: string;
+  dps?: number;
   granularity: Granularity;
   limit?: number;
+  metrics: Measure[];
+  results: DataResponse;
+  showLabels?: boolean;
+  showLegend?: boolean;
+  spanChartGaps?: boolean;
+  title?: string;
+  xAxis: Dimension;
+  xAxisTitle?: string;
+  yAxisMin?: number;
+  yAxisTitle?: string;
 };
 
 type PropsWithRequiredTheme = Props & { theme: Theme };
 type Record = { [p: string]: string };
 
 export default (props: Props) => {
-  const { results, title } = props;
+  const { title } = props;
   const { fillGaps } = useTimeseries(props, 'desc');
 
   const theme: Theme = useTheme() as Theme;
@@ -70,13 +71,10 @@ export default (props: Props) => {
   setChartJSDefaults(theme, 'line');
 
   // Add the theme to props
-  const updatedProps: PropsWithRequiredTheme = {
-    ...props,
-    theme,
-  };
+  const updatedProps: PropsWithRequiredTheme = useMemo(() => ({ ...props, theme }), [props, theme]);
 
   const chartData: ChartData<'line'> = useMemo(() => {
-    const { results, metrics, applyFill, theme } = updatedProps;
+    const { applyFill, metrics, results, spanChartGaps, theme } = updatedProps;
 
     const data = results?.data?.reduce(fillGaps, []);
 
@@ -91,10 +89,13 @@ export default (props: Props) => {
         metrics?.map((yAxis, i) => ({
           label: yAxis.title,
           data:
-            data?.map((d: Record) => ({
-              y: parseFloat(d[yAxis.name] || '0'),
-              x: parseTime(d[props.xAxis?.name || '']),
-            })) || [],
+            data?.map((d: Record) => {
+              const nullString = spanChartGaps ? '0' : 'null';
+              return {
+                y: parseFloat(d[yAxis.name] || nullString),
+                x: parseTime(d[updatedProps.xAxis?.name || '']),
+              };
+            }) || [],
           backgroundColor: applyFill
             ? hexToRgb(chartColors[i % chartColors.length], 0.2)
             : chartColors[i % chartColors.length],
@@ -111,6 +112,7 @@ export default (props: Props) => {
   const chartOptions: ChartOptions<'line'> = useMemo(
     () => ({
       responsive: true,
+      spanGaps: updatedProps.spanChartGaps,
       maintainAspectRatio: false,
       interaction: {
         mode: 'index',

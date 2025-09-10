@@ -56,6 +56,7 @@ export default function getBarChartOptions({
   showLegend = false,
   showSecondYAxis = false,
   showTotals = false,
+  spanChartGaps = true,
   stackBars,
   stackMetrics = false,
   stacked = false,
@@ -73,6 +74,7 @@ export default function getBarChartOptions({
   reverseXAxis?: boolean;
   secondAxisTitle?: string;
   showSecondYAxis?: boolean;
+  spanChartGaps?: boolean;
   stackBars?: boolean;
   stackMetrics?: boolean;
   stacked?: boolean;
@@ -81,6 +83,7 @@ export default function getBarChartOptions({
 }): ChartOptions<'bar' | 'line'> {
   return {
     responsive: true,
+    skipNull: !spanChartGaps,
     maintainAspectRatio: false,
     indexAxis: displayHorizontally ? ('y' as const) : ('x' as const),
     layout: {
