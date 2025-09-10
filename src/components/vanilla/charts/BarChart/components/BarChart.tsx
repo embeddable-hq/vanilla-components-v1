@@ -38,21 +38,22 @@ type Props = {
   displayHorizontally?: boolean;
   dps?: number;
   enableDownloadAsCSV?: boolean;
-  metrics: Measure[];
   lineMetrics?: Measure[];
+  metrics: Measure[];
   results?: DataResponse;
   reverseXAxis?: boolean;
+  secondAxisTitle?: string;
   showLabels?: boolean;
   showLegend?: boolean;
+  showSecondYAxis?: boolean;
   sortBy?: Dimension | Measure;
+  spanChartGaps?: boolean;
   stackMetrics?: boolean;
+  theme: Theme;
   title?: string;
   xAxis: Dimension;
   xAxisTitle?: string;
   yAxisTitle?: string;
-  showSecondYAxis?: boolean;
-  secondAxisTitle?: string;
-  theme: Theme;
 };
 
 export default function BarChart({ ...props }: Props): React.JSX.Element {
@@ -88,9 +89,24 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
   if (granularity && granularity in dateFormats) {
     dateFormat = dateFormats[granularity];
   }
+
+  // If skipChartGaps is true, filter out any values missing metric data
+  let dataToUse = results?.data || [];
+  if (!props.spanChartGaps) {
+    dataToUse = dataToUse.filter((d) => {
+      let hasMetric = false;
+      metrics.forEach((m) => {
+        if (d[m.name] !== null && d[m.name] !== undefined) {
+          hasMetric = true;
+        }
+      });
+      return hasMetric;
+    });
+  }
+
   const labels = [
     ...new Set(
-      results?.data?.map((d: { [p: string]: string }) => {
+      dataToUse.map((d: { [p: string]: string }) => {
         const value = d[xAxis?.name];
         return formatValue(value ?? '', {
           meta: xAxis?.meta,
@@ -108,20 +124,20 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
       borderRadius: theme.charts.bar.borderRadius,
       borderSkipped: theme.charts.bar.borderSkipped,
       borderWidth: theme.charts.bar.borderWidth,
-      data: results?.data?.map((d) => parseFloat(d[metric.name] || 0)) || [],
+      data: dataToUse.map((d) => parseFloat(d[metric.name] || 0)) || [],
       label: metric.title,
       maxBarThickness: 50,
       minBarLength: 0,
       order: 1,
     })) || [];
 
-  //optional metrics to display as a line on the barchart
+  // optional metrics to display as a line on the barchart
   const lineMetricsDatasets =
     lineMetrics?.map((metric, i) => ({
       backgroundColor: chartColors[metrics.length + (i % chartColors.length)],
       borderColor: chartColors[metrics.length + (i % chartColors.length)],
       cubicInterpolationMode: theme.charts.bar.cubicInterpolationMode,
-      data: results?.data?.map((d) => parseFloat(d[metric.name] || 0)) || [],
+      data: dataToUse.map((d) => parseFloat(d[metric.name] || 0)) || [],
       label: metric.title,
       order: 0,
       pointHoverRadius: 3,

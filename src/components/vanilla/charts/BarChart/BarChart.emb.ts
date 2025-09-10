@@ -112,6 +112,14 @@ export const meta = {
       defaultValue: false,
     },
     {
+      name: 'spanChartGaps',
+      type: 'boolean',
+      label: 'Span chart gaps',
+      description: 'Connect points with a line when data is missing',
+      category: 'Chart settings',
+      defaultValue: true,
+    },
+    {
       name: 'displayHorizontally',
       type: 'boolean',
       label: 'Display Horizontally',
