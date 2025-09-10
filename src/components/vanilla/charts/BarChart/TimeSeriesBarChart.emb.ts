@@ -101,7 +101,7 @@ export const meta = {
       name: 'spanChartGaps',
       type: 'boolean',
       label: 'Span chart gaps',
-      description: 'Connect points with a line when data is missing',
+      description: 'Show zero value bars when data is missing',
       category: 'Chart settings',
       defaultValue: true,
     },
