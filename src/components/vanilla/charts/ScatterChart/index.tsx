@@ -39,21 +39,22 @@ ChartJS.register(
 );
 
 type Props = {
-  xAxis: Dimension;
-  metrics: Measure[];
-  results: DataResponse;
-  granularity?: Granularity;
-  xAxisTitle?: string;
-  yAxisTitle?: string;
-  title?: string;
   description?: string;
-  showLegend?: boolean;
-  showLabels?: boolean;
-  reverseXAxis?: boolean;
-  yAxisMin?: number;
   dps?: number;
   enableDownloadAsCSV?: boolean;
+  granularity?: Granularity;
   isTimeDimension: boolean;
+  metrics: Measure[];
+  results: DataResponse;
+  reverseXAxis?: boolean;
+  showLabels?: boolean;
+  showLegend?: boolean;
+  spanChartGaps?: boolean;
+  title?: string;
+  xAxis: Dimension;
+  xAxisTitle?: string;
+  yAxisMin?: number;
+  yAxisTitle?: string;
 };
 
 type PropsWithRequiredTheme = Props & { theme: Theme };
@@ -86,23 +87,20 @@ export default (props: Props) => {
         aria-label={props.title ? `Scatter Chart: ${props.title}` : 'Scatter Chart'}
         aria-roledescription="scatter chart"
         height="100%"
-        options={chartOptions(updatedProps, scatterData)}
+        options={chartOptions(updatedProps)}
         data={scatterData}
       />
     </Container>
   );
 };
 
-function chartOptions(
-  props: PropsWithRequiredTheme,
-  scatterData: ChartData<'scatter'>,
-): ChartOptions<'scatter'> {
+function chartOptions(props: PropsWithRequiredTheme): ChartOptions<'scatter'> {
   const { theme } = props;
-  const datasets = scatterData.datasets;
 
   return {
     responsive: true,
     maintainAspectRatio: false,
+    spanGaps: props.spanChartGaps,
     animation: {
       duration: 400,
       easing: 'linear',
@@ -214,9 +212,10 @@ function chartData(
         label: metric.title,
         data:
           updatedData?.map((row) => {
+            const nullString = props.spanChartGaps ? '0' : 'null';
             return {
               x: row[props.xAxis.name],
-              y: parseFloat(row[metric.name]) || 0,
+              y: parseFloat(row[metric.name] || nullString),
             };
           }) || [],
         backgroundColor: hexToRgb(theme.charts.colors[i], 0.8),

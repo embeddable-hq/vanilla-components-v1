@@ -90,6 +90,7 @@ export default (props: Props) => {
           label: yAxis.title,
           data:
             data?.map((d: Record) => {
+              // This will produce 'NaN' with 'null' but it works. Sending an actual null doesn't
               const nullString = spanChartGaps ? '0' : 'null';
               return {
                 y: parseFloat(d[yAxis.name] || nullString),
