@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useEmbeddableState } from '@embeddable.com/react';
 import { Dimension, Granularity } from '@embeddable.com/core';
+
 import Container from '../../Container';
 import Dropdown from '../Dropdown';
+import { getCustomGranularities } from '../../../util/getCustomGranularities';
 
 export type Props = {
   day?: boolean;
@@ -24,16 +25,6 @@ type GranularityResponse = {
   data: { value: string }[];
 };
 
-type WindowSimplified = {
-  __EMBEDDABLE__?: {
-    nativeTypes?: {
-      granularity?: {
-        options?: string[];
-      };
-    };
-  };
-};
-
 export default (props: Props) => {
   const { title } = props;
   const [granularity, setGranularity] = useState(props.defaultValue);
@@ -41,8 +32,7 @@ export default (props: Props) => {
 
   useEffect(() => {
     // Get granularities from the window object if available
-    const windowGranularities = (window as WindowSimplified).__EMBEDDABLE__?.nativeTypes
-      ?.granularity?.options;
+    const windowGranularities = getCustomGranularities();
     setCustomGranularities(windowGranularities || []);
   }, []);
 

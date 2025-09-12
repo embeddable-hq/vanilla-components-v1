@@ -9,6 +9,7 @@ import {
   subQuarters,
   subYears,
 } from 'date-fns';
+import { getCustomGranularities } from '../../../../util/getCustomGranularities';
 
 function toSeconds(unit: string, n: number): number {
   const unitsInSeconds: { [key: string]: number } = {
@@ -161,7 +162,7 @@ export function getValidGranularities(period?: TimeRange): GranularityResponse {
   if (data.length >= 2) recommendedG = data[data.length - 2]; //set the recommended granularity option as the penultimate valid option.
 
   // Get custom granularities from window object if available
-  const windowGranularities = (window as any).__EMBEDDABLE__?.nativeTypes?.granularity?.options;
+  const windowGranularities = getCustomGranularities();
   if (windowGranularities) {
     windowGranularities.forEach((g: string) => {
       if (!data.find((d) => d.value === g)) data.push({ value: g as Granularity });
