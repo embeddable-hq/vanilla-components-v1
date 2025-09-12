@@ -160,6 +160,14 @@ export function getValidGranularities(period?: TimeRange): GranularityResponse {
   let recommendedG: { value: Granularity } = { value: 'day' };
   if (data.length >= 2) recommendedG = data[data.length - 2]; //set the recommended granularity option as the penultimate valid option.
 
+  // Get custom granularities from window object if available
+  const windowGranularities = (window as any).__EMBEDDABLE__?.nativeTypes?.granularity?.options;
+  if (windowGranularities) {
+    windowGranularities.forEach((g: string) => {
+      if (!data.find((d) => d.value === g)) data.push({ value: g as Granularity });
+    });
+  }
+
   return {
     isLoading: false,
     data,

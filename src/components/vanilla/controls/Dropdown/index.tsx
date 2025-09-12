@@ -132,7 +132,6 @@ export default (props: Props) => {
   const list = useMemo(
     () =>
       props.options?.data?.reduce((memo, o, i: number) => {
-        console.log(o);
         memo.push(
           <div
             key={i}
@@ -144,10 +143,12 @@ export default (props: Props) => {
             onKeyDown={(e) =>
               handleKeyDownCallback(e, () => set(o[props.property?.name || ''] || ''), true)
             }
-            className={`flex items-center min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal ${
+            className={`block min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal  ${
               value === o[props.property?.name || ''].replaceAll('_', ' ') ? 'bg-black/5' : ''
-            } whitespace-nowrap overflow-hidden text-ellipsis`}
+            } truncate`}
             tabIndex={0}
+            aria-label={o[props.property?.name || ''].replaceAll('_', ' ')}
+            title={o[props.property?.name || ''].replaceAll('_', ' ')}
           >
             {o[props.property?.name || ''].replaceAll('_', ' ')}
             {o.note && (
@@ -248,7 +249,7 @@ export default (props: Props) => {
               overflow-x-hidden
               overflow-y-auto
               top-11
-              w-full
+              w-[140px]
               z-50
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
               border-[color:--embeddable-controls-borders-colors-normal]
