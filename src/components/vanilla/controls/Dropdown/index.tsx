@@ -144,7 +144,7 @@ export default (props: Props) => {
               handleKeyDownCallback(e, () => set(o[props.property?.name || ''] || ''), true)
             }
             className={`block min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal  ${
-              value === o[props.property?.name || ''].replaceAll('_', ' ') ? 'bg-black/5' : ''
+              value === o[props.property?.name || ''] ? 'bg-black/5' : ''
             } truncate`}
             tabIndex={0}
             aria-label={o[props.property?.name || ''].replaceAll('_', ' ')}
