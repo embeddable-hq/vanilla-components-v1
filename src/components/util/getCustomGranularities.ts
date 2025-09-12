@@ -32,7 +32,10 @@ const getFromWindow = <T>(property: string, fallback: T = {} as T): T => {
 };
 
 export const getCustomGranularities = (): string[] => {
-  if (!window) return [];
-  const nativeTypes = getFromWindow<NativeTypes>('nativeTypes', {});
-  return nativeTypes?.granularity?.options || [];
+  if (typeof window !== 'undefined') {
+    const nativeTypes = getFromWindow<NativeTypes>('nativeTypes', {});
+    return nativeTypes?.granularity?.options || [];
+  } else {
+    return [];
+  }
 };
