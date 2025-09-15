@@ -57,6 +57,7 @@ export const meta = {
       name: 'limit',
       type: 'number',
       label: 'Limit results',
+      defaultValue: 100,
       category: 'Chart data',
     },
     {
