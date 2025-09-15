@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.5
+
+### Patch Changes
+
+- 8739c3c: Update SDK versions, add compatibility for custom granularities"
+
 ## 1.1.4
 
 ### Patch Changes
