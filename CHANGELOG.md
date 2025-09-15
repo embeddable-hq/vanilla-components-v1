@@ -10,7 +10,8 @@
 
 ### Patch Changes
 
-- 8739c3c: Update SDK versions, add compatibility for custom granularities
+# Removed - duplicate due to failing build with incorrect node version. The version above is correct
+# - 8739c3c: Update SDK versions, add compatibility for custom granularities
 
 ## 1.1.4
 
