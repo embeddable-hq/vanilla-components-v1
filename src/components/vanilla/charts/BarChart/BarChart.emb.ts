@@ -57,6 +57,7 @@ export const meta = {
       name: 'limit',
       type: 'number',
       label: 'Limit results',
+      defaultValue: 100,
       category: 'Chart data',
     },
     {
@@ -201,7 +202,7 @@ export default defineComponent(Component, meta, {
         from: inputs.ds,
         select: [...dimensions, ...measures],
         orderBy: orderProp,
-        limit: inputs.limit || 50,
+        limit: inputs.limit || 100,
       }),
     };
   },
