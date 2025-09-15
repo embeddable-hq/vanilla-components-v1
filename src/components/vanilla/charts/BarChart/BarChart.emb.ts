@@ -202,7 +202,7 @@ export default defineComponent(Component, meta, {
         from: inputs.ds,
         select: [...dimensions, ...measures],
         orderBy: orderProp,
-        limit: inputs.limit || 50,
+        limit: inputs.limit || 100,
       }),
     };
   },
