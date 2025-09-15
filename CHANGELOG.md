@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.6
+
+### Patch Changes
+
+- 64a4b26: Install platform specific bindings for SWC to fix CI/CD pipeline
+
 ## 1.1.5
 
 ### Patch Changes
