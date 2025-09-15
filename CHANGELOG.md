@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 95d5b6e: Update SDKs, add custom granularity compatibility
+- 288be5a: Update SDKs, add custom granularity compatibility
 
 ## 1.1.4
 
