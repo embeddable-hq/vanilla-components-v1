@@ -131,7 +131,7 @@ export const defaultTheme: Theme = {
       },
     },
     stackedArea: {
-      cubicInterpolationMode: 'default',
+      cubicInterpolationMode: 'monotone',
       font: {
         size: 12,
       },
