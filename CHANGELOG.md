@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.7
+
+### Patch Changes
+
+- dfc168c: Explicit bar chart default limit, fixed stacked area chart
+
 ## 1.1.6
 
 ### Patch Changes
