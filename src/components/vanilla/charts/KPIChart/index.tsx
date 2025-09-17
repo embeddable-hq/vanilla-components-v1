@@ -19,6 +19,7 @@ type Props = {
   dimension?: Dimension;
   dps?: number;
   fontSize?: number;
+  showNullValuesAsZero?: boolean;
   showPrevPeriodLabel?: boolean;
 };
 
@@ -33,10 +34,12 @@ export default (props: Props) => {
     dps,
     prefix,
     suffix,
+    showNullValuesAsZero = true,
     showPrevPeriodLabel,
   } = props;
 
   const theme: Theme = useTheme() as Theme;
+  const zeroValue = showNullValuesAsZero ? 0 : '--';
 
   const { n, percentage } = useMemo(() => {
     if (dimension || !metric?.name || !results?.data?.length) {
@@ -102,11 +105,15 @@ export default (props: Props) => {
                   color: fontColor,
                 }}
               >
-                {`${metric.title}: ${formatValue(`${results?.data?.[0]?.[metric.name]}`, {
-                  type: 'number',
-                  dps: dps,
-                  meta: metric?.meta,
-                })}
+                {`${metric.title}: ${
+                  results?.data?.[0]?.[metric.name] === null && !showNullValuesAsZero
+                    ? '--'
+                    : formatValue(`${results?.data?.[0]?.[metric.name]}`, {
+                        type: 'number',
+                        dps: dps,
+                        meta: metric?.meta,
+                      })
+                }
                 `}
               </p>
             )}
@@ -117,7 +124,7 @@ export default (props: Props) => {
               className={`text-[color:--embeddable-font-colorNormal]`}
               style={{ fontSize: `${fontSize}px` }}
             >
-              <p>{`${prefix || ''}${n || 0}${suffix || ''}`}</p>
+              <p>{`${prefix || ''}${n || '--'}${suffix || ''}`}</p>
             </div>
             {prevTimeFilter?.to && (
               <div
@@ -140,7 +147,14 @@ export default (props: Props) => {
                 <span>
                   {percentage === Infinity
                     ? '∞'
-                    : `${formatValue(`${Math.abs(percentage || 0)}`, { type: 'number', dps: dps })}%`}
+                    : `${formatValue(
+                        `${
+                          percentage === null && !showNullValuesAsZero
+                            ? '--'
+                            : Math.abs(percentage || 0)
+                        }`,
+                        { type: 'number', dps: dps },
+                      )}%`}
                 </span>
                 {showPrevPeriodLabel &&
                   prevTimeFilter?.relativeTimeString &&
