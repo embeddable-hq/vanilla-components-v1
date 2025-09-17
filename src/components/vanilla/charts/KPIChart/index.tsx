@@ -44,31 +44,23 @@ export default (props: Props) => {
     if (dimension || !metric?.name || !results?.data?.length) {
       return { percentage: null, n: null }; // Skip calculations
     }
-    const isNullVal = results?.data?.[0]?.[metric.name] === null;
 
     const n = parseFloat(results?.data?.[0]?.[metric.name] || 0);
     const prev = parseFloat(prevResults?.data?.[0]?.[metric.name] || 0);
 
+    if (isNaN(n) || isNaN(prev)) {
+      return { percentage: null, n: null };
+    }
+
     return {
       percentage: prev || prev === 0 ? Math.round((n / prev) * 100) - 100 : null,
-      n:
-        isNullVal && !showNullValuesAsZero
-          ? '--'
-          : formatValue(n.toString(), {
-              type: 'number',
-              meta: metric?.meta,
-              dps: dps,
-            }),
+      n: formatValue(n.toString(), {
+        type: 'number',
+        meta: metric?.meta,
+        dps: dps,
+      }),
     };
-  }, [
-    dimension,
-    metric?.name,
-    metric?.meta,
-    results?.data,
-    prevResults?.data,
-    showNullValuesAsZero,
-    dps,
-  ]);
+  }, [dimension, dps, metric?.meta, metric?.name, prevResults?.data, results?.data]);
 
   const fontSize = props.fontSize || theme.charts.kpi.font.size;
   const metaFontSize = Math.max(fontSize / 3, parseInt(theme.font.size.replace('px', ''), 10));
@@ -158,14 +150,14 @@ export default (props: Props) => {
                 <span>
                   {percentage === Infinity
                     ? '∞'
-                    : `${formatValue(
-                        `${
-                          percentage === null && !showNullValuesAsZero
-                            ? '--'
-                            : Math.abs(percentage || 0)
-                        }`,
-                        { type: 'number', dps: dps },
-                      )}%`}
+                    : `${
+                        percentage === null && !showNullValuesAsZero
+                          ? '--'
+                          : formatValue(`${Math.abs(percentage || 0)}`, {
+                              type: 'number',
+                              dps: dps,
+                            })
+                      }%`}
                 </span>
                 {showPrevPeriodLabel &&
                   prevTimeFilter?.relativeTimeString &&
