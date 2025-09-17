@@ -127,7 +127,7 @@ export default (props: Props) => {
               className={`text-[color:--embeddable-font-colorNormal]`}
               style={{ fontSize: `${fontSize}px` }}
             >
-              <p>{`${prefix || ''}${n || '--'}${suffix || ''}`}</p>
+              <p>{`${prefix || ''}${n === null && !showNullValuesAsZero ? '--' : n}${suffix || ''}`}</p>
             </div>
             {prevTimeFilter?.to && (
               <div
