@@ -1,5 +1,23 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.7
+
+### Patch Changes
+
+- dfc168c: Explicit bar chart default limit, fixed stacked area chart
+
+## 1.1.6
+
+### Patch Changes
+
+- 64a4b26: Install platform specific bindings for SWC to fix CI/CD pipeline
+
+## 1.1.5
+
+### Patch Changes
+
+- 288be5a: Update SDKs, add custom granularity compatibility
+
 ## 1.1.4
 
 ### Patch Changes

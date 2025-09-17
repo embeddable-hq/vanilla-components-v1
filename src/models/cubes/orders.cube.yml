@@ -13,6 +13,14 @@ cubes:
         sql: created_at
         type: time
         description: 'The time when the order was created'
+        # optional - define additional custom time intervals (granularities)
+        granularities:
+          - name: quarter_hour
+            interval: 15 minutes
+
+          - name: week_starting_on_sunday
+            interval: 1 week
+            offset: -1 day
 
     measures:
       - name: count

@@ -40,6 +40,14 @@ export const meta = {
       defaultValue: option.defaultValue,
       category: 'Granularity options',
     })),
+    {
+      name: 'displayCustomGranularities',
+      type: 'boolean',
+      label: `Display Custom Granularities`,
+      description: `If enabled, additional granularities defined by your data team will be included in the dropdown.`,
+      defaultValue: true,
+      category: 'Granularity options',
+    },
   ],
   events: [
     {

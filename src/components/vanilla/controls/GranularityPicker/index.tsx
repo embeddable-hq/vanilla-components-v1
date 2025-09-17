@@ -1,12 +1,14 @@
-import { useEmbeddableState } from '@embeddable.com/react';
+import React, { useEffect, useState } from 'react';
 import { Dimension, Granularity } from '@embeddable.com/core';
-import React, { useState } from 'react';
+
 import Container from '../../Container';
 import Dropdown from '../Dropdown';
+import { getCustomGranularities } from '../../../util/getCustomGranularities';
 
 export type Props = {
   day?: boolean;
   defaultValue: Granularity;
+  displayCustomGranularities?: boolean;
   hour?: boolean;
   minute?: boolean;
   month?: boolean;
@@ -26,6 +28,13 @@ type GranularityResponse = {
 export default (props: Props) => {
   const { title } = props;
   const [granularity, setGranularity] = useState(props.defaultValue);
+  const [customGranularities, setCustomGranularities] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Get granularities from the window object if available
+    const windowGranularities = getCustomGranularities();
+    setCustomGranularities(windowGranularities || []);
+  }, []);
 
   const options: Granularity[] = [
     'second',
@@ -64,11 +73,22 @@ export default (props: Props) => {
 
   const granularityOptions = (): GranularityResponse => {
     const data: { value: Granularity }[] = [];
-    //display options selected by user
+    // display options selected by user
     options.filter((option) => props[option])?.forEach((option) => data.push({ value: option }));
+
+    // Handle custom granularities from window object
+    let customOptions: { value: Granularity }[] = [];
+    if (props.displayCustomGranularities) {
+      customOptions = customGranularities.map((title: string) => ({
+        value: title as Granularity,
+      }));
+    }
+
+    const finalData = [...data, ...customOptions];
+
     return {
       isLoading: false,
-      data: data,
+      data: finalData,
     };
   };
 
