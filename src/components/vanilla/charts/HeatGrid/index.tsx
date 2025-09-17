@@ -215,7 +215,7 @@ const HeatGrid: React.FC<Props> = (props) => {
               Sun
             </div>
           </div>
-          <div className="flex flow-grow overflow-auto">
+          <div className="flex flex-grow overflow-auto">
             {dataToDisplay.length > 0 &&
               dataToDisplay.map((week, weekIndex) => (
                 <div key={weekIndex} className="flex flex-col">
