@@ -39,25 +39,36 @@ export default (props: Props) => {
   } = props;
 
   const theme: Theme = useTheme() as Theme;
-  const zeroValue = showNullValuesAsZero ? 0 : '--';
 
   const { n, percentage } = useMemo(() => {
     if (dimension || !metric?.name || !results?.data?.length) {
       return { percentage: null, n: null }; // Skip calculations
     }
+    const isNullVal = results?.data?.[0]?.[metric.name] === null;
 
     const n = parseFloat(results?.data?.[0]?.[metric.name] || 0);
     const prev = parseFloat(prevResults?.data?.[0]?.[metric.name] || 0);
 
     return {
       percentage: prev || prev === 0 ? Math.round((n / prev) * 100) - 100 : null,
-      n: formatValue(n.toString(), {
-        type: 'number',
-        meta: metric?.meta,
-        dps: dps,
-      }),
+      n:
+        isNullVal && !showNullValuesAsZero
+          ? '--'
+          : formatValue(n.toString(), {
+              type: 'number',
+              meta: metric?.meta,
+              dps: dps,
+            }),
     };
-  }, [results, prevResults, metric, dps, dimension]);
+  }, [
+    dimension,
+    metric?.name,
+    metric?.meta,
+    results?.data,
+    prevResults?.data,
+    showNullValuesAsZero,
+    dps,
+  ]);
 
   const fontSize = props.fontSize || theme.charts.kpi.font.size;
   const metaFontSize = Math.max(fontSize / 3, parseInt(theme.font.size.replace('px', ''), 10));
