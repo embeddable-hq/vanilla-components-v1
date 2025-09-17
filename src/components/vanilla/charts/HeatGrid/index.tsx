@@ -239,7 +239,7 @@ const HeatGrid: React.FC<Props> = (props) => {
         </div>
         <div className="flex justify-between items-center w-full">
           {displayLegend && (
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center pr-2">
               <div style={{ ...CELL_STYLE, width: '24px' }}>Less</div>
               {generateBox(baseColor ? baseColor : theme.brand.primary, BASE_OPACITY, CELL_STYLE)}
               {generateBox(baseColor ? baseColor : theme.brand.primary, 0.4, CELL_STYLE)}
