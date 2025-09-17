@@ -190,7 +190,7 @@ const HeatGrid: React.FC<Props> = (props) => {
     <Container {...props} className="overflow-y-hidden">
       <div className="flex flex-col items-left">
         <div
-          className={`flex flex-wrap ${displayLegend || displayStats ? 'border-b-2 mb-2 pb-2' : null} border-gray-200 `}
+          className={`flex flex-nowrap ${displayLegend || displayStats ? 'border-b-2 mb-2 pb-2' : null} border-gray-200 `}
         >
           <div className="flex flex-col items-center">
             <div className="text-xs" style={{ ...CELL_STYLE, width: '24px', textAlign: 'right' }}>
@@ -215,25 +215,27 @@ const HeatGrid: React.FC<Props> = (props) => {
               Sun
             </div>
           </div>
-          {dataToDisplay.length > 0 &&
-            dataToDisplay.map((week, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col">
-                {week.map((day: { value: number; date: string }, dayIndex: number) => (
-                  <div
-                    key={`${weekIndex}-${dayIndex}`}
-                    style={{
-                      ...CELL_STYLE,
-                      backgroundColor: getColor(day.value),
-                      border:
-                        day.value < 0
-                          ? `1px solid ${hexToRgb(baseColor ? baseColor : theme.brand.primary, BASE_OPACITY)}`
-                          : 'none',
-                    }}
-                    title={`${day.date}: ${day.value}`}
-                  />
-                ))}
-              </div>
-            ))}
+          <div className="flex flow-grow overflow-auto">
+            {dataToDisplay.length > 0 &&
+              dataToDisplay.map((week, weekIndex) => (
+                <div key={weekIndex} className="flex flex-col">
+                  {week.map((day: { value: number; date: string }, dayIndex: number) => (
+                    <div
+                      key={`${weekIndex}-${dayIndex}`}
+                      style={{
+                        ...CELL_STYLE,
+                        backgroundColor: getColor(day.value),
+                        border:
+                          day.value < 0
+                            ? `1px solid ${hexToRgb(baseColor ? baseColor : theme.brand.primary, BASE_OPACITY)}`
+                            : 'none',
+                      }}
+                      title={`${day.date}: ${day.value}`}
+                    />
+                  ))}
+                </div>
+              ))}
+          </div>
         </div>
         <div className="flex justify-between items-center w-full">
           {displayLegend && (
