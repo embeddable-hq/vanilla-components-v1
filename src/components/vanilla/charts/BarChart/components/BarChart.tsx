@@ -90,18 +90,12 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
     dateFormat = dateFormats[granularity];
   }
 
-  // If skipChartGaps is true, filter out any values missing metric data
+  // If spanChartGaps is false, filter out any values missing metric data
   let dataToUse = results?.data || [];
   if (!props.spanChartGaps) {
-    dataToUse = dataToUse.filter((d) => {
-      let hasMetric = false;
-      metrics.forEach((m) => {
-        if (d[m.name] !== null && d[m.name] !== undefined) {
-          hasMetric = true;
-        }
-      });
-      return hasMetric;
-    });
+    dataToUse = dataToUse.filter((d) =>
+      metrics.some((m) => d[m.name] !== null && d[m.name] !== undefined),
+    );
   }
 
   const labels = [
