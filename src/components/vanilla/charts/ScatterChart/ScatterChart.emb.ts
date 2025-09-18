@@ -80,6 +80,14 @@ export const meta = {
       defaultValue: false,
     },
     {
+      name: 'spanChartGaps',
+      type: 'boolean',
+      label: 'Span chart gaps',
+      description: 'Connect points with a line when data is missing',
+      category: 'Chart settings',
+      defaultValue: true,
+    },
+    {
       name: 'reverseXAxis',
       type: 'boolean',
       label: 'Reverse X Axis',

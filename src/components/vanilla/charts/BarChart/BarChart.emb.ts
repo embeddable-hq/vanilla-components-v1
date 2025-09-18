@@ -113,6 +113,14 @@ export const meta = {
       defaultValue: false,
     },
     {
+      name: 'spanChartGaps',
+      type: 'boolean',
+      label: 'Span chart gaps',
+      description: 'Show 0 value bars when data is missing',
+      category: 'Chart settings',
+      defaultValue: true,
+    },
+    {
       name: 'displayHorizontally',
       type: 'boolean',
       label: 'Display Horizontally',
