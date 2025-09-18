@@ -40,53 +40,74 @@ export default (props: Props) => {
 
   const theme: Theme = useTheme() as Theme;
 
-  const { n, percentage, percentageFormatted } = useMemo(() => {
-    if (dimension || !metric?.name || !results?.data?.length) {
-      return { percentage: null, n: null }; // Skip calculations
-    }
+  const { nFormatted, pFormatted, p } = useMemo<{
+    nFormatted: string;
+    pFormatted: string;
+    p: number;
+  }>(() => {
+    /*
+      n: value from metric
+      p: percentage change - previous value from metric to current value from metric
+      nFormatted: formatted n as string
+      pFormatted: formatted p as string
+    */
+    let nFormatted: string = showNullValuesAsZero ? '0' : '--';
+    let pFormatted: string = showNullValuesAsZero ? '0' : '--';
+    let p = 0;
+    let n = 0;
 
-    // This value could be null in the data response
+    // Helper func
+    const skipCalc = () => ({ nFormatted, pFormatted, p });
+
+    // If we're missing any of these, skip calculations
+    if (dimension || !metric?.name || !results?.data?.length) return skipCalc();
+
+    // Will always be a number, null, or undefined
     const numberToParse = results?.data?.[0]?.[metric.name];
-    if (numberToParse === null || numberToParse === undefined) {
-      return { percentage: null, n: null }; // No valid number to parse
-    }
-    const n = parseFloat(results?.data?.[0]?.[metric.name] || 0);
 
-    // This value could be null or not exist in the previous data response
+    // Handle nFormatted first
+    if (numberToParse === null || numberToParse === undefined) return skipCalc();
+    n = parseFloat(numberToParse);
+    if (isNaN(n)) return skipCalc();
+    nFormatted = formatValue(n.toString(), {
+      type: 'number',
+      meta: metric?.meta,
+      dps: dps,
+    }) as string; // always a string due to using toString()
+
+    // Handle pFormatted second
     const prevToParse = prevResults?.data?.[0]?.[metric.name];
-    if (prevToParse === null || prevToParse === undefined) {
-      return { percentage: null, n }; // No valid previous number to parse
+    if (prevToParse === null || prevToParse === undefined) return skipCalc();
+    const prev = parseFloat(prevToParse);
+
+    // Use infinity symbol for divide by zero
+    if (isNaN(prev) || prev === 0) {
+      pFormatted = '∞';
+      return skipCalc();
     }
-    const prev = parseFloat(prevResults?.data?.[0]?.[metric.name] || 0);
 
-    // Handle edge cases where n or prev are NaN
-    if (isNaN(n) || isNaN(prev)) {
-      return { percentage: null, n: null };
-    }
+    // Calculate percentage change
+    p = Math.round((n / prev) * 100) - 100;
+    pFormatted = formatValue(p.toString(), {
+      type: 'number',
+      meta: metric?.meta,
+      dps: dps,
+    }) as string; // always a string due to using toString()
 
-    const calcPercent = Math.round((n / prev) * 100) - 100;
-
-    // If both n and prev exist, calculate the percentage change and format n
     return {
-      percentage: calcPercent === null && showNullValuesAsZero ? 0 : calcPercent,
-      percentageFormatted:
-        calcPercent === null && showNullValuesAsZero
-          ? 0
-          : formatValue(calcPercent.toString(), {
-              type: 'number',
-              meta: metric?.meta,
-              dps: dps,
-            }),
-      n:
-        n === null && showNullValuesAsZero
-          ? 0
-          : formatValue(n.toString(), {
-              type: 'number',
-              meta: metric?.meta,
-              dps: dps,
-            }),
+      nFormatted,
+      pFormatted,
+      p,
     };
-  }, [dimension, dps, metric?.meta, metric?.name, prevResults?.data, results?.data]);
+  }, [
+    dimension,
+    dps,
+    metric?.meta,
+    metric?.name,
+    prevResults?.data,
+    results?.data,
+    showNullValuesAsZero,
+  ]);
 
   const fontSize = props.fontSize || theme.charts.kpi.font.size;
   const metaFontSize = Math.max(fontSize / 3, parseInt(theme.font.size.replace('px', ''), 10));
@@ -134,8 +155,7 @@ export default (props: Props) => {
                   color: fontColor,
                 }}
               >
-                {`${metric.title}: ${n === null && !showNullValuesAsZero ? '--' : n}
-                `}
+                {`${prefix ? prefix : ''}${nFormatted}${suffix ? suffix : ''}`}
               </p>
             )}
           </>
@@ -145,7 +165,7 @@ export default (props: Props) => {
               className={`text-[color:--embeddable-font-colorNormal]`}
               style={{ fontSize: `${fontSize}px` }}
             >
-              <p>{`${prefix || ''}${n === null && !showNullValuesAsZero ? '--' : n}${suffix || ''}`}</p>
+              <p>{`${prefix ? prefix : ''}${nFormatted}${suffix ? suffix : ''}`}</p>
             </div>
             {prevTimeFilter?.to && (
               <div
@@ -158,20 +178,14 @@ export default (props: Props) => {
                   text-${theme.charts.kpi?.alignment || 'center'}
                 `}
                 style={{
-                  color: percentage && percentage < 0 ? negativeColor : fontColor,
+                  color: p && p < 0 ? negativeColor : fontColor,
                   fontSize: `${metaFontSize}px`,
                 }}
               >
                 <Chevron
-                  className={`${percentage && percentage < 0 ? 'rotate-180' : ''} h-[20px] w-[9px] min-w-[9px] mr-1.5`}
+                  className={`${p && p < 0 ? 'rotate-180' : ''} h-[20px] w-[9px] min-w-[9px] mr-1.5`}
                 />
-                <span>
-                  {percentage === Infinity
-                    ? '∞'
-                    : `${
-                        percentage === null && !showNullValuesAsZero ? '--' : percentageFormatted
-                      }%`}
-                </span>
+                <span>{`${prefix ? prefix : ''}${pFormatted}%${suffix ? suffix : ''}`}</span>
                 {showPrevPeriodLabel &&
                   prevTimeFilter?.relativeTimeString &&
                   prevTimeFilter.relativeTimeString.length > 0 && (
