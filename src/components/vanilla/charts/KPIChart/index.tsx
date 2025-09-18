@@ -45,13 +45,26 @@ export default (props: Props) => {
       return { percentage: null, n: null }; // Skip calculations
     }
 
+    // This value could be null in the data response
+    const numberToParse = results?.data?.[0]?.[metric.name];
+    if (numberToParse === null || numberToParse === undefined) {
+      return { percentage: null, n: null }; // No valid number to parse
+    }
     const n = parseFloat(results?.data?.[0]?.[metric.name] || 0);
+
+    // This value could be null or not exist in the previous data response
+    const prevToParse = prevResults?.data?.[0]?.[metric.name];
+    if (prevToParse === null || prevToParse === undefined) {
+      return { percentage: null, n }; // No valid previous number to parse
+    }
     const prev = parseFloat(prevResults?.data?.[0]?.[metric.name] || 0);
 
+    // Handle edge cases where n or prev are NaN
     if (isNaN(n) || isNaN(prev)) {
       return { percentage: null, n: null };
     }
 
+    // If both n and prev exist, calculate the percentage change and format n
     return {
       percentage: prev || prev === 0 ? Math.round((n / prev) * 100) - 100 : null,
       n: formatValue(n.toString(), {
