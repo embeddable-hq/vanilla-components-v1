@@ -40,7 +40,7 @@ export default (props: Props) => {
 
   const theme: Theme = useTheme() as Theme;
 
-  const { n, percentage } = useMemo(() => {
+  const { n, percentage, percentageFormatted } = useMemo(() => {
     if (dimension || !metric?.name || !results?.data?.length) {
       return { percentage: null, n: null }; // Skip calculations
     }
@@ -64,14 +64,27 @@ export default (props: Props) => {
       return { percentage: null, n: null };
     }
 
+    const calcPercent = Math.round((n / prev) * 100) - 100;
+
     // If both n and prev exist, calculate the percentage change and format n
     return {
-      percentage: prev || prev === 0 ? Math.round((n / prev) * 100) - 100 : null,
-      n: formatValue(n.toString(), {
-        type: 'number',
-        meta: metric?.meta,
-        dps: dps,
-      }),
+      percentage: calcPercent === null && showNullValuesAsZero ? 0 : calcPercent,
+      percentageFormatted:
+        calcPercent === null && showNullValuesAsZero
+          ? 0
+          : formatValue(calcPercent.toString(), {
+              type: 'number',
+              meta: metric?.meta,
+              dps: dps,
+            }),
+      n:
+        n === null && showNullValuesAsZero
+          ? 0
+          : formatValue(n.toString(), {
+              type: 'number',
+              meta: metric?.meta,
+              dps: dps,
+            }),
     };
   }, [dimension, dps, metric?.meta, metric?.name, prevResults?.data, results?.data]);
 
@@ -121,15 +134,7 @@ export default (props: Props) => {
                   color: fontColor,
                 }}
               >
-                {`${metric.title}: ${
-                  results?.data?.[0]?.[metric.name] === null && !showNullValuesAsZero
-                    ? '--'
-                    : formatValue(`${results?.data?.[0]?.[metric.name]}`, {
-                        type: 'number',
-                        dps: dps,
-                        meta: metric?.meta,
-                      })
-                }
+                {`${metric.title}: ${n === null && !showNullValuesAsZero ? '--' : n}
                 `}
               </p>
             )}
@@ -164,12 +169,7 @@ export default (props: Props) => {
                   {percentage === Infinity
                     ? '∞'
                     : `${
-                        percentage === null && !showNullValuesAsZero
-                          ? '--'
-                          : formatValue(`${Math.abs(percentage || 0)}`, {
-                              type: 'number',
-                              dps: dps,
-                            })
+                        percentage === null && !showNullValuesAsZero ? '--' : percentageFormatted
                       }%`}
                 </span>
                 {showPrevPeriodLabel &&
