@@ -205,7 +205,24 @@ export default (props: Props) => {
         />
 
         {!!value && (
-          <span className="selectorText">
+          <span
+            className={`
+              absolute
+              border
+              flex
+              flex-col
+              max-h-[400px]
+              overflow-x-hidden
+              overflow-y-auto
+              top-11
+              w-[140px]
+              bg-[color:--embeddable-controls-backgrounds-colors-soft]
+              border-[color:--embeddable-controls-borders-colors-normal]
+              rounded-[--embeddable-controls-borders-radius]
+              text-[color:--embeddable-controls-font-colors-normal]
+              z-[--embeddable-controls-dropdown-focused-zIndex]
+            `}
+          >
             Selected {value.length} {value.length === 1 ? 'option' : 'options'}
           </span>
         )}
