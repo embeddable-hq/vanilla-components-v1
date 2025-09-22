@@ -221,6 +221,7 @@ export default (props: Props) => {
               rounded-[--embeddable-controls-borders-radius]
               text-[color:--embeddable-controls-font-colors-normal]
               z-[--embeddable-controls-dropdown-focused-zIndex]
+              ${focus ? 'hidden' : ''}
             `}
           >
             Selected {value.length} {value.length === 1 ? 'option' : 'options'}
