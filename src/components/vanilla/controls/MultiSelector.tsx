@@ -199,8 +199,8 @@ export default (props: Props) => {
             px-3
             text-sm
             w-full
-            ${focus || !value ? '' : 'opacity-0'}
             text-[color:--embeddable-controls-font-colors-normal]
+            ${focus || !value ? '' : 'opacity-0'}
           `}
         />
 
@@ -208,19 +208,19 @@ export default (props: Props) => {
           <span
             className={`
               absolute
-              border
-              flex
-              flex-col
-              max-h-[400px]
-              overflow-x-hidden
-              overflow-y-auto
-              top-11
-              w-[140px]
-              bg-[color:--embeddable-controls-backgrounds-colors-soft]
-              border-[color:--embeddable-controls-borders-colors-normal]
-              rounded-[--embeddable-controls-borders-radius]
+              block
+              h-8
+              leading-8
+              left-3
+              overflow-hidden
+              pointer-events-none
+              rounded-xl
+              text-sm
+              top-1
+              truncate
+              w-[calc(100%-2.5rem)]
+              whitespace-nowrap
               text-[color:--embeddable-controls-font-colors-normal]
-              z-[--embeddable-controls-dropdown-focused-zIndex]
               ${focus ? 'hidden' : ''}
             `}
           >
