@@ -116,6 +116,17 @@ export const defaultTheme: Theme = {
       },
       weight: 5,
     },
+    table: {
+      cell: {
+        zIndex: 10,
+      },
+      header: {
+        zIndex: 10,
+      },
+      pivot: {
+        zIndex: 20,
+      },
+    },
     scatter: {
       font: {
         size: 12,
@@ -237,6 +248,21 @@ export const defaultTheme: Theme = {
         buttonStart: '4px 0px 0px 4px',
         weekNumber: '4px',
       },
+      zIndex: 50,
+    },
+    dropdown: {
+      chevron: {
+        zIndex: 1,
+      },
+      clear: {
+        zIndex: 10,
+      },
+      focused: {
+        zIndex: 50,
+      },
+      spinner: {
+        zIndex: 1,
+      },
     },
     font: {
       colors: {
@@ -252,6 +278,17 @@ export const defaultTheme: Theme = {
         selected: '#F3F4F6',
       },
     },
+    multiSelector: {
+      borderColor: '#DADCE1',
+      chevron: {
+        zIndex: 1,
+      },
+      clear: {
+        zIndex: 10,
+      },
+      maxHeight: '400px',
+      zIndex: 10,
+    },
     skeletonBox: {
       animation: `shimmer 2s infinite`,
       backgroundImage: `linear-gradient(
@@ -261,6 +298,7 @@ export const defaultTheme: Theme = {
         rgba(255, 255, 255, 0.5) 60%,
         rgba(255, 255, 255, 0)
       );`,
+      zIndex: 10,
     },
     tooltips: {
       radius: '4px',
@@ -299,6 +337,7 @@ export const defaultTheme: Theme = {
       width: '24px',
       height: '24px',
     },
+    zIndex: 5,
   },
   font: {
     color: '#888888',
@@ -322,8 +361,14 @@ export const defaultTheme: Theme = {
     },
     urls: [],
   },
+  hostOnTop: {
+    zIndex: 1,
+  },
   png: {
     backgroundColor: '#FFFFFF',
+  },
+  spinner: {
+    zIndex: 1,
   },
   svg: {
     fillBkg: '#FFFFFF',

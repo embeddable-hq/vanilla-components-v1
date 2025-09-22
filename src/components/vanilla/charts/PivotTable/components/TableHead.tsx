@@ -60,7 +60,7 @@ export default function TableHead({
         className={cn('p-2 border-y first:border-l', {
           'border-b-0': column.children?.length,
           'border-r': shouldRenderRightBorder,
-          'lg:sticky lg:left-0 lg:z-10 bg-[color:--embeddable-controls-backgrounds-colors-soft]':
+          'lg:sticky lg:left-0 lg:z-[--embeddable-charts-table-header-zIndex] bg-[color:--embeddable-controls-backgrounds-colors-soft]':
             isSticky,
           'cursor-pointer': isSortable,
         })}

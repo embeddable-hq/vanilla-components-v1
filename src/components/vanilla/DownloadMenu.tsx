@@ -166,7 +166,18 @@ const DownloadMenu: React.FC<Props> = (props) => {
   // If there's a downloadAllFunction, we need to show the menu
   if (enableDownloadAsCSV && !enableDownloadAsPNG && !downloadAllFunction) {
     return (
-      <div className="absolute top-0 right-0 z-5 flex items-center justify-end space-x-2">
+      <div
+        className={`
+        absolute
+        flex
+        items-center
+        justify-end
+        right-0
+        space-x-2
+        top-0
+        z-[--embeddable-downloadMenu-zIndex]
+      `}
+      >
         <div
           onClick={handleCSVClick}
           className="cursor-pointer"
@@ -184,7 +195,18 @@ const DownloadMenu: React.FC<Props> = (props) => {
   // If only PNG is enabled, skip the menu and show just the PNG download Icon
   if (!enableDownloadAsCSV && enableDownloadAsPNG) {
     return (
-      <div className="absolute top-0 right-0 z-5 flex items-center justify-end space-x-2">
+      <div
+        className={`
+        absolute
+        flex
+        items-center
+        justify-end
+        right-0
+        space-x-2
+        top-0
+        z-[--embeddable-downloadMenu-zIndex]
+      `}
+      >
         <div
           onClick={handlePNGClick}
           className="cursor-pointer"
@@ -202,7 +224,18 @@ const DownloadMenu: React.FC<Props> = (props) => {
   // Main Component
   return (
     <>
-      <div className="absolute top-0 right-0 z-5 flex items-center justify-end space-x-2 ">
+      <div
+        className={`
+        absolute
+        flex
+        items-center
+        justify-end
+        right-0
+        space-x-2
+        top-0
+        z-[--embeddable-downloadMenu-zIndex]
+      `}
+      >
         <div
           onClick={handleSetShow}
           className="cursor-pointer relative w-3 flex justify-center"

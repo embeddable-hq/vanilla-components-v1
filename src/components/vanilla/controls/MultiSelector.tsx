@@ -205,25 +205,7 @@ export default (props: Props) => {
         />
 
         {!!value && (
-          <span
-            className={`
-              absolute
-              block
-              h-8
-              leading-8
-              left-3
-              overflow-hidden
-              pointer-events-none
-              rounded-xl
-              text-sm
-              top-1
-              truncate
-              w-[calc(100%-2rem)]
-              whitespace-nowrap
-              text-[color:--embeddable-controls-font-colors-normal]
-              ${focus ? 'hidden' : ''}
-            `}
-          >
+          <span className="selectorText">
             Selected {value.length} {value.length === 1 ? 'option' : 'options'}
           </span>
         )}
@@ -231,7 +213,21 @@ export default (props: Props) => {
         {focus && (
           <div
             style={{ minWidth: props.minDropdownWidth }}
-            className="flex flex-col bg-white rounded-xl absolute top-11 z-50 border border-[#DADCE1] w-full overflow-y-auto overflow-x-hidden max-h-[400px]"
+            className={`
+              absolute
+              bg-white
+              border
+              flex
+              flex-col
+              overflow-x-hidden
+              overflow-y-auto
+              rounded-xl
+              top-11
+              w-full
+              border-[--embeddable-controls-multiSelector-borderColor]
+              max-h-[--embeddable-controls-multiSelector-maxHeight]
+              z-[--embeddable-controls-multiSelector-zIndex]
+            `}
             onMouseDown={(e) => {
               e.preventDefault();
               // re-focus the input (allows repeated clicking in and out)
@@ -253,14 +249,31 @@ export default (props: Props) => {
           </div>
         )}
 
-        <ChevronDown className="absolute right-2.5 top-2.5 z-1 pointer-events-none" />
+        <ChevronDown
+          className={`
+          absolute
+          pointer-events-none
+          right-2.5
+          top-2.5
+          z-[--embeddable-controls-multiSelector-chevron-zIndex]
+        `}
+        />
 
         {!props.unclearable && !!value && (
           <div
             onClick={() => {
               set('');
             }}
-            className="absolute right-10 top-0 h-10 flex items-center z-10 cursor-pointer"
+            className={`
+              absolute
+              cursor-pointer
+              flex
+              h-10
+              items-center
+              right-10
+              top-0
+              z-[--embeddable-controls-multiSelector-clear-zIndex]
+            `}
           >
             <ClearIcon />
           </div>

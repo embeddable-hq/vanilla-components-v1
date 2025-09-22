@@ -14,9 +14,14 @@ export default function Spinner({ show, className, size }: Props) {
   return (
     <svg
       className={twMerge(
-        `absolute right-0 top-0 z-1 pointer-events-none spinner ${
-          show ? 'opacity-100' : 'opacity-0'
-        }`,
+        `
+          absolute
+          pointer-events-none
+          right-0
+          spinner
+          top-0
+          z-[--embeddable-spinner-zIndex]
+          ${show ? 'opacity-100' : 'opacity-0'}`,
         className,
       )}
       width={size || '24'}

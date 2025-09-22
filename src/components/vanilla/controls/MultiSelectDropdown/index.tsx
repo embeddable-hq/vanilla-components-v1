@@ -273,11 +273,12 @@ export default (props: Props) => {
               overflow-x-hidden
               overflow-y-auto
               top-11
-              w-full
-              z-50
+              w-[140px]
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
+              border-[color:--embeddable-controls-borders-colors-normal]
               rounded-[--embeddable-controls-borders-radius]
               text-[color:--embeddable-controls-font-colors-normal]
+              z-[--embeddable-controls-dropdown-focused-zIndex]
             `}
             onFocus={() => {
               setIsDropdownOrItemFocused(true);
@@ -295,9 +296,26 @@ export default (props: Props) => {
         )}
 
         {props.options.isLoading ? (
-          <Spinner show className="absolute right-2 top-2 z-1 pointer-events-none" />
+          <Spinner
+            show
+            className={`
+            absolute
+            pointer-events-none
+            right-2
+            top-2
+            z-[--embeddable-controls-dropdown-spinner-zIndex]
+          `}
+          />
         ) : (
-          <ChevronDown className="absolute right-2.5 top-2.5 z-1 pointer-events-none" />
+          <ChevronDown
+            className={`
+            absolute
+            pointer-events-none
+            right-2
+            top-2.5
+            z-[--embeddable-controls-dropdown-chevron-zIndex]
+          `}
+          />
         )}
 
         {!props.unclearable && !!value && (
@@ -305,7 +323,16 @@ export default (props: Props) => {
             onClick={() => {
               set('');
             }}
-            className="absolute right-10 top-0 h-10 flex items-center z-10 cursor-pointer"
+            className={`
+              absolute
+              cursor-pointer
+              flex
+              h-10
+              items-center
+              right-10
+              top-0
+              z-[--embeddable-controls-dropdown-clear-zIndex]
+            `}
           >
             <ClearIcon />
           </div>

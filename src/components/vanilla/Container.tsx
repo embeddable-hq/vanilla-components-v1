@@ -156,7 +156,7 @@ export default ({
                 skeleton-box
                 top-0
                 w-full
-                z-10
+                z-[--embeddable-controls-skeletonBox-zIndex]
                 bg-[color:--embeddable-controls-backgrounds-colors-heavy]
               `}
               />
