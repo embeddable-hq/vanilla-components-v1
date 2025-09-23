@@ -34,7 +34,6 @@ cubes:
       #   sql: CONCAT(first_name, ' ', last_name)
       #   type: string
 
-
     measures:
       - name: count
         type: count
@@ -51,7 +50,7 @@ cubes:
         sql: (RANDOM() * 5)
         type: number
         title: 'Decimal Value'
-      
+
       # Measure for testing whole numbers less than 5
       - name: small_numbers
         sql: FLOOR(RANDOM() * 5)

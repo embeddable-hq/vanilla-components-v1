@@ -132,6 +132,11 @@ export default (props: Props) => {
   const list = useMemo(
     () =>
       props.options?.data?.reduce((memo, o, i: number) => {
+        let valueToUse = o[props.property?.name || ''] || '';
+        if (typeof valueToUse === 'string') {
+          valueToUse = valueToUse.replaceAll('_', ' ');
+        }
+
         memo.push(
           <div
             key={i}
@@ -147,10 +152,10 @@ export default (props: Props) => {
               value === o[props.property?.name || ''] ? 'bg-black/5' : ''
             } truncate`}
             tabIndex={0}
-            aria-label={o[props.property?.name || ''].replaceAll('_', ' ')}
-            title={o[props.property?.name || ''].replaceAll('_', ' ')}
+            aria-label={valueToUse}
+            title={valueToUse}
           >
-            {o[props.property?.name || ''].replaceAll('_', ' ')}
+            {valueToUse}
             {o.note && (
               <span className="font-normal ml-auto pl-3 text-xs opacity-70">{o.note}</span>
             )}
@@ -233,7 +238,7 @@ export default (props: Props) => {
               text-[color:--embeddable-controls-font-colors-normal]
             `}
           >
-            {value.replaceAll('_', ' ')}
+            {typeof value === 'string' ? value.replaceAll('_', ' ') : value}
           </span>
         )}
 
