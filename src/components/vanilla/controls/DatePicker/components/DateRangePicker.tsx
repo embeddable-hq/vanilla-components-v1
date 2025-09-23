@@ -183,9 +183,18 @@ export default function DateRangePicker(props: Props) {
               setTriggerBlur(false);
               ref.current?.focus();
             }}
-            className={`${
-              focus ? 'block' : 'hidden'
-            } absolute top-8 right-0 sm:right-auto sm:left-0 z-50 pt-3 pointer-events-auto opacity-100`}
+            className={`
+              ${focus ? 'block' : 'hidden'}
+              absolute
+              opacity-100
+              pointer-events-auto
+              pt-3
+              right-0
+              sm:left-0
+              sm:right-auto
+              top-8
+              z-[--embeddable-controls-datepicker-zIndex]
+            `}
           >
             <DayPicker
               showOutsideDays

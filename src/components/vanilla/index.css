@@ -30,7 +30,7 @@
 
 /* Handle some z-indexing issues */
 :host(.on-top) {
-  z-index: 1;
+  z-index: var(--embeddable-hostOnTop-zIndex);
 }
 
 /* Every component has an inside-card class */

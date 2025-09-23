@@ -113,7 +113,7 @@ const PivotTable = <T,>({
         embeddable-table-header
         sticky
         top-0
-        z-20
+        z-[--embeddable-charts-table-pivot-zIndex]
         bg-[color:--embeddable-controls-backgrounds-colors-soft]
       `}
       >

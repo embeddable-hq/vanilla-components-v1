@@ -108,6 +108,17 @@ export type Theme = {
       labels: ChartLabels;
       weight: number;
     };
+    table: {
+      cell: {
+        zIndex: number;
+      };
+      header: {
+        zIndex: number;
+      };
+      pivot: {
+        zIndex: number;
+      };
+    };
     scatter: {
       colors?: string[];
       font: {
@@ -193,6 +204,21 @@ export type Theme = {
         buttonStart: string;
         weekNumber: string;
       };
+      zIndex: number;
+    };
+    dropdown: {
+      chevron: {
+        zIndex: number;
+      };
+      clear: {
+        zIndex: number;
+      };
+      focused: {
+        zIndex: number;
+      };
+      spinner: {
+        zIndex: number;
+      };
     };
     font: {
       colors: {
@@ -208,9 +234,21 @@ export type Theme = {
         selected: string;
       };
     };
+    multiSelector: {
+      borderColor: string;
+      chevron: {
+        zIndex: number;
+      };
+      clear: {
+        zIndex: number;
+      };
+      maxHeight: string;
+      zIndex: number;
+    };
     skeletonBox: {
       animation: string;
       backgroundImage: string;
+      zIndex: number;
     };
     tooltips: {
       radius: string;
@@ -248,6 +286,7 @@ export type Theme = {
       width?: number | string;
       height?: number | string;
     };
+    zIndex?: number;
   };
   font: {
     color: string;
@@ -268,8 +307,14 @@ export type Theme = {
     };
     urls: string[];
   };
+  hostOnTop: {
+    zIndex: number;
+  };
   png: {
     backgroundColor: string;
+  };
+  spinner: {
+    zIndex: number;
   };
   svg: {
     fillBkg: string;
