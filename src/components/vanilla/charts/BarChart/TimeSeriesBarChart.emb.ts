@@ -98,6 +98,14 @@ export const meta = {
       defaultValue: false,
     },
     {
+      name: 'spanChartGaps',
+      type: 'boolean',
+      label: 'Span chart gaps',
+      description: 'Show zero value bars when data is missing',
+      category: 'Chart settings',
+      defaultValue: true,
+    },
+    {
       name: 'displayHorizontally',
       type: 'boolean',
       label: 'Display Horizontally',
@@ -155,7 +163,6 @@ export const meta = {
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {
-
     return {
       ...inputs,
       isTSBarChart: true,
@@ -169,7 +176,7 @@ export default defineComponent(Component, meta, {
             granularity: inputs.granularity,
           },
           inputs.metrics,
-          inputs.lineMetrics
+          inputs.lineMetrics,
         ],
         orderBy: [
           {

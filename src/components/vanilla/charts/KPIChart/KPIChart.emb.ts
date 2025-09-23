@@ -76,6 +76,14 @@ export const meta = {
       category: 'Chart settings',
     },
     {
+      name: 'showNullValuesAsZero',
+      type: 'boolean',
+      label: 'Show null values as zero',
+      description: 'Null values will be displayed as 0 if true or -- if false',
+      defaultValue: true,
+      category: 'Chart settings',
+    },
+    {
       name: 'prefix',
       type: 'string',
       label: 'Prefix',
