@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.8
+
+### Patch Changes
+
+- 1833fd3: heat grid sizing issues, zIndex values to theme, replaceall error
+
 ## 1.1.7
 
 ### Patch Changes
