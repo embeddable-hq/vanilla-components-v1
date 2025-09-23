@@ -22,6 +22,12 @@ cubes:
             interval: 1 week
             offset: -1 day
 
+      - name: order_year
+        type: number
+        sql: EXTRACT(YEAR FROM {created_at})
+        title: 'Order Year'
+        description: 'The year when the order was created'
+
     measures:
       - name: count
         type: count
