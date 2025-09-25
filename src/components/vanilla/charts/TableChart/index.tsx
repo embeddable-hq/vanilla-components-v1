@@ -151,8 +151,8 @@ export default (props: Props) => {
                     let title = '';
                     let isJson = false;
                     if (typeof formattedValue === 'object') {
-                      // If it has a 'type' property of 'pre, it's a preformatted JSON object
                       if ((formattedValue as React.ReactElement).type === 'pre') {
+                        // If it has a 'type' property of 'pre', it's a preformatted JSON object
                         isJson = true;
                       } else {
                         // Otherwise it's a link, so we just want the link text as the title
