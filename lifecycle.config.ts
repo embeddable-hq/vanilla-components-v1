@@ -152,6 +152,7 @@ const loadGoogleFonts = (fontName: string) => {
   preconnectLink1.rel = 'preconnect';
   preconnectLink1.href = 'https://fonts.googleapis.com';
   preconnectLink1.id = 'google-fonts-preconnect-1';
+  preconnectLink1.crossOrigin = 'anonymous';
   const preconnectLink2 = document.createElement('link');
   preconnectLink2.rel = 'preconnect';
   preconnectLink2.href = 'https://fonts.gstatic.com';
@@ -159,6 +160,7 @@ const loadGoogleFonts = (fontName: string) => {
   const fontLink = document.createElement('link');
   fontLink.rel = 'stylesheet';
   fontLink.id = 'google-fonts';
+  fontLink.crossOrigin = 'anonymous';
 
   // Format the font name for Google Fonts URL. Replace spaces with '+' and join with '&family='
   // But make sure the first & is a ? instead
