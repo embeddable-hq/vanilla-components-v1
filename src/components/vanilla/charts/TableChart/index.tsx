@@ -14,6 +14,7 @@ export type Props = {
   allResults?: DataResponse;
   columns: DimensionOrMeasure[];
   defaultSort?: { property: DimensionOrMeasure; direction: string }[];
+  expandForJSON?: boolean;
   fontSize?: number;
   limit?: number;
   minColumnWidth?: number;
@@ -30,7 +31,7 @@ type Meta = {
 };
 
 export default (props: Props) => {
-  const { columns, results, allResults } = props;
+  const { columns, expandForJSON, results, allResults } = props;
   const [isDownloadingAll, setIsDownloadingAll] = useState(false);
   const [maxRowsFit, setMaxRowFit] = useState(0);
   const [resizing, setResizing] = useState(false);
@@ -148,8 +149,14 @@ export default (props: Props) => {
                   {columns.map((column, index) => {
                     const formattedValue = formatColumn(row[column.name], column);
                     let title = '';
+                    let isJson = false;
                     if (typeof formattedValue === 'object') {
-                      // It's a link, so we just want the link text as the title
+                      // If it has a 'type' property of 'pre, it's a preformatted JSON object
+                      if ((formattedValue as React.ReactElement).type === 'pre') {
+                        isJson = true;
+                      }
+
+                      // Otherwise it's a link, so we just want the link text as the title
                       title = (formattedValue as React.ReactElement).props.children;
                     } else {
                       title = formattedValue;
@@ -160,9 +167,10 @@ export default (props: Props) => {
                         className="text-dark p-3 truncate"
                         style={{
                           fontSize: props.fontSize ? `${props.fontSize}px` : theme.font.size,
-                          maxWidth: props.minColumnWidth
-                            ? `${props.minColumnWidth * 1.2}px`
-                            : 'auto',
+                          maxWidth:
+                            props.minColumnWidth && (!isJson || !expandForJSON)
+                              ? `${props.minColumnWidth * 1.2}px`
+                              : 'auto',
                         }}
                       >
                         <span title={title}>{formattedValue}</span>
@@ -188,10 +196,11 @@ export default (props: Props) => {
 };
 
 function formatColumn(
-  text: string | number | boolean | null | undefined,
+  text: string | number | boolean | null | undefined | object,
   column: DimensionOrMeasure,
 ) {
   if (text === null || text === undefined) return '-';
+  if (typeof text === 'object') return <pre>{JSON.stringify(text, null, 2)}</pre>;
   if (typeof text === 'number' || column.nativeType === 'number') {
     return formatValue(`${text}`, { type: 'number', meta: column?.meta });
   }

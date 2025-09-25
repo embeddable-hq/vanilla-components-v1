@@ -4,6 +4,7 @@ import react from '@embeddable.com/sdk-react';
 export default defineConfig({
   plugins: [react],
   lifecycleHooksFile: './lifecycle.config.ts',
+  pushModels: false,
 
   /*
    * uncomment for EU deployments

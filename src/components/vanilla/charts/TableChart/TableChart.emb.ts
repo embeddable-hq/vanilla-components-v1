@@ -105,6 +105,14 @@ export const meta = {
       category: 'Chart styling',
     },
     {
+      name: 'expandForJSON',
+      type: 'boolean',
+      label: 'Expand cells for JSON objects',
+      description: 'If a cell contains a JSON object, expand the cell to show the full object',
+      defaultValue: true,
+      category: 'Chart styling',
+    },
+    {
       name: 'fontSize',
       type: 'number',
       label: 'Font size in pixels',
