@@ -154,10 +154,10 @@ export default (props: Props) => {
                       // If it has a 'type' property of 'pre, it's a preformatted JSON object
                       if ((formattedValue as React.ReactElement).type === 'pre') {
                         isJson = true;
+                      } else {
+                        // Otherwise it's a link, so we just want the link text as the title
+                        title = (formattedValue as React.ReactElement).props.children;
                       }
-
-                      // Otherwise it's a link, so we just want the link text as the title
-                      title = (formattedValue as React.ReactElement).props.children;
                     } else {
                       title = formattedValue;
                     }
