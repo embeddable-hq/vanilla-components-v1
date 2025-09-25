@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.9
+
+### Patch Changes
+
+- 8602b34: Fix potential CORS issue w/ Google Fonts, Allow table to display JSON strings
+
 ## 1.1.8
 
 ### Patch Changes
