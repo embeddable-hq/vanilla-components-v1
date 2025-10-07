@@ -19,6 +19,7 @@ export type Props = {
   limit?: number;
   minColumnWidth?: number;
   results: DataResponse;
+  stripMarkdownFromCSV?: boolean;
   title: string;
 };
 
@@ -31,7 +32,7 @@ type Meta = {
 };
 
 export default (props: Props) => {
-  const { columns, expandForJSON, results, allResults } = props;
+  const { allResults, columns, expandForJSON, results, stripMarkdownFromCSV } = props;
   const [isDownloadingAll, setIsDownloadingAll] = useState(false);
   const [maxRowsFit, setMaxRowFit] = useState(0);
   const [resizing, setResizing] = useState(false);

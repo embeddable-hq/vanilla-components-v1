@@ -96,6 +96,14 @@ export const meta = {
       category: 'Export options',
       defaultValue: true,
     },
+    {
+      name: 'stripMarkdownFromCSV',
+      type: 'boolean',
+      label: 'Strip Markdown from CSV',
+      description: 'Remove any markdown formatting from text when downloading as CSV',
+      category: 'Export options',
+      defaultValue: true,
+    },
     // Table styling
     {
       name: 'minColumnWidth',
