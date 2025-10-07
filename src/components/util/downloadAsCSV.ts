@@ -9,8 +9,9 @@ type Input = {
 };
 
 interface Props extends ContainerProps {
-  results?: DataResponse | DataResponse[];
   prevResults?: DataResponse;
+  results?: DataResponse | DataResponse[];
+  stripMarkdownFromCSV?: boolean;
 }
 
 const downloadAsCSV = (
@@ -58,6 +59,11 @@ const downloadAsCSV = (
             .map(String) // convert every value to String
             .map((v) => v.replaceAll('"', '""')) // escape double quotes
             .map((v) => `"${v}"`) // quote it
+            .map((v) =>
+              props.stripMarkdownFromCSV
+                ? v.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1') // convert [text](link) to text
+                : v,
+            ) // strip markdown links if the option is enabled
             .join(','), // comma-separated
       )
       .join('\r\n'); // rows starting on new lines
