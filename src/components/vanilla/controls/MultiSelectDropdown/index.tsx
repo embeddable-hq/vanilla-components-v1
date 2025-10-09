@@ -273,7 +273,7 @@ export default (props: Props) => {
               overflow-x-hidden
               overflow-y-auto
               top-11
-              w-[140px]
+              w-full
               bg-[color:--embeddable-controls-backgrounds-colors-soft]
               border-[color:--embeddable-controls-borders-colors-normal]
               rounded-[--embeddable-controls-borders-radius]
