@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.10
+
+### Patch Changes
+
+- a20be52: Optional remove markdown links from CSV download, fix dropdown options width issue
+
 ## 1.1.9
 
 ### Patch Changes
