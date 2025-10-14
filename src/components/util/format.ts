@@ -53,10 +53,7 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
     if (isNaN(num)) return wrap(str);
     return wrap(
       num.toLocaleString('en-US', {
-        // add suffixes for thousands, millions, and billions
-        // the maximum number of decimal places to use
         maximumFractionDigits: dps ?? 2,
-        // specify the abbreviations to use for the suffixes
         notation: 'compact',
         compactDisplay: 'short',
       }),
