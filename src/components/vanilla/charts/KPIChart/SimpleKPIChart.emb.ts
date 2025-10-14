@@ -78,6 +78,13 @@ export const meta = {
       category: 'Formatting',
     },
     {
+      name: 'abbreviateLongNumbers',
+      type: 'boolean',
+      label: 'Abbreviate long numbers (e.g., 1,200 as 1.2K)',
+      defaultValue: false,
+      category: 'Formatting',
+    },
+    {
       name: 'enableDownloadAsCSV',
       type: 'boolean',
       label: 'Show download as CSV',

@@ -8,34 +8,36 @@ import { Theme } from '../../../../themes/theme';
 import { useTheme } from '@embeddable.com/react';
 
 type Props = {
-  results: DataResponse;
-  prevResults?: DataResponse;
-  prevTimeFilter?: TimeRange;
-  title?: string;
-  prefix?: string;
-  suffix?: string;
-  metric?: Measure;
-  displayMetric?: boolean;
+  abbreviateLongNumbers?: boolean;
   dimension?: Dimension;
+  displayMetric?: boolean;
   dps?: number;
   fontSize?: number;
+  metric?: Measure;
+  prefix?: string;
+  prevResults?: DataResponse;
+  prevTimeFilter?: TimeRange;
+  results: DataResponse;
   showNullValuesAsZero?: boolean;
   showPrevPeriodLabel?: boolean;
+  suffix?: string;
+  title?: string;
 };
 
 export default (props: Props) => {
   const {
-    results,
+    abbreviateLongNumbers,
+    dimension,
+    displayMetric,
+    dps,
+    metric,
+    prefix,
     prevResults,
     prevTimeFilter,
-    metric,
-    displayMetric,
-    dimension,
-    dps,
-    prefix,
-    suffix,
+    results,
     showNullValuesAsZero = true,
     showPrevPeriodLabel,
+    suffix,
   } = props;
 
   const theme: Theme = useTheme() as Theme;
@@ -60,8 +62,7 @@ export default (props: Props) => {
     const skipCalc = () => ({ nFormatted, pFormatted, p });
 
     // If we're missing any of these, skip calculations
-    if (dimension || !metric?.name || !results?.data?.length) return skipCalc();
-
+    if (!metric?.name || !results?.data?.length) return skipCalc();
     // Will always be a number, null, or undefined
     const numberToParse = results?.data?.[0]?.[metric.name];
 
@@ -69,10 +70,12 @@ export default (props: Props) => {
     if (numberToParse === null || numberToParse === undefined) return skipCalc();
     n = parseFloat(numberToParse);
     if (isNaN(n)) return skipCalc();
+
     nFormatted = formatValue(n.toString(), {
       type: 'number',
       meta: metric?.meta,
       dps: dps,
+      abbreviateLongNumbers,
     }) as string; // always a string due to using toString()
 
     // Handle pFormatted second
@@ -100,7 +103,7 @@ export default (props: Props) => {
       p,
     };
   }, [
-    dimension,
+    abbreviateLongNumbers,
     dps,
     metric?.meta,
     metric?.name,
