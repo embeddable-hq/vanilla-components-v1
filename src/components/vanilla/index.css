@@ -35,11 +35,11 @@
 
 /* Every component has an inside-card class */
 :host(.inside-card) {
-  box-shadow: var(--embeddable-container-boxShadow);
-  border-radius: var(--embeddable-container-borderRadius);
+  box-shadow: var(--embeddable-container-boxShadow) !important;
+  border-radius: var(--embeddable-container-borderRadius) !important;
   padding: var(--embeddable-container-padding) !important;
-  border: var(--embeddable-container-border);
-  background-color: var(--embeddable-container-backgroundColor);
+  border: var(--embeddable-container-border) !important;
+  background-color: var(--embeddable-container-backgroundColor) !important;
 }
 
 /* Day Picker */
