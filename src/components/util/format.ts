@@ -5,11 +5,12 @@ import { parseTime } from '../util/timezone';
 type Type = 'number' | 'date' | 'string';
 
 type Options = {
-  type?: Type;
-  truncate?: number;
+  abbreviateLongNumbers?: boolean;
   dateFormat?: string;
-  meta?: { pretext?: string; posttext?: string };
   dps?: number;
+  meta?: { pretext?: string; posttext?: string };
+  truncate?: number;
+  type?: Type;
 };
 
 function numberFormatter(dps: number | undefined | null) {
@@ -41,10 +42,24 @@ const dateFormatter = new Intl.DateTimeFormat();
 export default function formatValue(str: string = '', opt: Type | Options = 'string') {
   if (str === null) return null;
 
-  const { type, dateFormat, meta, truncate, dps }: Options =
+  const { abbreviateLongNumbers, type, dateFormat, meta, truncate, dps }: Options =
     typeof opt === 'string' ? { type: opt } : opt;
 
-  if (type === 'number') return wrap(numberFormatter(dps).format(parseFloat(str)));
+  if (type === 'number') {
+     if(abbreviateLongNumbers) {
+        const num = parseFloat(str);
+         if (isNaN(num)) return wrap(str);
+         return wrap(
+           num.toLocaleString('en-US', {
+             maximumFractionDigits: dps ?? 2,
+             notation: 'compact',
+             compactDisplay: 'short',
+           }),
+         );
+     } else {
+          return wrap(numberFormatter(dps).format(parseFloat(str)));  
+     }
+  }
 
   if (type === 'date' && str.endsWith('T00:00:00.000')) {
     return wrap(dateFormatter.format(new Date(str)));

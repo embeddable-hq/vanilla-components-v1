@@ -9,7 +9,7 @@ export const meta = {
   defaultWidth: 300,
   defaultHeight: 200,
   classNames: ['inside-card'],
-  category: 'Charts',
+  category: 'Charts: essentials',
   inputs: [
     {
       name: 'ds',
