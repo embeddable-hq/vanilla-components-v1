@@ -4,7 +4,7 @@ import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 
 import Component, { Props } from './index';
-import TimeZoneType from '../../../../types/TimeZones.type.emb';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 import { TimeZone } from '../../../../enums/TimeZone';
 
 export const meta = {
@@ -17,7 +17,7 @@ export const meta = {
   inputs: [
     {
       name: 'defaultValue',
-      type: TimeZoneType,
+      type: TimeZones,
       label: 'Default value',
       defaultValue: TimeZone.UTC as never,
       category: 'Settings',
@@ -42,7 +42,7 @@ export const meta = {
       properties: [
         {
           name: 'value',
-          type: TimeZoneType,
+          type: TimeZones,
         },
       ],
     },
@@ -50,7 +50,7 @@ export const meta = {
   variables: [
     {
       name: 'time zone choice',
-      type: TimeZoneType,
+      type: TimeZones,
       defaultValue: Value.noFilter(),
       inputs: [],
       events: [{ name: 'onChange', property: 'value' }],
