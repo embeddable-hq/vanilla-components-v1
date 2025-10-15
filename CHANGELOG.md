@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.11
+
+### Patch Changes
+
+- a5cddb7: Allow KPI charts to abbreviate long numbers
+
 ## 1.1.10
 
 ### Patch Changes
