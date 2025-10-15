@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.12
+
+### Patch Changes
+
+- ed08e24: Fixes an issue that was causing borders not to appear around some charts and graphs in builder mode
+
 ## 1.1.11
 
 ### Patch Changes
