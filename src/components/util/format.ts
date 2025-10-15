@@ -45,19 +45,20 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
   const { abbreviateLongNumbers, type, dateFormat, meta, truncate, dps }: Options =
     typeof opt === 'string' ? { type: opt } : opt;
 
-  if (type === 'number' && !abbreviateLongNumbers)
-    return wrap(numberFormatter(dps).format(parseFloat(str)));
-
-  if (type === 'number' && abbreviateLongNumbers) {
-    const num = parseFloat(str);
-    if (isNaN(num)) return wrap(str);
-    return wrap(
-      num.toLocaleString('en-US', {
-        maximumFractionDigits: dps ?? 2,
-        notation: 'compact',
-        compactDisplay: 'short',
-      }),
-    );
+  if (type === 'number') {
+     if(abbreviateLongNumbers) {
+        const num = parseFloat(str);
+         if (isNaN(num)) return wrap(str);
+         return wrap(
+           num.toLocaleString('en-US', {
+             maximumFractionDigits: dps ?? 2,
+             notation: 'compact',
+             compactDisplay: 'short',
+           }),
+         );
+     } else {
+          return wrap(numberFormatter(dps).format(parseFloat(str)));  
+     }
   }
 
   if (type === 'date' && str.endsWith('T00:00:00.000')) {
