@@ -362,7 +362,7 @@ export const defaultTheme: Theme = {
     urls: [],
   },
   hostOnTop: {
-    zIndex: 1,
+    zIndex: 10,
   },
   png: {
     backgroundColor: '#FFFFFF',
