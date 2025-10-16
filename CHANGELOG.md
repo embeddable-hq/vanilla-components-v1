@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.13
+
+### Patch Changes
+
+- d786e5d: Fixes z-index issue with multiple embeddables on a single page
+
 ## 1.1.12
 
 ### Patch Changes
