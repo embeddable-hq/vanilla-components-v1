@@ -43,13 +43,6 @@ cubes:
         title: 'Is Large Order'
         description: 'Returns true if the order count is greater than 10'
       
-      - name: count_with_eight_random_decimals
-        type: number
-        title: 'Random number between 100 and 200 with 8 random numbers added as decimals'
-        description: 'Count of orders with 8 decimal places'
-        # Random number between 100 and 200 with 8 random numbers added as decimals
-        sql: 'ROUND((100 + RANDOM() * 100)::numeric, 8)'
-
     joins:
       - name: products # the name of the data model to join to (not the table)
         sql: '{CUBE}.product_id = {products}.id'
