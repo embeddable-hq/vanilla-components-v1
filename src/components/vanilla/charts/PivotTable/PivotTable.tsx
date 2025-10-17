@@ -17,6 +17,7 @@ type Props<T> = {
   data: T[][];
   defaultColumnDimensionSortDirection?: SortDirection;
   defaultRowDimensionSortDirection?: SortDirection;
+  dps?: number;
   fontSize?: string;
   granularity?: string;
   isRowGroupDefaultExpanded?: boolean;
@@ -34,6 +35,7 @@ const PivotTable = <T,>({
   data,
   defaultColumnDimensionSortDirection,
   defaultRowDimensionSortDirection,
+  dps,
   fontSize = '14px',
   granularity,
   isRowGroupDefaultExpanded = true,
@@ -165,6 +167,7 @@ const PivotTable = <T,>({
                         ...(getMeasureByLabel(column.label)
                           ? { meta: getMeasureByLabel(column.label)?.meta, type: 'number' }
                           : {}),
+                        dps,
                       })}
                 </span>
               );

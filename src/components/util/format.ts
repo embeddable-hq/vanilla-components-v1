@@ -13,14 +13,6 @@ type Options = {
   type?: Type;
 };
 
-function numberFormatter(dps: number | undefined | null) {
-  const fallback = dps == null || dps < 0;
-  return new Intl.NumberFormat(undefined, {
-    minimumFractionDigits: fallback ? 0 : dps, // Minimum number of digits after the decimal
-    maximumFractionDigits: fallback ? 2 : dps, // Maximum number of digits after the decimal
-  });
-}
-
 const dateFormatter = new Intl.DateTimeFormat();
 
 /**
@@ -46,19 +38,34 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
     typeof opt === 'string' ? { type: opt } : opt;
 
   if (type === 'number') {
-     if(abbreviateLongNumbers) {
-        const num = parseFloat(str);
-         if (isNaN(num)) return wrap(str);
-         return wrap(
-           num.toLocaleString('en-US', {
-             maximumFractionDigits: dps ?? 2,
-             notation: 'compact',
-             compactDisplay: 'short',
-           }),
-         );
-     } else {
-          return wrap(numberFormatter(dps).format(parseFloat(str)));  
-     }
+    const num = parseFloat(str);
+    if (isNaN(num)) return wrap(str);
+
+    // Case 1: dps is defined - use it for decimal places but keep whole numbers whole
+    if (dps !== undefined && dps !== null) {
+      return wrap(
+        Number.isInteger(num)
+          ? num.toLocaleString('en-US', { maximumFractionDigits: 0 })
+          : num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: dps }),
+      );
+    }
+
+    // Case 2: abbreviate long numbers (eg 1500 -> 1.5K)
+    if (abbreviateLongNumbers) {
+      return wrap(
+        num.toLocaleString('en-US', {
+          notation: 'compact',
+          compactDisplay: 'short',
+        }),
+      );
+    }
+
+    // Case 3: normal formatting (Just wrap it with commas, keep whole numbers whole)
+    if (Number.isInteger(num)) {
+      return wrap(num.toLocaleString('en-US', { maximumFractionDigits: 0 }));
+    } else {
+      return wrap(num.toLocaleString('en-US'));
+    }
   }
 
   if (type === 'date' && str.endsWith('T00:00:00.000')) {

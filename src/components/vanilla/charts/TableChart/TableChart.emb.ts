@@ -83,6 +83,13 @@ export const meta = {
       category: 'Chart settings',
     },
     {
+      name: 'dps',
+      type: 'number',
+      label: 'Number decimal places',
+      description: 'Number of decimal places to show for numeric values',
+      category: 'Formatting',
+    },
+    {
       name: 'enableDownloadAsCSV',
       type: 'boolean',
       label: 'Show download as CSV',
