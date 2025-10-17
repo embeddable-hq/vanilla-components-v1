@@ -11,20 +11,21 @@ type DynamicDimensionsData = {
 };
 
 type Props = {
-  title: string;
-  description?: string;
-  rowValues?: Dimension[];
+  aggregateRowDimensions?: boolean;
+  columnSortDirection?: SortDirection;
   columnValues?: Dimension[];
+  description?: string;
+  dps?: number;
+  fontSize?: number;
+  isRowGroupDefaultExpanded?: boolean;
+  measureVisualizationFormat: MeasureVisualizationFormat;
   metrics: Measure[];
   minColumnWidth?: number;
   minRowDimensionColumnWidth?: number;
-  rowSortDirection?: SortDirection;
-  columnSortDirection?: SortDirection;
   nullValueCharacter?: string;
-  isRowGroupDefaultExpanded?: boolean;
-  measureVisualizationFormat: MeasureVisualizationFormat;
-  fontSize?: number;
-  aggregateRowDimensions?: boolean;
+  rowSortDirection?: SortDirection;
+  rowValues?: Dimension[];
+  title: string;
 } & DynamicDimensionsData;
 
 export default ({ rowValues, columnValues, metrics, ...props }: Props) => {
@@ -50,13 +51,14 @@ export default ({ rowValues, columnValues, metrics, ...props }: Props) => {
       {results.every((result) => result && !result.isLoading && !result.error) && (
         <PivotTable
           {...props}
-          data={results.map((result) => result.data!)}
           columnDimensions={columnValues}
+          data={results.map((result) => result.data!)}
           defaultColumnDimensionSortDirection={props.columnSortDirection}
-          rowDimensions={rowValues?.filter((metric) => isDimension(metric)) as Dimension[]}
           defaultRowDimensionSortDirection={props.rowSortDirection}
-          measures={metrics}
+          dps={props.dps}
           fontSize={props.fontSize ? `${props.fontSize}px` : undefined}
+          measures={metrics}
+          rowDimensions={rowValues?.filter((metric) => isDimension(metric)) as Dimension[]}
         />
       )}
     </Container>
