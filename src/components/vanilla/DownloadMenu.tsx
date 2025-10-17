@@ -113,17 +113,23 @@ const DownloadMenu: React.FC<Props> = (props) => {
       return;
     }
     const { chartName, props: csvProps } = csvOpts;
+    let { results } = csvProps;
+    if (!results) {
+      return;
+    }
+    results = null;
+    console.log('here');
     // concatenate results data if results is an array (from pivot table)
     let data: DataResponse['data'] = [];
     if (Array.isArray(csvProps.results)) {
-      data = csvProps.results.reduce((acc: DataResponse['data'] = [], result) => {
+      data = results.reduce((acc: DataResponse['data'] = [], result) => {
         if (result?.data) {
           acc.push(...result.data);
         }
         return acc;
       }, []);
     } else {
-      data = csvProps.results?.data;
+      data = results?.data;
     }
     downloadAsCSV(csvProps, data, csvProps.prevResults?.data, chartName, setPreppingDownload);
   };
