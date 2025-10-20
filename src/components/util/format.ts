@@ -42,7 +42,7 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
     if (isNaN(num)) return wrap(str);
 
     // Case 1: dps is defined - use it for decimal places but keep whole numbers whole
-    if (dps !== undefined && dps !== null) {
+    if (dps != null) {
       return wrap(
         Number.isInteger(num)
           ? num.toLocaleString('en-US', { maximumFractionDigits: 0 })
