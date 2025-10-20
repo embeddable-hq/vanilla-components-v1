@@ -297,11 +297,14 @@ export default (props: Props) => {
           <ChevronDown
             className={`
             absolute
-            pointer-events-none
+            cursor-pointer
             right-2
             top-2.5
             z-[--embeddable-controls-dropdown-chevron-zIndex]
           `}
+            onClick={() => {
+              setFocus(!focus);
+            }}
           />
         )}
 
