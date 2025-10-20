@@ -83,6 +83,9 @@ const downloadAsCSV = (
   };
 
   const prepCSV = () => {
+    if (!data || data.length === 0) {
+      return '';
+    }
     const rows = [];
     const columns = Object.keys(data[0]);
     rows.push(columns.map((c) => titlesByName[c] || c)); //title row
