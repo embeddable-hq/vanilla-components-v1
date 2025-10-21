@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.15
+
+### Patch Changes
+
+- 80fddfa: Ensures CSV downloads for table data are sorted by column header order
+
 ## 1.1.14
 
 ### Patch Changes
