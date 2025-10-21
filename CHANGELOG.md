@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.14
+
+### Patch Changes
+
+- 472267b: Various bug fixes
+
 ## 1.1.13
 
 ### Patch Changes
