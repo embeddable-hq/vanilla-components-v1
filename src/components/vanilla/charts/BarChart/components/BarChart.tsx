@@ -50,6 +50,7 @@ type Props = {
   spanChartGaps?: boolean;
   stackMetrics?: boolean;
   theme: Theme;
+  timezone?: string;
   title?: string;
   xAxis: Dimension;
   xAxisTitle?: string;
@@ -105,6 +106,7 @@ function chartData(props: Props): ChartData<'bar' | 'line'> {
         return formatValue(value ?? '', {
           meta: xAxis?.meta,
           ...(isTimeDimension ? { dateFormat } : {}),
+          timezone: props.timezone,
         });
       }),
     ),

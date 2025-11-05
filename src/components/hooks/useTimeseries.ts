@@ -62,13 +62,13 @@ type Props = {
 
 /**
  * Hook for handling time-series data with gap filling
- * 
+ *
  * Runtime assumptions:
  * - Time dimensions should be sorted in ascending or descending order
  * - Missing dates should be filled based on granularity
  * - Date values should be in ISO format for proper parsing
  * - Granularity determines the time unit for gap filling
- * 
+ *
  * @param props - Component props containing time-series configuration
  * @param sortOrder - Sort order for the time series ('asc' or 'desc')
  * @returns Object with fillGaps function for processing time-series data
