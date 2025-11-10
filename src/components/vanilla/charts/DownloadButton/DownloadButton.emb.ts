@@ -2,6 +2,7 @@ import { Dimension, Measure, isDimension, isMeasure, loadData } from '@embeddabl
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component, { Props } from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'DownloadButton',
@@ -26,6 +27,14 @@ export const meta = {
         dataset: 'ds',
       },
       category: 'Data',
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -70,6 +79,7 @@ export default defineComponent<Props, typeof meta, { downloading: boolean }>(Com
         from: inputs.ds,
         select: inputs.columns,
         limit: inputs.maxRows || undefined,
+        timezone: inputs.timezone,
       });
       return {
         ...inputs,
