@@ -69,7 +69,7 @@ export default (props: Props) => {
     chartColors = theme.charts.bubble.colors;
   }
 
-  //add missing dates to time-series data
+  // add missing dates to time-series data
   const { fillGaps } = useTimeseries(props, 'desc');
   const { results } = props;
 
