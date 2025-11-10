@@ -101,8 +101,8 @@ export default (props: Props, sortOrder: string = 'asc') => {
       // Calculate the next expected date based on granularity and sort order
       const seqDate =
         sortOrder === 'asc'
-          ? addTime[granularity || 'day'](parseJSON(prevDate), 1)
-          : subTime[granularity || 'day'](parseJSON(prevDate), 1);
+          ? addTime[granularity || 'day'](new Date(prevDate), 1)
+          : subTime[granularity || 'day'](new Date(prevDate), 1);
 
       const dateSince1970 = parseJSON(xAxisValue).getTime(); // Timestamp of the current date
       const seqDateSince1970 = seqDate.getTime(); // Timestamp of the expected sequence date
