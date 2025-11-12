@@ -15,6 +15,7 @@ import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import { MeasureVisualizationFormat } from './enums/MeasureVisualizationFormat';
 import Component from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'PivotTable',
@@ -69,6 +70,14 @@ export const meta = {
       category: 'Variables to configure',
     },
     // Table settings
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
+    },
     {
       name: 'title',
       type: 'string',
@@ -211,6 +220,7 @@ export default defineComponent(Component, meta, {
                     ? undefined
                     : sort.slice(0, index + 1),
                 limit: 10_000,
+                timezone: inputs.timezone,
               }),
             };
           }, {})
@@ -229,6 +239,7 @@ export default defineComponent(Component, meta, {
                 ...measures,
               ],
               limit: 10_000,
+              timezone: inputs.timezone,
             }),
           };
 
