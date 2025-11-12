@@ -10,6 +10,7 @@ import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/
 
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import Component, { Props } from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'TableChart',
@@ -47,6 +48,14 @@ export const meta = {
       ],
     },
     // Chart settings
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
+    },
     {
       name: 'title',
       type: 'string',
@@ -182,6 +191,7 @@ export default defineComponent<
             limit,
             offset: limit * (state?.page || 0),
             orderBy: state?.sort || defaultSort,
+            timezone: inputs.timezone,
           });
 
     // All results get loaded when the download all button is clicked (otherwise they return empty)
@@ -191,6 +201,7 @@ export default defineComponent<
       limit: state?.downloadAll ? 10_000 : 0,
       offset: 0,
       orderBy: state?.sort || defaultSort,
+      timezone: inputs.timezone,
     });
 
     return {

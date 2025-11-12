@@ -210,7 +210,7 @@ function formatColumn(
     return text ? 'True' : 'False';
   }
 
-  if (text && column.nativeType === 'time') return formatValue(text, 'date');
+  if (text && column.nativeType === 'time') return formatValue(text, 'datewithtz');
 
   // detect links - we can't do this in the format function because it returns a dom element
   const { linkText, linkUrl } = detectAndReturnLinks(text);
