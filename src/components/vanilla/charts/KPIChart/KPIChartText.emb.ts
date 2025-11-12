@@ -4,6 +4,7 @@ import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/
 import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import Component from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'KPIChartText',
@@ -45,6 +46,14 @@ export const meta = {
       defaultValue: SortDirection.DESCENDING,
       label: 'Sort direction',
       category: 'Chart data',
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -121,6 +130,7 @@ export default defineComponent(Component, meta, {
           },
         ],
         limit: 1,
+        timezone: inputs.timezone,
       }),
     };
   },
