@@ -21,13 +21,14 @@ const valueProp: Dimension = {
 };
 
 export type Props = {
-  defaultPeriod?: TimeRange;
   defaultComparison?: string;
   defaultGranularity?: Granularity;
-  showGranularity?: boolean;
-  onChangePeriod: (v: TimeRange | null) => void;
+  defaultPeriod?: TimeRange;
   onChangeComparison: (v: TimeRange | null) => void;
   onChangeGranularity: (v: Granularity | null) => void;
+  onChangePeriod: (v: TimeRange | null) => void;
+  showGranularity?: boolean;
+  timezone?: string;
 };
 
 export default function DateRangeWithGranularity(props: Props) {
@@ -82,7 +83,7 @@ export default function DateRangeWithGranularity(props: Props) {
   useEffect(() => {
     if (!defaultPeriod) return;
     if (!defaultPeriod?.from && !defaultPeriod?.to && defaultPeriod?.relativeTimeString) {
-      const [from, to] = dateParser(defaultPeriod?.relativeTimeString, '');
+      const [from, to] = dateParser(defaultPeriod?.relativeTimeString, props.timezone);
       if (!from || !to) return;
       defaultPeriod.from = new Date(from);
       defaultPeriod.to = new Date(to);
@@ -90,7 +91,7 @@ export default function DateRangeWithGranularity(props: Props) {
       onChangePeriod(defaultPeriod as TimeRange);
       return;
     }
-  }, [defaultPeriod, onChangePeriod]);
+  }, [defaultPeriod, onChangePeriod, props.timezone]);
 
   return (
     <div className="flex items-center h-10">
@@ -108,6 +109,7 @@ export default function DateRangeWithGranularity(props: Props) {
             setGranularity(g);
             props.onChangeGranularity(g);
           }}
+          timezone={props.timezone}
         />
       </div>
       {!!onChangeComparison && (

@@ -36,11 +36,12 @@ type TimeRange = {
 };
 
 type Props = {
-  placeholder?: string;
+  hideDate?: boolean;
   onChange?: (v?: TimeRange) => void;
+  placeholder?: string;
+  timezone?: string;
   title?: string;
   value?: TimeRange;
-  hideDate?: boolean;
 };
 
 export default function DateRangePicker(props: Props) {
@@ -48,8 +49,6 @@ export default function DateRangePicker(props: Props) {
   const ref = useRef<HTMLInputElement | null>(null);
   const [triggerBlur, setTriggerBlur] = useState(false);
   const [range, setRange] = useState<TimeRange | undefined>(props.value);
-
-  const theme: Theme = useTheme() as Theme;
 
   useLayoutEffect(() => {
     if (!triggerBlur) return;
@@ -69,7 +68,14 @@ export default function DateRangePicker(props: Props) {
 
     if (!props.value?.relativeTimeString) return;
 
-    const [from, to] = dateParser(props.value?.relativeTimeString, 'UTC');
+    const dateInTZ = new Date().toLocaleString('en-US', {
+      timeZone: 'Pacific/Kiritimati',
+    });
+    console.log(dateInTZ);
+    console.log(new Date(dateInTZ));
+
+    const [from, to] = dateParser(props.value?.relativeTimeString, null, new Date(dateInTZ));
+    console.log({ from, to });
 
     if (!from || !to) return;
 
