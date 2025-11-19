@@ -67,15 +67,33 @@ export default function DateRangePicker(props: Props) {
     }
 
     if (!props.value?.relativeTimeString) return;
-
-    const dateInTZ = new Date().toLocaleString('en-US', {
-      timeZone: 'Pacific/Kiritimati',
+    /*
+    This works consistently
+      const dateInTZ = new Date().toLocaleString('en-US', {
+      timeZone: 'Pacific/Honolulu',
     });
     console.log(dateInTZ);
     console.log(new Date(dateInTZ));
 
-    const [from, to] = dateParser(props.value?.relativeTimeString, null, new Date(dateInTZ));
+    const [from, to] = dateParser(
+      props.value?.relativeTimeString,
+      'Pacific/Honolulu',
+      new Date(dateInTZ),
+    );
     console.log({ from, to });
+    */
+
+    // Ensure the correct time zone is used when parsing relative dates
+    const dateInTZ = new Date().toLocaleString('en-US', {
+      timeZone: props.timezone || 'UTC',
+    });
+
+    // To/From will be in browser local but set to the dates for the chosen time zone
+    const [from, to] = dateParser(
+      props.value?.relativeTimeString,
+      props.timezone || 'UTC',
+      new Date(dateInTZ),
+    );
 
     if (!from || !to) return;
 
@@ -84,7 +102,7 @@ export default function DateRangePicker(props: Props) {
       from: new Date(from),
       to: new Date(to),
     });
-  }, [props.value]);
+  }, [props.value, props.timezone]);
 
   const formatFrom = useMemo(
     () => (getYear(range?.from || new Date()) === getYear(new Date()) ? 'd MMM' : 'd MMM yyyy'),
@@ -98,11 +116,8 @@ export default function DateRangePicker(props: Props) {
 
   const formatDateText = () => {
     if (!range?.from || !range?.to) return 'Select';
-    // Perform some gymnastics to make sure we stay in UTC
-    const newFrom = toUTC(range.from) || new Date();
-    const newTo = toUTC(range.to) || new Date();
-    const fromFormat = formatValue(newFrom.toJSON(), { dateFormat: formatFrom });
-    const toFormat = formatValue(newTo.toJSON(), { dateFormat: formatTo });
+    const fromFormat = formatValue(range?.from.toJSON(), { dateFormat: formatFrom });
+    const toFormat = formatValue(range?.to.toJSON(), { dateFormat: formatTo });
     return `${fromFormat} - ${toFormat}`;
   };
 
