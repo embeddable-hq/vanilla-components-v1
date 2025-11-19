@@ -13,6 +13,7 @@ import {
   PointElement,
   Title,
   Tooltip,
+  BubbleDataPoint,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import React from 'react';
@@ -109,7 +110,7 @@ function chartOptions(
 
   const data = bubbleData.datasets[0].data;
 
-  //y-axis padding based on size of first item
+  // y-axis padding based on size of first item
   const firstItemRadius = props.reverseXAxis
     ? props.isTimeDimension
       ? data[0]?.r
@@ -118,9 +119,17 @@ function chartOptions(
       ? data[data.length - 1]?.r
       : data?.[0]?.r;
 
-  //top padding based on size of top vertical item
-  const highestItem = data.reduce((max, current) => (current?.y > max?.y ? current : max), data[0]);
-  const highestItemRadius = highestItem?.r || 0;
+  // top padding based on size of top vertical item
+  let highestItem: BubbleDataPoint | undefined = undefined;
+  let highestItemRadius = 0;
+  if (data) {
+    highestItem = data.reduce((max, current) => {
+      if (!current || current.y == null) return max;
+      if (!max || max.y == null) return current;
+      return current.y > max.y ? current : max;
+    }, data[0]);
+    highestItemRadius = highestItem?.r || 0;
+  }
 
   return {
     responsive: true,
