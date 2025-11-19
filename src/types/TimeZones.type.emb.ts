@@ -9,8 +9,8 @@ const TimeZones = defineType('timeZones', {
 defineOption(TimeZones, TimeZone.UTC);
 defineOption(TimeZones, TimeZone['UTC-11']);
 defineOption(TimeZones, TimeZone['UTC-10']);
-defineOption(TimeZones, TimeZone['UTC-9']);
 defineOption(TimeZones, TimeZone['UTC-9:30']);
+defineOption(TimeZones, TimeZone['UTC-9']);
 defineOption(TimeZones, TimeZone['UTC-8']);
 defineOption(TimeZones, TimeZone['UTC-7']);
 defineOption(TimeZones, TimeZone['UTC-6']);

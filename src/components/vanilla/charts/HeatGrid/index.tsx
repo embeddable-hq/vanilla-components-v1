@@ -127,11 +127,9 @@ const HeatGrid: React.FC<Props> = (props) => {
         };
       });
 
-      // Doing some juggling to get around time zones here
-      const dataStartDate = cleanedData[0][timeProperty?.name || 'date'];
-      const dataEndDate = cleanedData[cleanedData.length - 1][timeProperty?.name || 'date'];
-      const startDate = new TZDate(dataStartDate, 'UTC');
-      const endDate = new TZDate(dataEndDate, 'UTC');
+      // this should work with timezones as we're only using the date part now
+      const startDate = new Date(cleanedData[0][timeProperty?.name || 'date']);
+      const endDate = new Date(cleanedData[cleanedData.length - 1][timeProperty?.name || 'date']);
       const startOfWeekDate = startOfWeek(startDate, {
         weekStartsOn: 1,
       });

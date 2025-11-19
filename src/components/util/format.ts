@@ -23,7 +23,7 @@ function numberFormatter(dps: number | undefined | null) {
   });
 }
 
-const dateFormatter = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Chicago' });
+const dateFormatter = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC' });
 
 /**
  * Formats a value according to the specified options
