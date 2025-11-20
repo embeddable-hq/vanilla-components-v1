@@ -135,6 +135,13 @@ export const meta = {
       label: 'Default Column Sort Direction',
       category: 'Chart settings',
     },
+    {
+      name: 'dps',
+      type: 'number',
+      label: 'Number decimal places',
+      description: 'Number of decimal places to show for numeric values',
+      category: 'Chart settings',
+    },
 
     // Table styling
     {

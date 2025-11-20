@@ -1,4 +1,4 @@
-import { DataResponse } from '@embeddable.com/core';
+import { DataResponse, DimensionOrMeasure } from '@embeddable.com/core';
 
 import { ContainerProps } from '../vanilla/Container';
 
@@ -12,6 +12,7 @@ interface Props extends ContainerProps {
   prevResults?: DataResponse;
   results?: DataResponse | DataResponse[];
   stripMarkdownFromCSV?: boolean;
+  columns?: DimensionOrMeasure[];
 }
 
 const downloadAsCSV = (
@@ -52,7 +53,17 @@ const downloadAsCSV = (
   })();
 
   const arrayToCsv = (arrayData: any[][]) => {
-    return arrayData
+    let sortedArrayData = arrayData;
+    if (props.columns && props.columns.length > 0) {
+      sortedArrayData = arrayData.map((row) => {
+        // Sort the row according to the order of props.columns
+        return props.columns!.map((col) => {
+          const colIndex = arrayData[0].indexOf(titlesByName[col.name] || col.name);
+          return row[colIndex];
+        });
+      });
+    }
+    return sortedArrayData
       .map(
         (row) =>
           row
@@ -83,6 +94,9 @@ const downloadAsCSV = (
   };
 
   const prepCSV = () => {
+    if (!data || data.length === 0) {
+      return '';
+    }
     const rows = [];
     const columns = Object.keys(data[0]);
     rows.push(columns.map((c) => titlesByName[c] || c)); //title row

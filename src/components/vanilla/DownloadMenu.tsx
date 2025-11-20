@@ -113,10 +113,11 @@ const DownloadMenu: React.FC<Props> = (props) => {
       return;
     }
     const { chartName, props: csvProps } = csvOpts;
+
     // concatenate results data if results is an array (from pivot table)
     let data: DataResponse['data'] = [];
     if (Array.isArray(csvProps.results)) {
-      data = csvProps.results.reduce((acc: DataResponse['data'] = [], result) => {
+      data = csvProps?.results.reduce((acc: DataResponse['data'] = [], result) => {
         if (result?.data) {
           acc.push(...result.data);
         }

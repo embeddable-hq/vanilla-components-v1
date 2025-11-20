@@ -14,6 +14,7 @@ export type Props = {
   allResults?: DataResponse;
   columns: DimensionOrMeasure[];
   defaultSort?: { property: DimensionOrMeasure; direction: string }[];
+  dps?: number;
   expandForJSON?: boolean;
   fontSize?: number;
   limit?: number;
@@ -148,7 +149,7 @@ export default (props: Props) => {
               {results?.data?.slice(0, maxRowsFit).map((row, index) => (
                 <tr key={index} className="hover:bg-gray-400/5">
                   {columns.map((column, index) => {
-                    const formattedValue = formatColumn(row[column.name], column);
+                    const formattedValue = formatColumn(row[column.name], column, props.dps);
                     let title = '';
                     let isJson = false;
                     if (typeof formattedValue === 'object') {
@@ -199,11 +200,12 @@ export default (props: Props) => {
 function formatColumn(
   text: string | number | boolean | null | undefined | object,
   column: DimensionOrMeasure,
+  dps: number | undefined = undefined,
 ) {
   if (text === null || text === undefined) return '-';
   if (typeof text === 'object') return <pre>{JSON.stringify(text, null, 2)}</pre>;
   if (typeof text === 'number' || column.nativeType === 'number') {
-    return formatValue(`${text}`, { type: 'number', meta: column?.meta });
+    return formatValue(`${text}`, { type: 'number', meta: column?.meta, dps });
   }
   if (typeof text === 'boolean') {
     // don't use formatValue for booleans, just return the string representation

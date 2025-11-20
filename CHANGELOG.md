@@ -1,5 +1,29 @@
 # @embeddable.com/vanilla-components
 
+## 1.1.15
+
+### Patch Changes
+
+- 80fddfa: Ensures CSV downloads for table data are sorted by column header order
+
+## 1.1.14
+
+### Patch Changes
+
+- 472267b: Various bug fixes
+
+## 1.1.13
+
+### Patch Changes
+
+- d786e5d: Fixes z-index issue with multiple embeddables on a single page
+
+## 1.1.12
+
+### Patch Changes
+
+- ed08e24: Fixes an issue that was causing borders not to appear around some charts and graphs in builder mode
+
 ## 1.1.11
 
 ### Patch Changes

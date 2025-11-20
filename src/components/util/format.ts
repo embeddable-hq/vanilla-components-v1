@@ -1,5 +1,4 @@
 import { format as formatDate } from 'date-fns';
-import { TZDate } from '@date-fns/tz';
 
 import { parseTime } from '../util/timezone';
 
@@ -48,6 +47,19 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
     typeof opt === 'string' ? { type: opt } : opt;
 
   if (type === 'number') {
+    const num = parseFloat(str);
+    if (isNaN(num)) return wrap(str);
+
+    // Case 1: dps is defined - use it for decimal places but keep whole numbers whole
+    if (dps != null) {
+      return wrap(
+        Number.isInteger(num)
+          ? num.toLocaleString('en-US', { maximumFractionDigits: 0 })
+          : num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: dps }),
+      );
+    }
+
+    // Case 2: abbreviate long numbers (eg 1500 -> 1.5K)
     if (abbreviateLongNumbers) {
       const num = parseFloat(str);
       if (isNaN(num)) return wrap(str);
@@ -58,8 +70,13 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
           compactDisplay: 'short',
         }),
       );
+    }
+
+    // Case 3: normal formatting (Just wrap it with commas, keep whole numbers whole)
+    if (Number.isInteger(num)) {
+      return wrap(num.toLocaleString('en-US', { maximumFractionDigits: 0 }));
     } else {
-      return wrap(numberFormatter(dps).format(parseFloat(str)));
+      return wrap(num.toLocaleString('en-US'));
     }
   }
 
