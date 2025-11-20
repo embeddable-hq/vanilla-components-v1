@@ -5,6 +5,7 @@ import { endOfDay, startOfDay } from 'date-fns';
 import TimeComparisonType from '../../../../types/TimeComparison.type.emb';
 import { timeRangeToUTC } from '../../../util/timezone';
 import Component from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'ComparisonFilter',
@@ -33,6 +34,14 @@ export const meta = {
       label: 'Default comparison option',
       defaultValue: 'Previous period',
       category: 'Settings',
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'defaultPeriod',

@@ -2,6 +2,7 @@ import { OrderBy, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'CompareLineChart',
@@ -69,6 +70,14 @@ export const meta = {
       label: 'Comparison date range',
       description: 'Date range',
       category: 'Variables to configure',
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -186,6 +195,7 @@ export default defineComponent(Component, meta, {
                 },
               ]
             : undefined,
+        timezone: inputs.timezone,
       }),
       prevResults: loadData({
         from: inputs.ds,
@@ -212,6 +222,7 @@ export default defineComponent(Component, meta, {
                 },
               ]
             : undefined,
+        timezone: inputs.timezone,
       }),
     };
   },

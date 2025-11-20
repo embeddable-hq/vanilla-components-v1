@@ -62,13 +62,13 @@ type Props = {
 
 /**
  * Hook for handling time-series data with gap filling
- * 
+ *
  * Runtime assumptions:
  * - Time dimensions should be sorted in ascending or descending order
  * - Missing dates should be filled based on granularity
  * - Date values should be in ISO format for proper parsing
  * - Granularity determines the time unit for gap filling
- * 
+ *
  * @param props - Component props containing time-series configuration
  * @param sortOrder - Sort order for the time series ('asc' or 'desc')
  * @returns Object with fillGaps function for processing time-series data
@@ -101,8 +101,8 @@ export default (props: Props, sortOrder: string = 'asc') => {
       // Calculate the next expected date based on granularity and sort order
       const seqDate =
         sortOrder === 'asc'
-          ? addTime[granularity || 'day'](parseJSON(prevDate), 1)
-          : subTime[granularity || 'day'](parseJSON(prevDate), 1);
+          ? addTime[granularity || 'day'](new Date(prevDate), 1)
+          : subTime[granularity || 'day'](new Date(prevDate), 1);
 
       const dateSince1970 = parseJSON(xAxisValue).getTime(); // Timestamp of the current date
       const seqDateSince1970 = seqDate.getTime(); // Timestamp of the expected sequence date

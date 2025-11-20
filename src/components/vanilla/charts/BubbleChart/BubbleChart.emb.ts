@@ -2,6 +2,7 @@ import { OrderBy, isDimension, isMeasure, loadData } from '@embeddable.com/core'
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'BubbleChart',
@@ -57,6 +58,14 @@ export const meta = {
       label: 'Granularity',
       defaultValue: 'week',
       category: 'Variables to configure',
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -159,11 +168,13 @@ export default defineComponent(Component, meta, {
               inputs.bubbleSize,
             ],
             limit: inputs.limit || 50,
+            timezone: inputs.timezone,
           })
         : loadData({
             from: inputs.ds,
             select: [inputs.xAxis, inputs.yAxis, inputs.bubbleSize],
             limit: inputs.limit || 50,
+            timezone: inputs.timezone,
           }),
     };
   },

@@ -13,6 +13,7 @@ export type Props = {
   onChangePeriod: (v: TimeRange | null) => void;
   onChangeGranularity: (v: Granularity | null) => void;
   value: TimeRange;
+  timezone?: string;
 };
 
 export default (props: Props) => {
@@ -25,6 +26,7 @@ export default (props: Props) => {
         onChangePeriod={props.onChange}
         onChangeGranularity={props.onChangeGranularity}
         onChangeComparison={props.onChangeComparison}
+        timezone={props.timezone || 'UTC'}
       />
     </Container>
   );
