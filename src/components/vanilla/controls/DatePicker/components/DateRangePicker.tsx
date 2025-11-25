@@ -67,21 +67,6 @@ export default function DateRangePicker(props: Props) {
     }
 
     if (!props.value?.relativeTimeString) return;
-    /*
-    This works consistently
-      const dateInTZ = new Date().toLocaleString('en-US', {
-      timeZone: 'Pacific/Honolulu',
-    });
-    console.log(dateInTZ);
-    console.log(new Date(dateInTZ));
-
-    const [from, to] = dateParser(
-      props.value?.relativeTimeString,
-      'Pacific/Honolulu',
-      new Date(dateInTZ),
-    );
-    console.log({ from, to });
-    */
 
     // Ensure the correct time zone is used when parsing relative dates
     const dateInTZ = new Date().toLocaleString('en-US', {
@@ -116,8 +101,26 @@ export default function DateRangePicker(props: Props) {
 
   const formatDateText = () => {
     if (!range?.from || !range?.to) return 'Select';
-    const fromFormat = formatValue(range?.from.toJSON(), { dateFormat: formatFrom });
-    const toFormat = formatValue(range?.to.toJSON(), { dateFormat: formatTo });
+    // get the dates (but no time or timezone) from the range. Do not convert to UTC yet
+    const dateFrom = range.from.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const dateTo = range.to.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+
+    const fromFormat = formatValue(dateFrom, {
+      dateFormat: formatFrom,
+      type: 'datewithtz',
+    });
+    const toFormat = formatValue(dateTo, {
+      dateFormat: formatTo,
+      type: 'datewithtz',
+    });
     return `${fromFormat} - ${toFormat}`;
   };
 
