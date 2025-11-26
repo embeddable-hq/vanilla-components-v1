@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.2.0
+
+### Minor Changes
+
+- c4dfa9f: Time Zone Support
+
 ## 1.1.15
 
 ### Patch Changes
