@@ -1,10 +1,9 @@
-import { EmbeddableType, loadData } from '@embeddable.com/core';
+import { loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import Component from './index';
-import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'KPIChartText',
@@ -46,14 +45,6 @@ export const meta = {
       defaultValue: SortDirection.DESCENDING,
       label: 'Sort direction',
       category: 'Chart data',
-    },
-    {
-      name: 'timezone',
-      type: TimeZones as never,
-      label: 'Time Zone',
-      description: 'The time zone to use for date formatting',
-      category: 'Chart settings',
-      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -115,7 +106,7 @@ export const meta = {
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent(Component, meta, {
-  props: (inputs: Inputs<typeof meta>) => {
+  props: (inputs: Inputs<typeof meta>, _, clientContext) => {
     const defaultSortDirection = inputs.rowSortDirection === 'Ascending' ? 'asc' : 'desc';
 
     return {
@@ -130,7 +121,7 @@ export default defineComponent(Component, meta, {
           },
         ],
         limit: 1,
-        timezone: inputs.timezone,
+        timezone: clientContext.timezone || 'UTC',
       }),
     };
   },

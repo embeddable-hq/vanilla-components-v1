@@ -2,7 +2,6 @@ import { OrderBy, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component from './index';
-import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'StackedBarChart',
@@ -51,14 +50,6 @@ export const meta = {
         dataset: 'ds',
       },
       category: 'Chart data',
-    },
-    {
-      name: 'timezone',
-      type: TimeZones as never,
-      label: 'Time Zone',
-      description: 'The time zone to use for date formatting',
-      category: 'Chart settings',
-      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -154,7 +145,7 @@ export const meta = {
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent(Component, meta, {
-  props: (inputs: Inputs<typeof meta>) => {
+  props: (inputs: Inputs<typeof meta>, _, clientContext) => {
     const orderProp: OrderBy[] = [];
 
     if (inputs.sortBy) {
@@ -171,7 +162,7 @@ export default defineComponent(Component, meta, {
         from: inputs.ds,
         select: [inputs.xAxis, inputs.segment, inputs.metric],
         orderBy: orderProp,
-        timezone: inputs.timezone,
+        timezone: clientContext.timezone || 'UTC',
       }),
     };
   },

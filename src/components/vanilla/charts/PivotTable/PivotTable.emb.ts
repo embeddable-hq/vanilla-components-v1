@@ -1,8 +1,6 @@
 import {
   Dimension,
-  EmbeddableType,
   Measure,
-  NativeType,
   OrderBy,
   OrderDirection,
   isDimension,
@@ -15,7 +13,6 @@ import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import { MeasureVisualizationFormat } from './enums/MeasureVisualizationFormat';
 import Component from './index';
-import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'PivotTable',
@@ -70,14 +67,6 @@ export const meta = {
       category: 'Variables to configure',
     },
     // Table settings
-    {
-      name: 'timezone',
-      type: TimeZones as never,
-      label: 'Time Zone',
-      description: 'The time zone to use for date formatting',
-      category: 'Chart settings',
-      defaultValue: 'UTC',
-    },
     {
       name: 'title',
       type: 'string',
@@ -170,7 +159,7 @@ export const meta = {
 const aggregateRowDimensions = true; // This is unfinished functionality to disable aggregation rows and show row dimension in separate column
 
 export default defineComponent(Component, meta, {
-  props: (inputs: Inputs<typeof meta>, [state]) => {
+  props: (inputs: Inputs<typeof meta>, [state], clientContext) => {
     // This is necessary for backward compatibility with previous version of Pivot Table
     const rowValuesInputData = Array.isArray(inputs.rowValues)
       ? inputs.rowValues
@@ -227,7 +216,7 @@ export default defineComponent(Component, meta, {
                     ? undefined
                     : sort.slice(0, index + 1),
                 limit: 10_000,
-                timezone: inputs.timezone,
+                timezone: clientContext.timezone || 'UTC',
               }),
             };
           }, {})
@@ -246,7 +235,7 @@ export default defineComponent(Component, meta, {
                 ...measures,
               ],
               limit: 10_000,
-              timezone: inputs.timezone,
+              timezone: clientContext.timezone || 'UTC',
             }),
           };
 
