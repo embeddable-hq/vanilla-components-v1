@@ -4,6 +4,7 @@ import { endOfDay, startOfDay } from 'date-fns';
 
 import { timeRangeToUTC } from '../../../util/timezone';
 import Component from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'DateRangePicker',
@@ -25,6 +26,14 @@ export const meta = {
       label: 'Show granularity picker',
       category: 'Settings',
       defaultValue: false,
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'value',
@@ -83,11 +92,7 @@ export const meta = {
 
 export default defineComponent(Component, meta, {
   /* @ts-expect-error - to be fixed in @embeddable.com/react */
-  props: (inputs: Inputs<typeof meta>) => {
-    return {
-      ...inputs,
-    };
-  },
+  props: (inputs: Inputs<typeof meta>) => inputs,
   events: {
     onChange: (v) => {
       if (!v) return { value: Value.noFilter() };

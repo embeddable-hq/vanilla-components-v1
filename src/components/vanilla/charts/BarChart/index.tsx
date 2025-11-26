@@ -1,6 +1,7 @@
 import { DataResponse, Dimension, Granularity, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 import React, { useMemo } from 'react';
+import { TZDate } from '@date-fns/tz';
 
 import useTimeseries from '../../../hooks/useTimeseries';
 import Container from '../../Container';
@@ -32,6 +33,7 @@ export type Props = {
   showSecondYAxis?: boolean;
   secondAxisTitle?: string;
   theme?: Theme;
+  timezone?: string;
 };
 
 type PropsWithRequiredtheme = Props & { theme: Theme };
@@ -39,32 +41,48 @@ type PropsWithRequiredtheme = Props & { theme: Theme };
 export default (props: Props): React.JSX.Element => {
   const theme: Theme = useTheme() as Theme;
 
-  //add missing dates to time-series barcharts
+  // add missing dates to time-series barcharts
   const { fillGaps } = useTimeseries(props, 'desc');
   const { results, isTSBarChart } = props;
+  const { data } = results;
 
   // Create mapped data with proper date formatting for time-series bar charts
   const mappedData = useMemo(() => {
-    if (!isTSBarChart) return results?.data;
-    
-    const filledData = results?.data?.reduce(fillGaps, []);
+    if (!isTSBarChart) return data;
+
+    const filledData = data?.reduce(fillGaps, []);
     let dateFormat: string | undefined;
-    if (props.xAxis?.nativeType === 'time' && props.granularity && props.granularity in theme.dateFormats) {
+    if (
+      props.xAxis?.nativeType === 'time' &&
+      props.granularity &&
+      props.granularity in theme.dateFormats
+    ) {
       dateFormat = theme.dateFormats[props.granularity as keyof typeof theme.dateFormats];
     }
-    
-    return filledData?.map((d) => ({
-      ...d,
-      ...(props.xAxis?.name && {
-        [props.xAxis.name]: dateFormat
-          ? formatValue(d?.[props.xAxis.name], {
-              meta: props.xAxis?.meta,
-              dateFormat,
-            })
-          : d?.[props.xAxis.name],
-      }),
-    })) ?? [];
-  }, [isTSBarChart, results?.data, fillGaps, props.xAxis, props.granularity, theme]);
+
+    return (
+      filledData?.map((d) => ({
+        ...d,
+        ...(props.xAxis?.name && {
+          [props.xAxis.name]: dateFormat
+            ? formatValue(d?.[props.xAxis.name], {
+                meta: props.xAxis?.meta,
+                dateFormat,
+              })
+            : d?.[props.xAxis.name],
+        }),
+      })) ?? []
+    );
+  }, [
+    isTSBarChart,
+    data,
+    fillGaps,
+    props.xAxis?.nativeType,
+    props.xAxis.name,
+    props.xAxis?.meta,
+    props.granularity,
+    theme,
+  ]);
 
   // Update props with theme and mapped data
   const updatedProps: PropsWithRequiredtheme = {

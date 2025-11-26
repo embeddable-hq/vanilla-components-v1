@@ -36,11 +36,12 @@ type TimeRange = {
 };
 
 type Props = {
-  placeholder?: string;
+  hideDate?: boolean;
   onChange?: (v?: TimeRange) => void;
+  placeholder?: string;
+  timezone?: string;
   title?: string;
   value?: TimeRange;
-  hideDate?: boolean;
 };
 
 export default function DateRangePicker(props: Props) {
@@ -48,8 +49,6 @@ export default function DateRangePicker(props: Props) {
   const ref = useRef<HTMLInputElement | null>(null);
   const [triggerBlur, setTriggerBlur] = useState(false);
   const [range, setRange] = useState<TimeRange | undefined>(props.value);
-
-  const theme: Theme = useTheme() as Theme;
 
   useLayoutEffect(() => {
     if (!triggerBlur) return;
@@ -69,7 +68,17 @@ export default function DateRangePicker(props: Props) {
 
     if (!props.value?.relativeTimeString) return;
 
-    const [from, to] = dateParser(props.value?.relativeTimeString, 'UTC');
+    // Ensure the correct time zone is used when parsing relative dates
+    const dateInTZ = new Date().toLocaleString('en-US', {
+      timeZone: props.timezone || 'UTC',
+    });
+
+    // To/From will be in browser local but set to the dates for the chosen time zone
+    const [from, to] = dateParser(
+      props.value?.relativeTimeString,
+      props.timezone || 'UTC',
+      new Date(dateInTZ),
+    );
 
     if (!from || !to) return;
 
@@ -78,7 +87,7 @@ export default function DateRangePicker(props: Props) {
       from: new Date(from),
       to: new Date(to),
     });
-  }, [props.value]);
+  }, [props.value, props.timezone]);
 
   const formatFrom = useMemo(
     () => (getYear(range?.from || new Date()) === getYear(new Date()) ? 'd MMM' : 'd MMM yyyy'),
@@ -92,11 +101,26 @@ export default function DateRangePicker(props: Props) {
 
   const formatDateText = () => {
     if (!range?.from || !range?.to) return 'Select';
-    // Perform some gymnastics to make sure we stay in UTC
-    const newFrom = toUTC(range.from) || new Date();
-    const newTo = toUTC(range.to) || new Date();
-    const fromFormat = formatValue(newFrom.toJSON(), { dateFormat: formatFrom });
-    const toFormat = formatValue(newTo.toJSON(), { dateFormat: formatTo });
+    // get the dates (but no time or timezone) from the range. Do not convert to UTC yet
+    const dateFrom = range.from.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const dateTo = range.to.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+
+    const fromFormat = formatValue(dateFrom, {
+      dateFormat: formatFrom,
+      type: 'datewithtz',
+    });
+    const toFormat = formatValue(dateTo, {
+      dateFormat: formatTo,
+      type: 'datewithtz',
+    });
     return `${fromFormat} - ${toFormat}`;
   };
 

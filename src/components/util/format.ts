@@ -2,25 +2,34 @@ import { format as formatDate } from 'date-fns';
 
 import { parseTime } from '../util/timezone';
 
-type Type = 'number' | 'date' | 'string';
+type Type = 'number' | 'date' | 'datewithtz' | 'string';
 
 type Options = {
   abbreviateLongNumbers?: boolean;
   dateFormat?: string;
   dps?: number;
   meta?: { pretext?: string; posttext?: string };
+  timezone?: string;
   truncate?: number;
   type?: Type;
 };
 
-const dateFormatter = new Intl.DateTimeFormat();
+function numberFormatter(dps: number | undefined | null) {
+  const fallback = dps == null || dps < 0;
+  return new Intl.NumberFormat(undefined, {
+    minimumFractionDigits: fallback ? 0 : dps, // Minimum number of digits after the decimal
+    maximumFractionDigits: fallback ? 2 : dps, // Maximum number of digits after the decimal
+  });
+}
+
+const dateFormatter = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC' });
 
 /**
  * Formats a value according to the specified options
  *
  * Runtime assumptions:
  * - Metrics are always numeric and should be formatted as numbers
- * - Date strings should be in ISO format or end with 'T00:00:00.000'
+ * - Date strings should be in ISO format, end with 'T00:00:00.000', or end with 'T:00:00:00.000-ZZ:ZZ'
  * - DateFormat should be pre-calculated based on granularity and theme before calling this function
  * - Meta objects may contain pretext/posttext for value wrapping
  *
@@ -34,7 +43,7 @@ const dateFormatter = new Intl.DateTimeFormat();
 export default function formatValue(str: string = '', opt: Type | Options = 'string') {
   if (str === null) return null;
 
-  const { abbreviateLongNumbers, type, dateFormat, meta, truncate, dps }: Options =
+  const { abbreviateLongNumbers, type, dateFormat, meta, timezone, truncate, dps }: Options =
     typeof opt === 'string' ? { type: opt } : opt;
 
   if (type === 'number') {
@@ -52,8 +61,11 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
 
     // Case 2: abbreviate long numbers (eg 1500 -> 1.5K)
     if (abbreviateLongNumbers) {
+      const num = parseFloat(str);
+      if (isNaN(num)) return wrap(str);
       return wrap(
         num.toLocaleString('en-US', {
+          maximumFractionDigits: dps ?? 2,
           notation: 'compact',
           compactDisplay: 'short',
         }),
@@ -66,6 +78,15 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
     } else {
       return wrap(num.toLocaleString('en-US'));
     }
+  }
+
+  if (type === 'datewithtz') {
+    // We have to actually trick the browser into thinking this is a date in the local timezone
+    // because Date and Intl.DateTimeFormat don't support parsing with timezones directly
+    // And Date-fns format doesn't support timezones directly either
+    const strArray = str.split('.');
+    const dateWithNoTZ = strArray[0];
+    return wrap(formatDate(new Date(dateWithNoTZ), dateFormat || 'dd/MM/yyyy'));
   }
 
   if (type === 'date' && str.endsWith('T00:00:00.000')) {

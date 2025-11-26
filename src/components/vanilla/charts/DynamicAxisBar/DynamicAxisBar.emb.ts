@@ -2,6 +2,7 @@ import { DimensionOrMeasure, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component, { Props } from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'DynamicAxisBar',
@@ -52,6 +53,14 @@ export const meta = {
       label: 'Granularity (for dates)',
       defaultValue: 'week',
       category: 'Variables to configure',
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -155,6 +164,7 @@ export default defineComponent<Props, typeof meta, EmbeddableState>(Component, m
                 direction: 'desc',
               },
             ],
+            timezone: inputs.timezone,
             limit: 100,
           })
         : loadData({
@@ -167,6 +177,7 @@ export default defineComponent<Props, typeof meta, EmbeddableState>(Component, m
               },
             ],
             limit: 100,
+            timezone: inputs.timezone,
           }),
     };
   },

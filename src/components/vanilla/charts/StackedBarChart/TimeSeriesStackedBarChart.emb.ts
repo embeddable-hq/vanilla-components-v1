@@ -2,6 +2,7 @@ import { loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component from './index';
+import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'TimeSeriesStackedBarChart',
@@ -51,6 +52,14 @@ export const meta = {
         dataset: 'ds',
       },
       category: 'Chart data',
+    },
+    {
+      name: 'timezone',
+      type: TimeZones as never,
+      label: 'Time Zone',
+      description: 'The time zone to use for date formatting',
+      category: 'Chart settings',
+      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -161,6 +170,7 @@ export default defineComponent(Component, meta, {
             direction: 'desc',
           },
         ],
+        timezone: inputs.timezone,
       }),
     };
   },
