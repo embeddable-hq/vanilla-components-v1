@@ -1,8 +1,7 @@
-import { Dimension, loadData } from '@embeddable.com/core';
+import { loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component from './index';
-import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'HeatGrid',
@@ -40,14 +39,6 @@ export const meta = {
         dataset: 'ds',
       },
       category: 'Chart data',
-    },
-    {
-      name: 'timezone',
-      type: TimeZones as never,
-      label: 'Time Zone',
-      description: 'The time zone to use for date formatting',
-      category: 'Chart settings',
-      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -128,7 +119,7 @@ export const meta = {
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent(Component, meta, {
-  props: (inputs: Inputs<typeof meta>) => {
+  props: (inputs: Inputs<typeof meta>, _, clientContext) => {
     return {
       ...inputs,
       results: loadData({
@@ -141,7 +132,7 @@ export default defineComponent(Component, meta, {
           inputs.metric,
         ],
         limit: 10_000,
-        timezone: inputs.timezone,
+        timezone: clientContext.timezone || 'UTC',
       }),
     };
   },

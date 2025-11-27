@@ -8,7 +8,6 @@ import {
 } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 import Component from './index';
-import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'BarChart',
@@ -84,14 +83,6 @@ export const meta = {
       label: '2nd axis title',
       description: 'The title for the chart',
       category: 'Optional chart data',
-    },
-    {
-      name: 'timezone',
-      type: TimeZones as never,
-      label: 'Time Zone',
-      description: 'The time zone to use for date formatting',
-      category: 'Chart settings',
-      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -220,7 +211,7 @@ export default defineComponent(Component, meta, {
         select: [...dimensions, ...measures],
         orderBy: orderProp,
         limit: inputs.limit || 100,
-        timezone: inputs.timezone,
+        timezone: clientContext.timezone || 'UTC',
       }),
     };
   },

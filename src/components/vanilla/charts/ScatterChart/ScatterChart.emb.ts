@@ -1,8 +1,7 @@
-import { OrderBy, isDimension, isMeasure, loadData } from '@embeddable.com/core';
+import { OrderBy, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 import Component from './index';
-import TimeZones from '../../../../types/TimeZones.type.emb';
 
 export const meta = {
   name: 'ScatterChart',
@@ -51,14 +50,6 @@ export const meta = {
       label: 'Granularity',
       defaultValue: 'week',
       category: 'Variables to configure',
-    },
-    {
-      name: 'timezone',
-      type: TimeZones as never,
-      label: 'Time Zone',
-      description: 'The time zone to use for date formatting',
-      category: 'Chart settings',
-      defaultValue: 'UTC',
     },
     {
       name: 'title',
@@ -145,7 +136,7 @@ export const meta = {
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent(Component, meta, {
-  props: (inputs: Inputs<typeof meta>) => {
+  props: (inputs: Inputs<typeof meta>, _, clientContext) => {
     const orderProp: OrderBy[] = [];
 
     orderProp.push({
@@ -168,13 +159,13 @@ export default defineComponent(Component, meta, {
               inputs.metrics,
             ],
             limit: inputs.limit || 50,
-            timezone: inputs.timezone,
+            timezone: clientContext.timezone || 'UTC',
           })
         : loadData({
             from: inputs.ds,
             select: [inputs.xAxis, inputs.metrics],
             limit: inputs.limit || 50,
-            timezone: inputs.timezone,
+            timezone: clientContext.timezone || 'UTC',
           }),
     };
   },
