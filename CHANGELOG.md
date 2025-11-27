@@ -1,14 +1,16 @@
 # @embeddable.com/vanilla-components
 
+## 1.2.1
+
+### Patch Changes
+
+- 2604698: Adjusted time zones to work with client context instead of inputs
+
 ## 1.2.0
 
 ### Minor Changes
 
 - c4dfa9f: Time Zone Support
-
-### Patch Changes
-
-- 2604698: Adjusted time zones to work with client context instead of inputs
 
 ## 1.1.15
 
