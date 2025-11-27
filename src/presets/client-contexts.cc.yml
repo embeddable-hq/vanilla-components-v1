@@ -1,7 +1,14 @@
 - name: Default
   clientContext:
     theme: 'default'
+    timezone: 'UTC'
 
-- name: Celtics
+- name: New York
   clientContext:
-    theme: 'celtics'
+    theme: 'example'
+    timezone: 'America/New_York'
+
+- name: Kiritimati
+  clientContext:
+    theme: 'example'
+    timezone: 'Pacific/Kiritimati'
