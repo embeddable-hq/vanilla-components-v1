@@ -205,11 +205,7 @@ export default defineComponent(Component, meta, {
                 {
                   property: inputs.xAxis,
                   operator: 'inDateRange',
-                  value: {
-                    from: inputs.prevTimeFilter.from,
-                    relativeTimeString: '',
-                    to: inputs.prevTimeFilter.to,
-                  },
+                  value: inputs.prevTimeFilter,
                 },
               ]
             : undefined,
