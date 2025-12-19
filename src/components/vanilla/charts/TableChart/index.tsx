@@ -38,6 +38,7 @@ export default (props: Props) => {
   const [maxRowsFit, setMaxRowFit] = useState(0);
   const [resizing, setResizing] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
+  const [totalRows, setTotalRows] = useState<number | null>(null);
 
   const theme: Theme = useTheme() as Theme;
 
@@ -48,6 +49,13 @@ export default (props: Props) => {
     prevVariableValues: {},
     sort: props.defaultSort,
   }) as [Meta, (f: (m: Meta) => Meta) => void];
+
+  // Handle total row count for advanced pagination
+  useEffect(() => {
+    if (results && results.total !== undefined) {
+      setTotalRows(results.total);
+    }
+  }, [results]);
 
   useEffect(() => {
     if (!resizing) {
@@ -112,6 +120,7 @@ export default (props: Props) => {
     [meta, setMeta],
   );
 
+  // For non-advanced pagination we have to guess if there's a next page
   useEffect(() => {
     if (props.results?.data?.length) {
       setHasNextPage(props.limit ? props.results.data.length >= props.limit : false);
@@ -192,6 +201,7 @@ export default (props: Props) => {
         onPageChange={(page) => {
           setMeta((meta) => ({ ...meta, page: page }));
         }}
+        totalPages={totalRows && props.limit ? Math.ceil(totalRows / props.limit) : undefined}
       />
     </Container>
   );

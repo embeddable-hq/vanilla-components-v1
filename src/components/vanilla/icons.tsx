@@ -104,6 +104,82 @@ export const ChevronRight = ({
   );
 };
 
+export const DoubleChevronLeft = ({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: MouseEventHandler<SVGSVGElement>;
+}) => {
+  const theme: Theme = useTheme() as Theme;
+  return (
+    <svg
+      onClick={onClick}
+      className={className || ''}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="-10 -11 44 44"
+      id="Arrows-Button-Left-Double--Streamline-Micro"
+      height="20"
+      width="20"
+    >
+      <desc>Arrows Button Left Double Streamline Icon: https://streamlinehq.com</desc>
+      <path
+        stroke={theme.svg.fillNormal}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M10.8 20.520000000000003 1.3953600000000002 11.56464a1.08 1.08 0 0 1 0 -1.52928L10.8 1.08"
+        strokeWidth="4.2"
+      ></path>
+      <path
+        stroke={theme.svg.fillNormal}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M20.520000000000003 20.520000000000003 11.11536 11.56464a1.08 1.08 0 0 1 0 -1.52928L20.520000000000003 1.08"
+        strokeWidth="4.2"
+      ></path>
+    </svg>
+  );
+};
+
+export const DoubleChevronRight = ({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: MouseEventHandler<SVGSVGElement>;
+}) => {
+  const theme: Theme = useTheme() as Theme;
+  return (
+    <svg
+      onClick={onClick}
+      className={className || ''}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="-10 -11 44 44"
+      id="Arrows-Button-Left-Double--Streamline-Micro"
+      height="20"
+      width="20"
+    >
+      <desc>Arrows Button Right Double Streamline Icon: https://streamlinehq.com</desc>
+      <path
+        stroke={theme.svg.fillNormal}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m10.8 20.520000000000003 9.40464 -8.95536a1.08 1.08 0 0 0 0 -1.52928L10.8 1.08"
+        strokeWidth="4.2"
+      ></path>
+      <path
+        stroke={theme.svg.fillNormal}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m1.08 20.520000000000003 9.40464 -8.95536a1.08 1.08 0 0 0 0 -1.52928L1.08 1.08"
+        strokeWidth="4.2"
+      ></path>
+    </svg>
+  );
+};
+
 export const ChevronDown = ({
   className,
   onClick,
