@@ -142,7 +142,7 @@ export default (props: Props) => {
           font-[--embeddable-charts-fontWeights-kpiNumber]
         `}
       >
-        {dimension ? (
+        {!results.isLoading && !prevResults && dimension && (
           <>
             <div
               className={`text-[color:--embeddable-font-colorNormal]`}
@@ -162,7 +162,8 @@ export default (props: Props) => {
               </p>
             )}
           </>
-        ) : (
+        )}
+        {!results.isLoading && !prevResults?.isLoading && !dimension && (
           <>
             <div
               className={`text-[color:--embeddable-font-colorNormal]`}
@@ -170,7 +171,7 @@ export default (props: Props) => {
             >
               <p>{`${prefix ? prefix : ''}${nFormatted}${suffix ? suffix : ''}`}</p>
             </div>
-            {prevTimeFilter?.to && (
+            {(prevTimeFilter?.to || prevTimeFilter?.relativeTimeString) && (
               <div
                 className={`
                   flex
