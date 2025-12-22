@@ -54,7 +54,7 @@ export default (props: Props) => {
   const datasetsMeta = {
     barPercentage: 0.8,
     barThickness: 'flex',
-    borderRadius: theme.charts.bar.borderRadius,
+    borderRadius: theme.charts.bar.borderRadius as number,
     borderSkipped: theme.charts.bar.borderSkipped,
     borderWidth: theme.charts.bar.borderWidth,
     maxBarThickness: 50,
