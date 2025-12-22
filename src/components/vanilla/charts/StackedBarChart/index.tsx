@@ -3,6 +3,7 @@ import {
   CategoryScale,
   ChartData,
   Chart as ChartJS,
+  ChartOptions,
   Filler,
   Legend,
   LinearScale,
@@ -51,11 +52,14 @@ export default (props: Props) => {
   setChartJSDefaults(theme);
 
   const datasetsMeta = {
-    barPercentage: 0.6,
+    barPercentage: 0.8,
     barThickness: 'flex',
-    maxBarThickness: 25,
+    borderRadius: theme.charts.bar.borderRadius,
+    borderSkipped: theme.charts.bar.borderSkipped,
+    borderWidth: theme.charts.bar.borderWidth,
+    maxBarThickness: 50,
     minBarLength: 0,
-    borderRadius: 3,
+    order: 1,
   };
 
   //add missing dates to time-series stacked barcharts
@@ -97,7 +101,13 @@ export default (props: Props) => {
         aria-label={props.title ? `Stacked Bar Chart: ${props.title}` : 'Stacked Bar Chart'}
         aria-roledescription="stacked bar chart"
         height="100%"
-        options={getBarChartOptions({ ...updatedProps, stacked: props.stackBars, theme })}
+        options={
+          getBarChartOptions({
+            ...updatedProps,
+            stacked: props.stackBars,
+            theme,
+          }) as ChartOptions<'bar'>
+        }
         data={
           getStackedChartData(updatedProps, datasetsMeta) as ChartData<'bar', number[], unknown>
         }
