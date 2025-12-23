@@ -368,7 +368,7 @@ export const defaultTheme: Theme = {
     backgroundColor: '#FFFFFF',
   },
   spinner: {
-    zIndex: 1,
+    zIndex: 20,
   },
   svg: {
     fillBkg: '#FFFFFF',
