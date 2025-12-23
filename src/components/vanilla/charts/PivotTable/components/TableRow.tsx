@@ -62,8 +62,8 @@ const TableRow = ({ columns, row, renderCell, level = 0, isRowGroupDefaultExpand
     <>
       <tr
         className="
-        bg-[color:--embeddable-controls-backgrounds-colors-soft]
-        hover:bg-[color:--embeddable-controls-backgrounds-colors-normal]"
+        bg-controls-backgrounds-soft
+        hover:bg-controls-backgrounds-normal"
       >
         {renderColumns(columns, row.data)}
       </tr>

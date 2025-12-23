@@ -116,7 +116,7 @@ export default ({
     <>
       <div className="h-full relative font-embeddable text-sm flex flex-col">
         {props.enableDownloadAsCSV || props.enableDownloadAsPNG ? (
-          <div className={`${!props.title ? 'h-[32px] w-full' : ''}`}>
+          <div className={`${!props.title ? 'h-8 w-full' : ''}`}>
             {/* spacer to keep charts from overlaying download menu if no title*/}
           </div>
         ) : null}
@@ -156,8 +156,8 @@ export default ({
                 skeleton-box
                 top-0
                 w-full
-                z-[--embeddable-controls-skeletonBox-zIndex]
-                bg-[color:--embeddable-controls-backgrounds-colors-heavy]
+                z-controls-skeleton-box
+                bg-controls-backgrounds-heavy
               `}
               />
             )}

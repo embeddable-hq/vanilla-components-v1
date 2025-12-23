@@ -122,13 +122,13 @@ export default function DateRangeWithGranularity(props: Props) {
               md:block
               shrink
               whitespace-nowrap
-              text-[font-size:--embeddable-font-size]
-              text-[color:--embeddable-font-colorNormal]
+              text-embeddable
+              text-font-color-normal
             `}
           >
             compare to
           </div>
-          <div className="grow basis-0 max-w-[150px] h-full ml-2">
+          <div className="grow basis-0 max-w-150px h-full ml-2">
             <Dropdown
               unclearable
               minDropdownWidth={320}
@@ -142,7 +142,7 @@ export default function DateRangeWithGranularity(props: Props) {
         </>
       )}
       {!!props.showGranularity && (
-        <div className="grow basis-0 max-w-[115px] h-full ml-2">
+        <div className="grow basis-0 max-w-115px h-full ml-2">
           <Dropdown
             unclearable
             minDropdownWidth={80}

@@ -14,7 +14,7 @@ export default function TableCell({ isHeader, className, children }: PropsWithCh
       className={cn(
         'px-2 py-1.5 font-normal first:border-l bg-inherit',
         {
-          'lg:z-[--embeddable-charts-table-cell-zIndex] lg:sticky lg:left-0 text-left': isHeader,
+          'lg:z-charts-table-cell lg:sticky lg:left-0 text-left': isHeader,
         },
         className,
       )}

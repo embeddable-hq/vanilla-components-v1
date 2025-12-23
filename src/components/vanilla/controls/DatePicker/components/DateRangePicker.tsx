@@ -133,7 +133,7 @@ export default function DateRangePicker(props: Props) {
           relative
           text-sm
           w-full
-          text-[color:--embeddable-font-colorNormal]
+          text-font-color-normal
         `}
       >
         <Dropdown
@@ -145,13 +145,13 @@ export default function DateRangePicker(props: Props) {
             flex
             h-10
             items-center
-            max-w-[120px]
-            min-w-[80px]
+            max-w-120px
+            min-w-80px
             relative
             rounded-r-none
-            sm:max-w-[140px]
+            sm:max-w-140px
             w-full
-            border-[color:--embeddable-controls-borders-colors-normal]
+            border-controls-borders-normal
           `}
           defaultValue={range?.relativeTimeString || ''}
           onChange={(relativeTimeString) => {
@@ -180,14 +180,14 @@ export default function DateRangePicker(props: Props) {
             font-embeddable
             grow
             items-center
-            min-w-[60px]
+            min-w-60px
             p-4
             relative
             text-sm
-            bg-[color:--embeddable-controls-backgrounds-colors-soft]
-            border-[color:--embeddable-controls-borders-colors-normal]
-            hover:bg-[color:--embeddable-controls-inputs-colors-hover]
-            rounded-r-[--embeddable-controls-borders-radius]
+            bg-controls-backgrounds-soft
+            border-controls-borders-normal
+            hover:bg-controls-inputs-hover
+            rounded-r-controls-borders-radius
           `}
         >
           <input
@@ -217,7 +217,7 @@ export default function DateRangePicker(props: Props) {
               sm:left-0
               sm:right-auto
               top-8
-              z-[--embeddable-controls-datepicker-zIndex]
+              z-controls-datepicker
             `}
           >
             <DayPicker
@@ -227,13 +227,13 @@ export default function DateRangePicker(props: Props) {
                 px-4
                 py-3
                 !m-0
-                bg-[color:--embeddable-controls-backgrounds-colors-soft]
-                border-[color:--embeddable-controls-borders-colors-normal]
-                rounded-[--embeddable-controls-borders-radius]
+                bg-controls-backgrounds-soft
+                border-controls-borders-normal
+                rounded-controls-borders-radius
               `}
               classNames={{
                 selected: `
-                  bg-[color:--embeddable-controls-inputs-colors-selected]
+                  bg-controls-inputs-selected
                   `,
               }}
               components={{
@@ -279,9 +279,9 @@ const CustomCaption = (props: MonthCaptionProps) => {
           items-center
           justify-center
           w-7
-          bg-[color:--embeddable-controls-backgrounds-colors-soft]
-          border-[color:--embeddable-controls-borders-colors-heavy]
-          rounded-[--embeddable-controls-borders-radius]
+          bg-controls-backgrounds-soft
+          border-controls-borders-heavy
+          rounded-controls-borders-radius
         `}
         disabled={!previousMonth}
         onClick={() => previousMonth && goToMonth(previousMonth)}
@@ -299,9 +299,9 @@ const CustomCaption = (props: MonthCaptionProps) => {
           items-center
           justify-center
           w-7
-          bg-[color:--embeddable-controls-backgrounds-colors-soft]
-          border-[color:--embeddable-controls-borders-colors-heavy]
-          rounded-[--embeddable-controls-borders-radius]
+          bg-controls-backgrounds-soft
+          border-controls-borders-heavy
+          rounded-controls-borders-radius
         `}
         disabled={!nextMonth}
         onClick={() => nextMonth && goToMonth(nextMonth)}

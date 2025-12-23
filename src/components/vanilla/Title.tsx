@@ -20,7 +20,7 @@ export default function Title({ title, style }: Props) {
           leading-6
           mb-2
           text-base
-          font-[--embeddable-charts-fontWeights-title]
+          font-charts-title
         `}
         style={style || {}}
       >
