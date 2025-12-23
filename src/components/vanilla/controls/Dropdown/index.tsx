@@ -148,7 +148,7 @@ export default (props: Props) => {
             onKeyDown={(e) =>
               handleKeyDownCallback(e, () => set(o[props.property?.name || ''] || ''), true)
             }
-            className={`block min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal  ${
+            className={`block min-h-36px px-3 py-2 hover:bg-black/5 cursor-pointer font-normal  ${
               value === o[props.property?.name || ''] ? 'bg-black/5' : ''
             } truncate`}
             tabIndex={0}
@@ -176,7 +176,7 @@ export default (props: Props) => {
             flex
             h-10
             items-center
-            min-w-[50px]
+            min-w-50px
             relative
             w-full
             bg-controls-backgrounds-soft
@@ -232,7 +232,7 @@ export default (props: Props) => {
               text-sm ${focus ? 'hidden' : ''}
               top-1
               truncate
-              w-[calc(100%-2.5rem)]
+              w-padded-100
               whitespace-nowrap
               rounded-controls-borders-radius
               text-controls-font-normal
@@ -250,7 +250,7 @@ export default (props: Props) => {
               border
               flex
               flex-col
-              max-h-[400px]
+              max-h-400px
               overflow-x-hidden
               overflow-y-auto
               top-11

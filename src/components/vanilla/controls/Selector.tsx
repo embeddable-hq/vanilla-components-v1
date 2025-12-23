@@ -135,7 +135,7 @@ export default (props: Props) => {
             font-normal
             hover:bg-black/5
             items-center
-            min-h-[36px]
+            min-h-36px
             overflow-hidden
             px-3
             py-2
@@ -155,7 +155,7 @@ export default (props: Props) => {
     <Container title={props.title}>
       <div
         className={twMerge(
-          'relative rounded-controls-borders-radius w-full min-w-[50px] h-10 border border-[#DADCE1] flex items-center',
+          'relative rounded-controls-borders-radius w-full min-w-50px h-10 border border-controls-borders-normal flex items-center',
           props.className,
         )}
       >
@@ -206,7 +206,7 @@ export default (props: Props) => {
               text-sm
               top-1
               truncate
-              w-[calc(100%-2.5rem)]
+              w-padded-100
               whitespace-nowrap
               text-controls-font-normal
               ${focus ? 'hidden' : ''}

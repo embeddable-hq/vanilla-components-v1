@@ -116,7 +116,7 @@ export default ({
     <>
       <div className="h-full relative font-embeddable text-sm flex flex-col">
         {props.enableDownloadAsCSV || props.enableDownloadAsPNG ? (
-          <div className={`${!props.title ? 'h-[32px] w-full' : ''}`}>
+          <div className={`${!props.title ? 'h-8 w-full' : ''}`}>
             {/* spacer to keep charts from overlaying download menu if no title*/}
           </div>
         ) : null}

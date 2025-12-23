@@ -145,11 +145,11 @@ export default function DateRangePicker(props: Props) {
             flex
             h-10
             items-center
-            max-w-[120px]
-            min-w-[80px]
+            max-w-120px
+            min-w-80px
             relative
             rounded-r-none
-            sm:max-w-[140px]
+            sm:max-w-140px
             w-full
             border-controls-borders-normal
           `}
@@ -180,7 +180,7 @@ export default function DateRangePicker(props: Props) {
             font-embeddable
             grow
             items-center
-            min-w-[60px]
+            min-w-60px
             p-4
             relative
             text-sm

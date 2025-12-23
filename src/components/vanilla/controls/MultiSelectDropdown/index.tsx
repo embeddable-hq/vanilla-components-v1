@@ -155,17 +155,17 @@ export default (props: Props) => {
               setIsDropdownOrItemFocused(true);
               setFocus(true);
             }}
-            className={`flex items-center min-h-[36px] w-full px-3 py-2 hover:bg-black/5 cursor-pointer font-normal gap-1 ${
+            className={`flex items-center min-h-36px w-full px-3 py-2 hover:bg-black/5 cursor-pointer font-normal gap-1 ${
               value?.includes(o[props.property?.name || '']) ? 'bg-black/5' : ''
             }`}
             tabIndex={0}
           >
             {value?.includes(o[props.property?.name || '']) ? (
-              <div className={`w-[16px] h-[16px] inline-block`}>
+              <div className={`w-16px h-16px inline-block`}>
                 <Checkbox />
               </div>
             ) : (
-              <div className={`w-[16px] h-[16px] inline-block`}>
+              <div className={`w-16px h-16px inline-block`}>
                 <CheckboxEmpty />
               </div>
             )}
@@ -192,7 +192,7 @@ export default (props: Props) => {
             flex
             h-10
             items-center
-            min-w-[50px]
+            min-w-50px
             relative
             w-full
             bg-controls-backgrounds-soft
@@ -244,7 +244,7 @@ export default (props: Props) => {
               text-sm
               top-1
               truncate
-              w-[calc(100%-2rem)]
+              w-padded-100
               whitespace-nowrap
               bg-controls-backgrounds-soft
               border-controls-borders-normal
@@ -265,7 +265,7 @@ export default (props: Props) => {
               border
               flex
               flex-col
-              max-h-[400px]
+              max-h-400px
               overflow-x-hidden
               overflow-y-auto
               top-11

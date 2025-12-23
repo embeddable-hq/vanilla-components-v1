@@ -16,9 +16,9 @@ export default function Button({ buttonLabel, showSpinner, disabled, onClick, ic
       className={`
         border
         disabled:cursor-not-allowed
-        disabled:opacity-[0.6]
+        disabled:opacity-60
         flex
-        gap-[8px]
+        gap-8
         items-center
         justify-center
         bg-controls-buttons-active-background

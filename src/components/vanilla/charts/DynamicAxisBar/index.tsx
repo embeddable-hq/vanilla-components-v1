@@ -55,29 +55,30 @@ export default (props: Props) => {
     theme,
     xAxis: xAxis ? xAxis : props.xAxis,
   };
-  const mappedData = results?.data?.map((d) => ({
-    ...d,
-    ...(xAxis?.name && {
-      [xAxis.name]: dateFormat
-        ? formatValue(d?.[xAxis.name], {
-            meta: xAxis?.meta,
-            dateFormat,
-          })
-        : d?.[xAxis.name],
-    }),
-  })) ?? [];
+  const mappedData =
+    results?.data?.map((d) => ({
+      ...d,
+      ...(xAxis?.name && {
+        [xAxis.name]: dateFormat
+          ? formatValue(d?.[xAxis.name], {
+              meta: xAxis?.meta,
+              dateFormat,
+            })
+          : d?.[xAxis.name],
+      }),
+    })) ?? [];
 
   return (
     <Container {...props} className="overflow-y-hidden">
-      <div className="flex h-[60px] w-full">
+      <div className="flex h-60px w-full">
         <div>
           <select
             className={`
               border
               flex
-              h-10
+              h-32px
               items-center
-              min-w-[50px]
+              min-w-50px
               px-3
               relative
               w-full

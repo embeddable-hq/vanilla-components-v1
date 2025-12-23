@@ -144,10 +144,7 @@ export default (props: Props) => {
       >
         {dimension ? (
           <>
-            <div
-              className={`text-font-color-normal`}
-              style={{ fontSize: `${fontSize}px` }}
-            >
+            <div className={`text-font-color-normal`} style={{ fontSize: `${fontSize}px` }}>
               <p>{results?.data?.[0]?.[dimension.name]}</p>
             </div>
             {displayMetric && metric && (
@@ -164,10 +161,7 @@ export default (props: Props) => {
           </>
         ) : (
           <>
-            <div
-              className={`text-font-color-normal`}
-              style={{ fontSize: `${fontSize}px` }}
-            >
+            <div className={`text-font-color-normal`} style={{ fontSize: `${fontSize}px` }}>
               <p>{`${prefix ? prefix : ''}${nFormatted}${suffix ? suffix : ''}`}</p>
             </div>
             {prevTimeFilter?.to && (
@@ -186,7 +180,7 @@ export default (props: Props) => {
                 }}
               >
                 <Chevron
-                  className={`${p && p < 0 ? 'rotate-180' : ''} h-[20px] w-[9px] min-w-[9px] mr-1.5`}
+                  className={`${p && p < 0 ? 'rotate-180' : ''} h-20px w-9px min-w-9px mr-1.5`}
                 />
                 <span>{`${prefix ? prefix : ''}${pFormatted}%${suffix ? suffix : ''}`}</span>
                 {showPrevPeriodLabel &&

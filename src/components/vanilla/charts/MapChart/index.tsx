@@ -85,7 +85,7 @@ export default (props: Props) => {
 
   return (
     <Container {...props} className="overflow-y-hidden">
-      <div className="relative aspect-[1.87] overflow-hidden cursor-pointer">
+      <div className="relative aspect-187 overflow-hidden cursor-pointer">
         <div
           ref={box}
           className="relative"
