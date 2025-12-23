@@ -62,11 +62,23 @@ export default (props: Props) => {
         // We haven't finished the loadData yet, so hang on
         return;
       }
-      downloadAsCSV(props, allResults?.data, [], 'downloaded-chart-data');
+      // Massage allResults data to respect date formatting
+      const formattedData = allResults.data.map((row) => {
+        const formattedRow: { [key: string]: any } = {};
+        const formattedColumns = columns.map((column) =>
+          formatColumn(row[column.name], column, props.dps),
+        );
+        columns.forEach((column, index) => {
+          formattedRow[column.name] = formattedColumns[index];
+        });
+        return formattedRow;
+      });
+
+      downloadAsCSV(props, formattedData, [], 'downloaded-chart-data');
       setIsDownloadingAll(false);
       setMeta((meta) => ({ ...meta, downloadAll: false }));
     }
-  }, [allResults, isDownloadingAll, props, setMeta]);
+  }, [allResults, columns, isDownloadingAll, props, setMeta]);
 
   const calculateMaxRowFit = useCallback(
     ({ height }: { height: number }) => {
