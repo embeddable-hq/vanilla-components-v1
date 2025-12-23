@@ -10,7 +10,80 @@ module.exports = {
     extend: {
       fontFamily: {
         embeddable: defaultTheme.font.family,
-      }
+      },
+      height: {
+        'controls-buttons-height': 'var(--embeddable-controls-buttons-height)',
+      },
+      maxHeight: {
+        'controls-multiselector': 'var(--embeddable-controls-multiSelector-maxHeight)',
+      },
+      borderColor: {
+        'controls-multiselector': 'var(--embeddable-controls-multiSelector-borderColor)',
+      },
+      // CSS Variable tokens
+      colors: {
+        'font-color-normal': 'var(--embeddable-font-colorNormal)',
+        'controls-backgrounds-soft': 'var(--embeddable-controls-backgrounds-colors-soft)',
+        'controls-backgrounds-transparent': 'var(--embeddable-controls-backgrounds-colors-transparent)',
+        'controls-backgrounds-heavy': 'var(--embeddable-controls-backgrounds-colors-heavy)',
+        'controls-backgrounds-normal': 'var(--embeddable-controls-backgrounds-colors-normal)',
+        'controls-inputs-hover': 'var(--embeddable-controls-inputs-colors-hover)',
+        'controls-inputs-selected': 'var(--embeddable-controls-inputs-colors-selected)',
+        'controls-buttons-active-background': 'var(--embeddable-controls-buttons-active-background)',
+        'controls-buttons-hovered-background': 'var(--embeddable-controls-buttons-hovered-background)',
+        'controls-buttons-pressed': 'var(--embeddable-controls-buttons-colors-pressed)',
+        'controls-borders-normal': 'var(--embeddable-controls-borders-colors-normal)',
+        'controls-borders-heavy': 'var(--embeddable-controls-borders-colors-heavy)',
+        'controls-borders-primary': 'var(--embeddable-controls-boders-colors-primary)',
+        'controls-font-normal': 'var(--embeddable-controls-font-colors-normal)',
+        'controls-buttons-active-font-color': 'var(--embeddable-controls-buttons-active-fontColor)',
+        'controls-buttons-hovered-font-color': 'var(--embeddable-controls-buttons-hovered-fontColor)',
+        'controls-buttons-pressed-font-color': 'var(--embeddable-controls-buttons-pressed-fontColor)',
+        'controls-buttons-active-border': 'var(--embeddable-controls-buttons-active-border)',
+        'controls-buttons-hovered-border': 'var(--embeddable-controls-buttons-hovered-border)',
+        'controls-buttons-pressed-border': 'var(--embeddable-controls-buttons-pressed-border)',
+        'controls-multiselector-border': 'var(--embeddable-controls-multiSelector-borderColor)',
+        'download-menu-background-color': 'var(--embeddable-downloadMenu-backgroundColor)',
+        'download-menu-hover-background-color': 'var(--embeddable-downloadMenu-hover-backgroundColor)',
+        'download-menu-hover-color': 'var(--embeddable-downloadMenu-hover-fontColor)',
+        'download-menu-color': 'var(--embeddable-downloadMenu-font-color)',
+      },
+      padding: {
+        'controls-buttons-padding-x': 'var(--embeddable-controls-buttons-paddingX)',
+        'controls-buttons-padding-y': 'var(--embeddable-controls-buttons-paddingY)',
+        'download-menu-outer': 'var(--embeddable-downloadMenu-paddingOuter)',
+        'download-menu-inner': 'var(--embeddable-downloadMenu-paddingInner)',
+      },
+      borderRadius: {
+        'controls-borders-radius': 'var(--embeddable-controls-borders-radius)',
+        'controls-buttons-radius': 'var(--embeddable-controls-buttons-radius)',
+        'controls-tooltips-radius': 'var(--embeddable-controls.tooltips.radius)',
+        'download-menu-border-radius': 'var(--embeddable-downloadMenu-borderRadius)',
+      },
+      fontSize: {
+        'embeddable': 'var(--embeddable-font-size)',
+      },
+      zIndex: {
+        'controls-datepicker': 'var(--embeddable-controls-datepicker-zIndex)',
+        'controls-dropdown-focused': 'var(--embeddable-controls-dropdown-focused-zIndex)',
+        'controls-dropdown-spinner': 'var(--embeddable-controls-dropdown-spinner-zIndex)',
+        'controls-dropdown-chevron': 'var(--embeddable-controls-dropdown-chevron-zIndex)',
+        'controls-dropdown-clear': 'var(--embeddable-controls-dropdown-clear-zIndex)',
+        'controls-multiselector': 'var(--embeddable-controls-multiSelector-zIndex)',
+        'controls-multiselector-chevron': 'var(--embeddable-controls-multiSelector-chevron-zIndex)',
+        'controls-multiselector-clear': 'var(--embeddable-controls-multiSelector-clear-zIndex)',
+        'controls-skeleton-box': 'var(--embeddable-controls-skeletonBox-zIndex)',
+        'charts-table-header': 'var(--embeddable-charts-table-header-zIndex)',
+        'charts-table-cell': 'var(--embeddable-charts-table-cell-zIndex)',
+        'charts-table-pivot': 'var(--embeddable-charts-table-pivot-zIndex)',
+        'spinner': 'var(--embeddable-spinner-zIndex)',
+        'download-menu': 'var(--embeddable-downloadMenu-zIndex)',
+      },
+      fontWeight: {
+        'charts-kpi': 'var(--embeddable-charts-fontWeights-kpiNumber)',
+        'charts-pagination': 'var(--embeddable-charts-fontWeights-pagination)',
+        'charts-title': 'var(--embeddable-charts-fontWeights-title)',
+      },
     }
   },
   safelist: [

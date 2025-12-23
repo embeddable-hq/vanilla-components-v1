@@ -139,13 +139,13 @@ export default (props: Props) => {
           leading-tight
           relative
           text-${theme.charts.kpi?.alignment || 'center'}
-          font-[--embeddable-charts-fontWeights-kpiNumber]
+          font-charts-kpi
         `}
       >
         {dimension ? (
           <>
             <div
-              className={`text-[color:--embeddable-font-colorNormal]`}
+              className={`text-font-color-normal`}
               style={{ fontSize: `${fontSize}px` }}
             >
               <p>{results?.data?.[0]?.[dimension.name]}</p>
@@ -165,7 +165,7 @@ export default (props: Props) => {
         ) : (
           <>
             <div
-              className={`text-[color:--embeddable-font-colorNormal]`}
+              className={`text-font-color-normal`}
               style={{ fontSize: `${fontSize}px` }}
             >
               <p>{`${prefix ? prefix : ''}${nFormatted}${suffix ? suffix : ''}`}</p>

@@ -102,7 +102,7 @@ export default (props: Props) => {
               absolute
               text-black
               bg-slate-200/80
-              rounded-[--embeddable-controls.tooltips.radius]
+              rounded-controls-tooltips-radius
               whitespace-nowrap
               pointer-events-none
               empty:opacity-0

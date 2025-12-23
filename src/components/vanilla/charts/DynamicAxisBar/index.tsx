@@ -81,8 +81,8 @@ export default (props: Props) => {
               px-3
               relative
               w-full
-              border-[color:--embeddable-controls-borders-colors-normal]
-              rounded-[--embeddable-controls-borders-radius]
+              border-controls-borders-normal
+              rounded-controls-borders-radius
             `}
             value={value}
             onChange={(e) => handleChange(e.target.value)}

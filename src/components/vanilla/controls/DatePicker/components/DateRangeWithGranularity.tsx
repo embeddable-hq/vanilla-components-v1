@@ -1,4 +1,4 @@
-import { dateParser } from '@cubejs-backend/api-gateway/dist/src/dateParser.js';
+import { dateParser } from '@cubejs-backend/api-gateway/dist/src/date-parser.js';
 import { DataResponse, Dimension, Granularity, TimeRange } from '@embeddable.com/core';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
@@ -122,8 +122,8 @@ export default function DateRangeWithGranularity(props: Props) {
               md:block
               shrink
               whitespace-nowrap
-              text-[font-size:--embeddable-font-size]
-              text-[color:--embeddable-font-colorNormal]
+              text-embeddable
+              text-font-color-normal
             `}
           >
             compare to

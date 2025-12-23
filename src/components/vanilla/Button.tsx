@@ -21,20 +21,20 @@ export default function Button({ buttonLabel, showSpinner, disabled, onClick, ic
         gap-[8px]
         items-center
         justify-center
-        bg-[color:--embeddable-controls-buttons-active-background]
-        border-[color:--embeddable-controls-buttons-active-border]
-        h-[--embeddable-controls-buttons-height]
-        hover:bg-[color:--embeddable-controls-buttons-hovered-background]
-        hover:border-[color:--embeddable-controls-buttons-hovered-border]
-        hover:text-[color:--embeddable-controls-buttons-hovered-fontColor]
-        pressed:bg-[color:--embeddable-controls-buttons-colors-pressed]
-        pressed:border-[color:--embeddable-controls-buttons-pressed-border]
-        pressed:text-[color:--embeddable-controls-buttons-pressed-fontColor]
-        px-[--embeddable-controls-buttons-paddingX]
-        py-[--embeddable-controls-buttons-paddingY]
-        rounded-[--embeddable-controls-buttons-radius] 
-        text-[color:--embeddable-controls-buttons-active-fontColor]
-        text-[font-size:--embeddable-font-size]
+        bg-controls-buttons-active-background
+        border-controls-buttons-active-border
+        h-controls-buttons-height
+        hover:bg-controls-buttons-hovered-background
+        hover:border-controls-buttons-hovered-border
+        hover:text-controls-buttons-hovered-font-color
+        pressed:bg-controls-buttons-pressed
+        pressed:border-controls-buttons-pressed-border
+        pressed:text-controls-buttons-pressed-font-color
+        px-controls-buttons-padding-x
+        py-controls-buttons-padding-y
+        rounded-controls-buttons-radius
+        text-controls-buttons-active-font-color
+        text-embeddable
       `}
       onClick={onClick}
       type="button"

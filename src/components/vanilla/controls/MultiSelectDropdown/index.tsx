@@ -195,9 +195,9 @@ export default (props: Props) => {
             min-w-[50px]
             relative
             w-full
-            bg-[color:--embeddable-controls-backgrounds-colors-soft]
-            border-[color:--embeddable-controls-borders-colors-normal]
-            rounded-[--embeddable-controls-borders-radius]
+            bg-controls-backgrounds-soft
+            border-controls-borders-normal
+            rounded-controls-borders-radius
             `,
           props.className,
         )}
@@ -225,9 +225,9 @@ export default (props: Props) => {
             px-3
             text-sm ${focus || !value ? '' : 'opacity-0'}
             w-full
-            rounded-[--embeddable-controls-borders-radius]
-            bg-[color:--embeddable-controls-backgrounds-colors-transparent]
-            text-[color:--embeddable-controls-font-colors-normal]
+            rounded-controls-borders-radius
+            bg-controls-backgrounds-transparent
+            text-controls-font-normal
           `}
         />
 
@@ -246,10 +246,10 @@ export default (props: Props) => {
               truncate
               w-[calc(100%-2rem)]
               whitespace-nowrap
-              bg-[color:--embeddable-controls-backgrounds-colors-soft]
-              border-[color:--embeddable-controls-borders-colors-normal]
-              rounded-[--embeddable-controls-borders-radius]
-              text-[color:--embeddable-controls-font-colors-normal]
+              bg-controls-backgrounds-soft
+              border-controls-borders-normal
+              rounded-controls-borders-radius
+              text-controls-font-normal
               ${focus ? 'hidden' : ''}
             `}
           >
@@ -270,11 +270,11 @@ export default (props: Props) => {
               overflow-y-auto
               top-11
               w-full
-              bg-[color:--embeddable-controls-backgrounds-colors-soft]
-              border-[color:--embeddable-controls-borders-colors-normal]
-              rounded-[--embeddable-controls-borders-radius]
-              text-[color:--embeddable-controls-font-colors-normal]
-              z-[--embeddable-controls-dropdown-focused-zIndex]
+              bg-controls-backgrounds-soft
+              border-controls-borders-normal
+              rounded-controls-borders-radius
+              text-controls-font-normal
+              z-controls-dropdown-focused
             `}
             onFocus={() => {
               setIsDropdownOrItemFocused(true);
@@ -299,7 +299,7 @@ export default (props: Props) => {
             pointer-events-none
             right-2
             top-2
-            z-[--embeddable-controls-dropdown-spinner-zIndex]
+            z-controls-dropdown-spinner
           `}
           />
         ) : (
@@ -309,7 +309,7 @@ export default (props: Props) => {
             cursor-pointer
             right-2
             top-2.5
-            z-[--embeddable-controls-dropdown-chevron-zIndex]
+            z-controls-dropdown-chevron
           `}
             onClick={() => {
               setFocus(!focus);
@@ -330,7 +330,7 @@ export default (props: Props) => {
               items-center
               right-10
               top-0
-              z-[--embeddable-controls-dropdown-clear-zIndex]
+              z-controls-dropdown-clear
             `}
           >
             <ClearIcon />

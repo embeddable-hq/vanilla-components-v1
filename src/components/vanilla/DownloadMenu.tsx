@@ -176,7 +176,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
         right-0
         space-x-2
         top-0
-        z-[--embeddable-downloadMenu-zIndex]
+        z-download-menu
       `}
       >
         <div
@@ -205,7 +205,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
         right-0
         space-x-2
         top-0
-        z-[--embeddable-downloadMenu-zIndex]
+        z-download-menu
       `}
       >
         <div
@@ -234,7 +234,7 @@ const DownloadMenu: React.FC<Props> = (props) => {
         right-0
         space-x-2
         top-0
-        z-[--embeddable-downloadMenu-zIndex]
+        z-download-menu
       `}
       >
         <div
@@ -257,9 +257,9 @@ const DownloadMenu: React.FC<Props> = (props) => {
                 right-0
                 top-6
                 whitespace-nowrap
-                bg-[color:--embeddable-downloadMenu-backgroundColor]
-                p-[--embeddable-downloadMenu-paddingOuter]
-                rounded-[--embeddable-downloadMenu-borderRadius]
+                bg-download-menu-background-color
+                p-download-menu-outer
+                rounded-download-menu-border-radius
               `}
                 style={{
                   border: theme.downloadMenu.border,
@@ -275,10 +275,10 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       className={`
                         flex
                         items-center
-                        hover:bg-[color:--embeddable-downloadMenu-hover-backgroundColor]
-                        hover:text-[color:--embeddable-downloadMenu-hover-fontColor]
-                        p-[--embeddable-downloadMenu-paddingInner]
-                        text-[color:--embeddable-downloadMenu-font-color]
+                        hover:bg-download-menu-hover-background-color
+                        hover:text-download-menu-hover-color
+                        p-download-menu-inner
+                        text-download-menu-color
                       `}
                       tabIndex={0}
                       ref={refFocus}
@@ -300,10 +300,10 @@ const DownloadMenu: React.FC<Props> = (props) => {
                         className={`
                         flex
                         items-center
-                        hover:bg-[color:--embeddable-downloadMenu-hover-backgroundColor]
-                        hover:text-[color:--embeddable-downloadMenu-hover-fontColor]
-                        p-[--embeddable-downloadMenu-paddingInner]
-                        text-[color:--embeddable-downloadMenu-font-color]
+                        hover:bg-download-menu-hover-background-color
+                        hover:text-download-menu-hover-color
+                        p-download-menu-inner
+                        text-download-menu-color
                       `}
                         tabIndex={0}
                         onFocus={() => setFocusedMenuItem('downloadAll')}
@@ -322,10 +322,10 @@ const DownloadMenu: React.FC<Props> = (props) => {
                       className={`
                         flex
                         items-center
-                        hover:bg-[color:--embeddable-downloadMenu-hover-backgroundColor]
-                        hover:text-[color:--embeddable-downloadMenu-hover-fontColor]
-                        p-[--embeddable-downloadMenu-paddingInner]
-                        text-[color:--embeddable-downloadMenu-font-color]
+                        hover:bg-download-menu-hover-background-color
+                        hover:text-download-menu-hover-color
+                        p-download-menu-inner
+                        text-download-menu-color
                       `}
                       tabIndex={0}
                       onFocus={() => setFocusedMenuItem('png')}

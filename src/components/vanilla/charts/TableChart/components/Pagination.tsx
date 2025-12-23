@@ -19,9 +19,9 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
         left-0
         select-none
         sticky
-        font-[--embeddable-charts-fontWeights-pagination]
-        text-[color:--embeddable-font-colorNormal]
-        text-[size:--embeddable-font-size]
+        font-charts-pagination
+        text-font-color-normal
+        text-embeddable
       `}
     >
       <ChevronLeft
@@ -36,8 +36,8 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
             justify-center
             p-1
             w-8
-            border-[color:--embeddable-controls-borders-colors-normal]
-            rounded-[--embeddable-controls-borders-radius]
+            border-controls-borders-normal
+            rounded-controls-borders-radius
           `,
           {
             'opacity-50 pointer-events-none': currentPage === 0,
@@ -62,8 +62,8 @@ const Pagination = ({ currentPage, hasNextPage, onPageChange }: Props) => {
           justify-center
           p-1
           w-8
-          border-[color:--embeddable-controls-borders-colors-normal]
-          rounded-[--embeddable-controls-borders-radius]
+          border-controls-borders-normal
+          rounded-controls-borders-radius
           
         `,
           {
