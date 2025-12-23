@@ -85,7 +85,7 @@ export default (props: Props) => {
 
   return (
     <Container {...props} className="overflow-y-hidden">
-      <div className="relative aspect-[1.87] overflow-hidden cursor-pointer">
+      <div className="relative aspect-187 overflow-hidden cursor-pointer">
         <div
           ref={box}
           className="relative"
@@ -102,7 +102,7 @@ export default (props: Props) => {
               absolute
               text-black
               bg-slate-200/80
-              rounded-[--embeddable-controls.tooltips.radius]
+              rounded-controls-tooltips-radius
               whitespace-nowrap
               pointer-events-none
               empty:opacity-0

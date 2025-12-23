@@ -148,7 +148,7 @@ export default (props: Props) => {
             onKeyDown={(e) =>
               handleKeyDownCallback(e, () => set(o[props.property?.name || ''] || ''), true)
             }
-            className={`block min-h-[36px] px-3 py-2 hover:bg-black/5 cursor-pointer font-normal  ${
+            className={`block min-h-36px px-3 py-2 hover:bg-black/5 cursor-pointer font-normal  ${
               value === o[props.property?.name || ''] ? 'bg-black/5' : ''
             } truncate`}
             tabIndex={0}
@@ -176,12 +176,12 @@ export default (props: Props) => {
             flex
             h-10
             items-center
-            min-w-[50px]
+            min-w-50px
             relative
             w-full
-            bg-[color:--embeddable-controls-backgrounds-colors-soft]
-            border-[color:--embeddable-controls-borders-colors-normal]
-            rounded-[--embeddable-controls-borders-radius]
+            bg-controls-backgrounds-soft
+            border-controls-borders-normal
+            rounded-controls-borders-radius
           `,
           props.className,
         )}
@@ -213,9 +213,9 @@ export default (props: Props) => {
             px-3
             text-sm ${focus || !value ? '' : 'opacity-0'}
             w-full
-            bg-[color:--embeddable-controls-backgrounds-colors-transparent]
-            rounded-[--embeddable-controls-borders-radius]
-            text-[color:--embeddable-controls-font-colors-normal]
+            bg-controls-backgrounds-transparent
+            rounded-controls-borders-radius
+            text-controls-font-normal
           `}
         />
 
@@ -232,10 +232,10 @@ export default (props: Props) => {
               text-sm ${focus ? 'hidden' : ''}
               top-1
               truncate
-              w-[calc(100%-2.5rem)]
+              w-padded-100
               whitespace-nowrap
-              rounded-[--embeddable-controls-borders-radius]
-              text-[color:--embeddable-controls-font-colors-normal]
+              rounded-controls-borders-radius
+              text-controls-font-normal
             `}
           >
             {typeof value === 'string' ? value.replaceAll('_', ' ') : value}
@@ -250,16 +250,16 @@ export default (props: Props) => {
               border
               flex
               flex-col
-              max-h-[400px]
+              max-h-400px
               overflow-x-hidden
               overflow-y-auto
               top-11
               w-full
-              bg-[color:--embeddable-controls-backgrounds-colors-soft]
-              border-[color:--embeddable-controls-borders-colors-normal]
-              rounded-[--embeddable-controls-borders-radius]
-              text-[color:--embeddable-controls-font-colors-normal]
-              z-[--embeddable-controls-dropdown-focused-zIndex]
+              bg-controls-backgrounds-soft
+              border-controls-borders-normal
+              rounded-controls-borders-radius
+              text-controls-font-normal
+              z-controls-dropdown-focused
             `}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -290,7 +290,7 @@ export default (props: Props) => {
             pointer-events-none
             right-2
             top-2
-            z-[--embeddable-controls-dropdown-spinner-zIndex]
+            z-controls-dropdown-spinner
           `}
           />
         ) : (
@@ -300,7 +300,7 @@ export default (props: Props) => {
             cursor-pointer
             right-2
             top-2.5
-            z-[--embeddable-controls-dropdown-chevron-zIndex]
+            z-controls-dropdown-chevron
           `}
             onClick={() => {
               setFocus(!focus);
@@ -321,7 +321,7 @@ export default (props: Props) => {
               items-center
               right-10
               top-0
-              z-[--embeddable-controls-dropdown-clear-zIndex]
+              z-controls-dropdown-clear
             `}
           >
             <ClearIcon />

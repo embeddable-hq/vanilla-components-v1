@@ -20,7 +20,7 @@ export default function Spinner({ show, className, size }: Props) {
           right-0
           spinner
           top-0
-          z-[--embeddable-spinner-zIndex]
+          z-spinner
           ${show ? 'opacity-100' : 'opacity-0'}`,
         className,
       )}

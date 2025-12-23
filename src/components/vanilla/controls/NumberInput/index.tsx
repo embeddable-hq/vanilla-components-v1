@@ -32,9 +32,9 @@ export default (props: Props) => {
           pr-8
           relative
           w-full
-          bg-[color:--embeddable-controls-backgrounds-colors-soft]
-          border-[color:--embeddable-controls-borders-colors-normal]
-          rounded-[--embeddable-controls-borders-radius]
+          bg-controls-backgrounds-soft
+          border-controls-borders-normal
+          rounded-controls-borders-radius
         `}
       >
         <input
@@ -48,9 +48,9 @@ export default (props: Props) => {
             outline-none
             px-3
             w-full
-            bg-[color:--embeddable-controls-backgrounds-colors-transparent]
-            rounded-[--embeddable-controls-borders-radius]
-            text-[color:--embeddable-controls-font-colors-normal]
+            bg-controls-backgrounds-transparent
+            rounded-controls-borders-radius
+            text-controls-font-normal
           `}
           onChange={(e) => {
             setValue(e.target.value);
@@ -84,7 +84,7 @@ export default (props: Props) => {
               flex
               items-center
               justify-center
-              text-[color:--embeddable-controls-font-colors-normal]
+              text-controls-font-normal
             `}
           >
             <ClearIcon />

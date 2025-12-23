@@ -298,7 +298,7 @@ export const defaultTheme: Theme = {
         rgba(255, 255, 255, 0.5) 60%,
         rgba(255, 255, 255, 0)
       );`,
-      zIndex: 10,
+      zIndex: 1,
     },
     tooltips: {
       radius: '4px',
@@ -368,7 +368,7 @@ export const defaultTheme: Theme = {
     backgroundColor: '#FFFFFF',
   },
   spinner: {
-    zIndex: 1,
+    zIndex: 2,
   },
   svg: {
     fillBkg: '#FFFFFF',

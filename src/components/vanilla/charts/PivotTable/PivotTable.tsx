@@ -115,8 +115,8 @@ const PivotTable = <T,>({
         embeddable-table-header
         sticky
         top-0
-        z-[--embeddable-charts-table-pivot-zIndex]
-        bg-[color:--embeddable-controls-backgrounds-colors-soft]
+        z-charts-table-pivot
+        bg-controls-backgrounds-soft
       `}
       >
         <TableHead

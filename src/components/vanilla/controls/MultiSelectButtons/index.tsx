@@ -27,7 +27,7 @@ export default (props: Props) => {
 
   return (
     <Container title={title}>
-      <div className="multiSelectContainer font-embeddable text-[font-size:--embeddable-font-size]">
+      <div className="multiSelectContainer font-embeddable text-embeddable">
         {values?.map((value, i) => {
           const background = selected.includes(value)
             ? theme.controls.buttons.multiSelect.active.background
@@ -42,7 +42,7 @@ export default (props: Props) => {
           return (
             <div
               key={i}
-              className={`multiselectItem text-[color:--embeddable-font-colorNormal]`}
+              className={`multiselectItem text-font-color-normal`}
               style={{ background, border, borderRadius }}
               onClick={() => handleClick(value)}
             >

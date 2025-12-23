@@ -135,13 +135,13 @@ export default (props: Props) => {
             font-normal
             hover:bg-black/5
             items-center
-            min-h-[36px]
+            min-h-36px
             overflow-hidden
             px-3
             py-2
             text-ellipsis
             whitespace-nowrap
-            text-[color:--embeddable-controls-font-colors-normal]
+            text-controls-font-normal
             ${value === option.value ? 'bg-black/5' : ''}
           `}
           tabIndex={0}
@@ -155,7 +155,7 @@ export default (props: Props) => {
     <Container title={props.title}>
       <div
         className={twMerge(
-          'relative rounded-xl w-full min-w-[50px] h-10 border border-[#DADCE1] flex items-center',
+          'relative rounded-controls-borders-radius w-full min-w-50px h-10 border border-controls-borders-normal flex items-center',
           props.className,
         )}
       >
@@ -187,7 +187,7 @@ export default (props: Props) => {
             px-3
             text-sm
             w-full
-            text-[color:--embeddable-controls-font-colors-normal]
+            text-controls-font-normal
             ${focus || !value ? '' : 'opacity-0'}
           `}
         />
@@ -202,13 +202,13 @@ export default (props: Props) => {
               left-3
               overflow-hidden
               pointer-events-none
-              rounded-xl
+              rounded-controls-borders-radius
               text-sm
               top-1
               truncate
-              w-[calc(100%-2.5rem)]
+              w-padded-100
               whitespace-nowrap
-              text-[color:--embeddable-controls-font-colors-normal]
+              text-controls-font-normal
               ${focus ? 'hidden' : ''}
             `}
           >
@@ -227,12 +227,12 @@ export default (props: Props) => {
               flex-col
               overflow-x-hidden
               overflow-y-auto
-              rounded-xl
+              rounded-controls-borders-radius
               top-11
               w-full
-              border-[--embeddable-controls-multiSelector-borderColor]
-              max-h-[--embeddable-controls-multiSelector-maxHeight]
-              z-[--embeddable-controls-multiSelector-zIndex]
+              border-controls-multiselector-border
+              max-h-controls-multiselector
+              z-controls-multiselector
             `}
             onMouseDown={(e) => {
               e.preventDefault();
@@ -261,7 +261,7 @@ export default (props: Props) => {
           cursor-pointer
           right-2.5
           top-2.5
-          z-[--embeddable-controls-multiSelector-chevron-zIndex]
+          z-controls-multiselector-chevron
         `}
           onClick={() => {
             setFocus(!focus);
@@ -281,7 +281,7 @@ export default (props: Props) => {
               items-center
               right-10
               top-0
-              z-[--embeddable-controls-multiSelector-clear-zIndex]
+              z-controls-multiselector-clear
             `}
           >
             <ClearIcon />

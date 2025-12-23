@@ -17,7 +17,7 @@ const TableHead = ({ columns, sortBy, sortDirection, onSortingChange, minColumnW
   const theme: Theme = useTheme() as Theme;
 
   return (
-    <thead className={`border-y border-[color:--embeddable-controls-boders-colors-primary]`}>
+    <thead className={`border-y border-controls-borders-primary`}>
       <tr>
         {columns?.map((column) => {
           const isSorted = sortBy?.name === column.name;
@@ -34,7 +34,7 @@ const TableHead = ({ columns, sortBy, sortDirection, onSortingChange, minColumnW
                 cursor-pointer
                 p-3
                 select-none
-                bg-[color:--embeddable-controls-backgrounds-colors-soft]
+                bg-controls-backgrounds-soft
               `}
               style={
                 minColumnWidth
