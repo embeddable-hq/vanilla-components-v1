@@ -86,6 +86,7 @@ export type Theme = {
       colors?: string[];
       font: {
         negativeColor: string;
+        positiveColor: string;
         size: number;
       };
     };

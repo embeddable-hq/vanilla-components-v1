@@ -116,6 +116,7 @@ export default (props: Props) => {
   const metaFontSize = Math.max(fontSize / 3, parseInt(theme.font.size.replace('px', ''), 10));
   const fontColor = theme.font.colorNormal;
   const negativeColor = theme.charts.kpi.font.negativeColor;
+  const positiveColor = theme.charts.kpi.font.positiveColor;
 
   if (results?.error) {
     return (
@@ -182,7 +183,7 @@ export default (props: Props) => {
                   text-${theme.charts.kpi?.alignment || 'center'}
                 `}
                 style={{
-                  color: p && p < 0 ? negativeColor : fontColor,
+                  color: p && p < 0 ? negativeColor : positiveColor,
                   fontSize: `${metaFontSize}px`,
                 }}
               >
