@@ -73,9 +73,14 @@ export default (props: Props) => {
       // Massage allResults data to respect date formatting
       const formattedData = allResults.data.map((row) => {
         const formattedRow: { [key: string]: any } = {};
-        const formattedColumns = columns.map((column) =>
-          formatColumn(row[column.name], column, props.dps),
-        );
+        const formattedColumns = columns.map((column) => {
+          let dateFormat: string | undefined;
+          const granularity = column.inputs?.granularity;
+          if (granularity && granularity in theme.dateFormats) {
+            dateFormat = theme.dateFormats[granularity as keyof typeof theme.dateFormats];
+          }
+          return formatColumn(row[column.name], column, props.dps, dateFormat);
+        });
         columns.forEach((column, index) => {
           formattedRow[column.name] = formattedColumns[index];
         });
@@ -86,7 +91,7 @@ export default (props: Props) => {
       setIsDownloadingAll(false);
       setMeta((meta) => ({ ...meta, downloadAll: false }));
     }
-  }, [allResults, columns, isDownloadingAll, props, setMeta]);
+  }, [allResults, columns, isDownloadingAll, props, setMeta, theme]);
 
   const calculateMaxRowFit = useCallback(
     ({ height }: { height: number }) => {
@@ -170,7 +175,17 @@ export default (props: Props) => {
               {results?.data?.slice(0, maxRowsFit).map((row, index) => (
                 <tr key={index} className="hover:bg-gray-400/5">
                   {columns.map((column, index) => {
-                    const formattedValue = formatColumn(row[column.name], column, props.dps);
+                    let dateFormat: string | undefined;
+                    const granularity = column.inputs?.granularity;
+                    if (granularity && granularity in theme.dateFormats) {
+                      dateFormat = theme.dateFormats[granularity as keyof typeof theme.dateFormats];
+                    }
+                    const formattedValue = formatColumn(
+                      row[column.name],
+                      column,
+                      props.dps,
+                      dateFormat,
+                    );
                     let title = '';
                     let isJson = false;
                     if (typeof formattedValue === 'object') {
@@ -223,6 +238,7 @@ function formatColumn(
   text: string | number | boolean | null | undefined | object,
   column: DimensionOrMeasure,
   dps: number | undefined = undefined,
+  dateFormat?: string | undefined,
 ) {
   if (text === null || text === undefined) return '-';
   if (typeof text === 'object') return <pre>{JSON.stringify(text, null, 2)}</pre>;
@@ -234,7 +250,8 @@ function formatColumn(
     return text ? 'True' : 'False';
   }
 
-  if (text && column.nativeType === 'time') return formatValue(text, 'datewithtz');
+  if (text && column.nativeType === 'time')
+    return formatValue(text, { type: 'datewithtz', dateFormat });
 
   // detect links - we can't do this in the format function because it returns a dom element
   const { linkText, linkUrl } = detectAndReturnLinks(text);
