@@ -116,6 +116,7 @@ export default (props: Props) => {
   const metaFontSize = Math.max(fontSize / 3, parseInt(theme.font.size.replace('px', ''), 10));
   const fontColor = theme.font.colorNormal;
   const negativeColor = theme.charts.kpi.font.negativeColor;
+  const positiveColor = theme.charts.kpi.font.positiveColor;
 
   if (results?.error) {
     return (
@@ -142,7 +143,7 @@ export default (props: Props) => {
           font-charts-kpi
         `}
       >
-        {dimension ? (
+        {!results.isLoading && !prevResults && dimension && (
           <>
             <div className={`text-font-color-normal`} style={{ fontSize: `${fontSize}px` }}>
               <p>{results?.data?.[0]?.[dimension.name]}</p>
@@ -159,12 +160,13 @@ export default (props: Props) => {
               </p>
             )}
           </>
-        ) : (
+        )}
+        {!results.isLoading && !prevResults?.isLoading && !dimension && (
           <>
             <div className={`text-font-color-normal`} style={{ fontSize: `${fontSize}px` }}>
               <p>{`${prefix ? prefix : ''}${nFormatted}${suffix ? suffix : ''}`}</p>
             </div>
-            {prevTimeFilter?.to && (
+            {(prevTimeFilter?.to || prevTimeFilter?.relativeTimeString) && (
               <div
                 className={`
                   flex
@@ -175,7 +177,7 @@ export default (props: Props) => {
                   text-${theme.charts.kpi?.alignment || 'center'}
                 `}
                 style={{
-                  color: p && p < 0 ? negativeColor : fontColor,
+                  color: p && p < 0 ? negativeColor : positiveColor,
                   fontSize: `${metaFontSize}px`,
                 }}
               >

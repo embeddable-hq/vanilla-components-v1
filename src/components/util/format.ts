@@ -55,7 +55,7 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
       return wrap(
         Number.isInteger(num)
           ? num.toLocaleString('en-US', { maximumFractionDigits: 0 })
-          : num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: dps }),
+          : num.toLocaleString('en-US', { minimumFractionDigits: dps, maximumFractionDigits: dps }),
       );
     }
 
@@ -66,6 +66,7 @@ export default function formatValue(str: string = '', opt: Type | Options = 'str
       return wrap(
         num.toLocaleString('en-US', {
           maximumFractionDigits: dps ?? 2,
+          minimumFractionDigits: dps ?? 0,
           notation: 'compact',
           compactDisplay: 'short',
         }),

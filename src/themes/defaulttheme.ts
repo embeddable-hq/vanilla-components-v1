@@ -80,6 +80,7 @@ export const defaultTheme: Theme = {
       alignment: 'center',
       font: {
         negativeColor: '#FF6B6C',
+        positiveColor: '#34C759',
         size: 32,
       },
     },

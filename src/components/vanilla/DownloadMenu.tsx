@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { DataResponse } from '@embeddable.com/core';
+import { DataResponse, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 
 import IconDownloadCSV from '../icons/DownloadCSV';
@@ -9,11 +9,13 @@ import downloadAsCSV from '../util/downloadAsCSV';
 import downloadAsPNG from '../util/downloadAsPNG';
 import { ContainerProps } from './Container';
 import { Theme } from '../../themes/theme';
+import formatValue from '../util/format';
 
 const FOCUS_TIMEOUT_MS = 200;
 const PNG_TIMEOUT_MS = 200;
 
 interface CSVProps extends ContainerProps {
+  columns?: Measure[];
   results?: DataResponse | DataResponse[];
   prevResults?: DataResponse;
 }
@@ -21,6 +23,7 @@ interface CSVProps extends ContainerProps {
 type Props = {
   csvOpts?: {
     chartName: string;
+    columns?: Measure[];
     props: CSVProps;
   };
   downloadAllFunction?: () => void;
@@ -126,6 +129,27 @@ const DownloadMenu: React.FC<Props> = (props) => {
     } else {
       data = csvProps.results?.data;
     }
+
+    // Format the columns (eg if date formatting is needed)
+    if (data && csvOpts.props.columns) {
+      data = data.map((row) => {
+        const formattedRow: { [key: string]: any } = {};
+        csvOpts.props.columns?.forEach((column) => {
+          let value = row[column.name];
+          if (value && column.nativeType === 'time') {
+            const granularity = column.inputs?.granularity;
+            const dateFormat =
+              granularity && granularity in theme.dateFormats
+                ? theme.dateFormats[granularity as keyof typeof theme.dateFormats]
+                : undefined;
+            value = formatValue(value, { type: 'datewithtz', dateFormat });
+          }
+          formattedRow[column.name] = value;
+        });
+        return formattedRow;
+      });
+    }
+
     downloadAsCSV(csvProps, data, csvProps.prevResults?.data, chartName, setPreppingDownload);
   };
 
