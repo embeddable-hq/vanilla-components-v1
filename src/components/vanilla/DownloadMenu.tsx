@@ -134,24 +134,18 @@ const DownloadMenu: React.FC<Props> = (props) => {
     if (data && csvOpts.props.columns) {
       data = data.map((row) => {
         const formattedRow: { [key: string]: any } = {};
-        const formattedColumns = csvOpts.props.columns
-          ? csvOpts.props.columns.map((column) => {
-              let dateFormat: string | undefined;
-              const granularity = column.inputs?.granularity;
-              if (granularity && granularity in theme.dateFormats) {
-                dateFormat = theme.dateFormats[granularity as keyof typeof theme.dateFormats];
-              }
-              const text = row[column.name];
-              if (text && column.nativeType === 'time')
-                return formatValue(text, { type: 'datewithtz', dateFormat });
-              return text;
-            })
-          : [];
-        if (csvOpts.props.columns) {
-          csvOpts.props.columns.forEach((column, index) => {
-            formattedRow[column.name] = formattedColumns[index];
-          });
-        }
+        csvOpts.props.columns?.forEach((column) => {
+          let value = row[column.name];
+          if (value && column.nativeType === 'time') {
+            const granularity = column.inputs?.granularity;
+            const dateFormat =
+              granularity && granularity in theme.dateFormats
+                ? theme.dateFormats[granularity as keyof typeof theme.dateFormats]
+                : undefined;
+            value = formatValue(value, { type: 'datewithtz', dateFormat });
+          }
+          formattedRow[column.name] = value;
+        });
         return formattedRow;
       });
     }
