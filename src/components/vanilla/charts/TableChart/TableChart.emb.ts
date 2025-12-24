@@ -60,6 +60,15 @@ export const meta = {
       category: 'Chart settings',
     },
     {
+      name: 'advancedPagination',
+      type: 'boolean',
+      label: 'Enable advanced pagination',
+      description:
+        'Enables advanced pagination by counting total rows but may impact performance on large datasets',
+      defaultValue: false,
+      category: 'Chart settings',
+    },
+    {
       name: 'defaultSort',
       type: 'dimensionOrMeasure',
       config: {
@@ -183,6 +192,7 @@ export default defineComponent<
             offset: limit * (state?.page || 0),
             orderBy: state?.sort || defaultSort,
             timezone: clientContext.timezone || 'UTC',
+            countRows: inputs.advancedPagination || false,
           });
 
     // All results get loaded when the download all button is clicked (otherwise they return empty)
