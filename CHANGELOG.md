@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.3.0
+
+### Minor Changes
+
+- 93b2a04: Multiple fixes - please see patch notes / PR description
+
 ## 1.2.1
 
 ### Patch Changes
