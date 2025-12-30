@@ -1,3 +1,5 @@
+import { RUIVars } from './rui-vars';
+
 export type ChartType = 'bar' | 'bubble' | 'kpi' | 'line' | 'pie' | 'scatter' | 'stackedArea';
 
 type ButtonSettings = {
@@ -325,6 +327,7 @@ export type Theme = {
     strokeStrong: string;
     strokeSoft: string;
   };
+  remarkableVars?: RUIVars;
 };
 
 type ThemeDeepPartial<T> = {
