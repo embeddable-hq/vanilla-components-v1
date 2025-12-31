@@ -1,4 +1,5 @@
 import { defaultTheme } from './src/themes/defaulttheme';
+import { RUIVars } from './src/themes/rui-vars';
 import { Theme } from './src/themes/theme';
 
 export default {
@@ -108,11 +109,26 @@ export default {
 const generateCssVariables = (obj: any, prefix = '--embeddable') => {
   let textContent = '';
   for (const key in obj) {
+    if (key === 'remarkableVars') {
+      textContent += generateRUIVars(obj[key] as RUIVars);
+      continue;
+    }
     if (typeof obj[key] === 'object' && obj[key] !== null) {
       textContent += generateCssVariables(obj[key], `${prefix}-${key}`);
     } else {
       textContent += `${prefix}-${key}: ${obj[key]};\n`;
     }
+  }
+  return textContent;
+};
+
+/*
+ * This function generates Remarkable UI specific CSS variables
+ */
+const generateRUIVars = (ruiVars: RUIVars) => {
+  let textContent = '';
+  for (const key in ruiVars) {
+    textContent += `${key}: ${ruiVars[key as keyof RUIVars]};\n`;
   }
   return textContent;
 };
