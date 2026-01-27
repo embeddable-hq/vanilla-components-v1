@@ -8,7 +8,7 @@ export default defineConfig({
   /*
    * uncomment for EU deployments
    */
-  region: 'EU',
+  // region: 'EU',
 
   /*
    * uncomment for US deployments
@@ -17,9 +17,9 @@ export default defineConfig({
 
   //For internal use only (this helps us help you debug issues)
 
-  // previewBaseUrl: 'https://app.dev.embeddable.com',
-  // pushBaseUrl: 'https://api.dev.embeddable.com',
-  // audienceUrl: 'https://api.dev.embeddable.com/',
-  // authDomain: 'embeddable-dev.eu.auth0.com',
-  // authClientId: 'xOKco5ztFCpWn54bJbFkAcT8mV4LLcpG',
+  previewBaseUrl: 'https://app.dev.embeddable.com',
+  pushBaseUrl: 'https://api.dev.embeddable.com',
+  audienceUrl: 'https://api.dev.embeddable.com/',
+  authDomain: 'embeddable-dev.eu.auth0.com',
+  authClientId: 'xOKco5ztFCpWn54bJbFkAcT8mV4LLcpG',
 });

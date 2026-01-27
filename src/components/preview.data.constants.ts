@@ -4,13 +4,17 @@ const dimensionName = 'country';
 const measureName = 'count';
 const dimensionGroupName = 'category';
 const timeDimensionName = 'date';
+const measureName2 = 'revenue';
+const geoDimensionName = 'location';
 const timeDimension = mockDimension(timeDimensionName, 'time', { title: 'Date' });
 
 const dimension = mockDimension(dimensionName, 'string', { title: 'Country' });
 const measure = mockMeasure(measureName, 'number', { title: 'Count' });
+const measure2 = mockMeasure(measureName2, 'number', { title: 'Revenue' });
 const dimensionGroup = mockDimension(dimensionGroupName, 'string', {
   title: 'Category',
 });
+const geoDimension = mockDimension(geoDimensionName, 'geo', { title: 'Location' });
 
 const results1Measure1Dimension = mockDataResponse(
   [dimensionName, measureName],
@@ -108,6 +112,31 @@ const results1Measure1TimeDimension1Group = mockDataResponse(
   ],
 );
 
+const results2Measures1Dimension = mockDataResponse(
+  [dimensionName, measureName, measureName2],
+  [
+    ['US', 120, 5500],
+    ['GER', 100, 4200],
+    ['UK', 80, 3800],
+    ['FRA', 70, 3100],
+    ['SPA', 55, 2400],
+  ],
+);
+
+const results1Measure1GeoDimension = mockDataResponse(
+  [geoDimensionName, measureName],
+  [
+    ['40.7128,-74.0060', 120], // New York
+    ['34.0522,-118.2437', 95], // Los Angeles
+    ['41.8781,-87.6298', 85], // Chicago
+    ['29.7604,-95.3698', 75], // Houston
+    ['33.4484,-112.0740', 65], // Phoenix
+    ['39.7392,-104.9903', 55], // Denver
+    ['47.6062,-122.3321', 90], // Seattle
+    ['37.7749,-122.4194', 110], // San Francisco
+  ],
+);
+
 const dataset = {
   embeddableId: '',
   datasetId: '',
@@ -119,13 +148,17 @@ export const previewData = {
   dataset,
   dimension,
   dimensionGroup,
+  geoDimension,
   measure,
+  measure2,
   results1Measure,
   results1MeasureVariant,
   results1Measure1Dimension,
   results1Measure1DimensionVariant,
   results1Measure2Dimensions,
   results1Measure2DimensionsVariant,
+  results2Measures1Dimension,
+  results1Measure1GeoDimension,
   timeDimension,
   results1Measure1TimeDimension,
   results1Measure1TimeDimension1Group,
