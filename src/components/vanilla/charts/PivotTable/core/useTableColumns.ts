@@ -35,7 +35,9 @@ export const useTableColumns = (
           key: rowDimension.name,
           depth: columnDimensions.length,
           type: ColumnType.ROW_HEADER,
-          dataType: rowDimension.nativeType,
+          dataType: (['string', 'number', 'boolean', 'time'] as const).includes(rowDimension.nativeType as any)
+            ? (rowDimension.nativeType as 'string' | 'number' | 'boolean' | 'time')
+            : 'string',
           parent,
         }),
     );
@@ -75,7 +77,9 @@ export const useTableColumns = (
       key: currentColumnDimension.name,
       depth,
       type: ColumnType.DIMENSION,
-      dataType: currentColumnDimension.nativeType,
+      dataType: (['string', 'number', 'boolean', 'time'] as const).includes(currentColumnDimension.nativeType as any)
+        ? (currentColumnDimension.nativeType as 'string' | 'number' | 'boolean' | 'time')
+        : 'string',
       parent,
     });
 
@@ -99,7 +103,9 @@ export const useTableColumns = (
             key: createColumnKey([...dimensionValuesInARow, measure.name]),
             depth,
             type: ColumnType.MEASURE,
-            dataType: measure.nativeType,
+            dataType: (['string', 'number', 'boolean', 'time'].includes(measure.nativeType as string)
+              ? (measure.nativeType as 'string' | 'number' | 'boolean' | 'time')
+              : 'number'),
             parent: parent || null,
           }),
       );
@@ -122,7 +128,9 @@ export const useTableColumns = (
         key: createColumnKey([...dimensionValuesInARow, dimensionValue]),
         depth,
         type: ColumnType.DIMENSION,
-        dataType: currentColumnDimension.nativeType,
+        dataType: (['string', 'number', 'boolean', 'time'] as const).includes(currentColumnDimension.nativeType as any)
+          ? (currentColumnDimension.nativeType as 'string' | 'number' | 'boolean' | 'time')
+          : 'string',
         parent: parent,
       });
 

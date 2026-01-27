@@ -3,6 +3,8 @@ import { mockDataResponse, mockDimension, mockMeasure } from '@embeddable.com/co
 const dimensionName = 'country';
 const measureName = 'count';
 const dimensionGroupName = 'category';
+const timeDimensionName = 'date';
+const timeDimension = mockDimension(timeDimensionName, 'time', { title: 'Date' });
 
 const dimension = mockDimension(dimensionName, 'string', { title: 'Country' });
 const measure = mockMeasure(measureName, 'number', { title: 'Count' });
@@ -75,6 +77,37 @@ const results1Measure2DimensionsVariant = mockDataResponse(
 const results1Measure = mockDataResponse([measureName], [[120]]);
 const results1MeasureVariant = mockDataResponse([measureName], [[100]]);
 
+const results1Measure1TimeDimension = mockDataResponse(
+  [timeDimensionName, measureName],
+  [
+    ['2024-01-01T00:00:00.000', 120],
+    ['2024-01-08T00:00:00.000', 140],
+    ['2024-01-15T00:00:00.000', 95],
+    ['2024-01-22T00:00:00.000', 160],
+    ['2024-01-29T00:00:00.000', 110],
+  ],
+);
+
+const results1Measure1TimeDimension1Group = mockDataResponse(
+  [timeDimensionName, dimensionGroupName, measureName],
+  [
+    ['2024-01-01T00:00:00.000', 'Cat 1', 70],
+    ['2024-01-01T00:00:00.000', 'Cat 2', 50],
+
+    ['2024-01-08T00:00:00.000', 'Cat 1', 85],
+    ['2024-01-08T00:00:00.000', 'Cat 2', 55],
+
+    ['2024-01-15T00:00:00.000', 'Cat 1', 55],
+    ['2024-01-15T00:00:00.000', 'Cat 2', 40],
+
+    ['2024-01-22T00:00:00.000', 'Cat 1', 95],
+    ['2024-01-22T00:00:00.000', 'Cat 2', 65],
+
+    ['2024-01-29T00:00:00.000', 'Cat 1', 65],
+    ['2024-01-29T00:00:00.000', 'Cat 2', 45],
+  ],
+);
+
 const dataset = {
   embeddableId: '',
   datasetId: '',
@@ -93,4 +126,7 @@ export const previewData = {
   results1Measure1DimensionVariant,
   results1Measure2Dimensions,
   results1Measure2DimensionsVariant,
+  timeDimension,
+  results1Measure1TimeDimension,
+  results1Measure1TimeDimension1Group,
 } as const;

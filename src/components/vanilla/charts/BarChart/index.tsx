@@ -15,6 +15,7 @@ export type Props = {
   displayHorizontally?: boolean;
   dps?: number;
   enableDownloadAsCSV?: boolean;
+  enableDownloadAsPNG?: boolean;
   granularity?: Granularity;
   isTSBarChart?: boolean;
   limit?: number;
