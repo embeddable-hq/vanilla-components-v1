@@ -1,9 +1,10 @@
 import { loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import { EmbeddedComponentMeta, Inputs, defineComponent, definePreview } from '@embeddable.com/react';
 
 import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'KPIChartText',
@@ -104,6 +105,17 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  dimension: previewData.dimension,
+  metric: previewData.measure,
+  results: previewData.results1Measure1Dimension,
+  rowSortDirection: SortDirection.DESCENDING,
+  title: '',
+  displayMetric: true,
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>, _, clientContext) => {
