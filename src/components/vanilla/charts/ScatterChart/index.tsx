@@ -42,6 +42,7 @@ type Props = {
   description?: string;
   dps?: number;
   enableDownloadAsCSV?: boolean;
+  enableDownloadAsPNG?: boolean;
   granularity?: Granularity;
   isTimeDimension: boolean;
   metrics: Measure[];
