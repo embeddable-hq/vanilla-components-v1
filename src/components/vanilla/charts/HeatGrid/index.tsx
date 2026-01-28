@@ -217,20 +217,21 @@ const HeatGrid: React.FC<Props> = (props) => {
             {dataToDisplay.length > 0 &&
               dataToDisplay.map((week, weekIndex) => (
                 <div key={weekIndex} className="flex flex-col">
-                  {week.map((day: { value: number; date: string }, dayIndex: number) => (
-                    <div
-                      key={`${weekIndex}-${dayIndex}`}
-                      style={{
-                        ...CELL_STYLE,
-                        backgroundColor: getColor(day.value),
-                        border:
-                          day.value < 0
-                            ? `1px solid ${hexToRgb(baseColor ? baseColor : theme.brand.primary, BASE_OPACITY)}`
-                            : 'none',
-                      }}
-                      title={`${day.date}: ${day.value}`}
-                    />
-                  ))}
+                  {Array.isArray(week) &&
+                    week.map((day: { value: number; date: string }, dayIndex: number) => (
+                      <div
+                        key={`${weekIndex}-${dayIndex}`}
+                        style={{
+                          ...CELL_STYLE,
+                          backgroundColor: getColor(day.value),
+                          border:
+                            day.value < 0
+                              ? `1px solid ${hexToRgb(baseColor ? baseColor : theme.brand.primary, BASE_OPACITY)}`
+                              : 'none',
+                        }}
+                        title={`${day.date}: ${day.value}`}
+                      />
+                    ))}
                 </div>
               ))}
           </div>
