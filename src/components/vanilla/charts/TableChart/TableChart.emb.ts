@@ -1,8 +1,9 @@
 import { OrderBy, loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import { EmbeddedComponentMeta, Inputs, defineComponent, definePreview } from '@embeddable.com/react';
 
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import Component, { Props } from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'TableChart',
@@ -137,6 +138,17 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  columns: [previewData.dimension, previewData.measure],
+  results: previewData.results1Measure1Dimension,
+  allResults: { data: [], isLoading: false },
+  title: '',
+  defaultSort: [],
+  limit: 10,
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+});
 
 export default defineComponent<
   Props,
