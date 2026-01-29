@@ -17,7 +17,7 @@ DO NOT call multiple independent tools in a single response, even when general e
 Vanilla Components v1 is a React TypeScript component library for the Embeddable platform. It exports pre-configured visualization components (charts, tables, KPI tiles) and controls (dropdowns, date pickers) built on top of open-source third party libraries. It is now in maintenance mode but still needs occasional updates. It has been replaced by the Remarkable Pro library, which is referenced further in this file and should be considered when making updates to Vanilla Components. Compatibility between the two libraries is not necessary, but in cases where Remarkable Pro does things one way, and Vanilla Components does them another, Remarkable Pro should be considered the source of truth UNLESS the change would break something in Vanilla Components.
 
 ## Reference: Remarkable Pro
-Remarkable Pro is a set of components and the succesor to Vanilla Components. It is built on top of the Remarkable UI primitive component library. It contains Embeddable-specific configuration and data wiring for use in the Embeddable no-code interface.
+Remarkable Pro is a set of components and the successor to Vanilla Components. It is built on top of the Remarkable UI primitive component library. It contains Embeddable-specific configuration and data wiring for use in the Embeddable no-code interface.
 
 The Remarkable Pro repository can be found locally at `~/work/code/remarkable-pro`. The Remarkable UI repository can be found locally at `~/work/code/remarkable-ui`.
 

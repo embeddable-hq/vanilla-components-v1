@@ -44,6 +44,8 @@ ChartJS.register(
 type Props = {
   applyFill?: boolean;
   dps?: number;
+  enableDownloadAsCSV?: boolean;
+  enableDownloadAsPNG?: boolean;
   granularity: Granularity;
   limit?: number;
   metrics: Measure[];

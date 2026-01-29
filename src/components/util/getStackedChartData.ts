@@ -13,6 +13,8 @@ export type Props = {
   displayHorizontally?: boolean;
   dps?: number;
   ds?: Dataset;
+  enableDownloadAsCSV?: boolean;
+  enableDownloadAsPNG?: boolean;
   granularity?: Granularity;
   isTSGroupedBarChart?: boolean;
   maxSegments?: number;
