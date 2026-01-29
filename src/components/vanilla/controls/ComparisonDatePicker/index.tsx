@@ -9,6 +9,7 @@ export type Props = {
   defaultComparison?: string;
   defaultGranularity?: Granularity;
   showGranularity?: boolean;
+  title?: string;
   onChangePeriod: (v: TimeRange | null) => void;
   onChangeComparison: (v: TimeRange | null) => void;
   onChangeGranularity: (v: Granularity | null) => void;

@@ -1,20 +1,18 @@
 import { mockDataResponse, mockDimension, mockMeasure } from '@embeddable.com/core';
 
 const dimensionName = 'country';
-const measureName = 'count';
 const dimensionGroupName = 'category';
-const timeDimensionName = 'date';
-const measureName2 = 'revenue';
 const geoDimensionName = 'location';
-const timeDimension = mockDimension(timeDimensionName, 'time', { title: 'Date' });
+const measureName = 'count';
+const measureName2 = 'revenue';
+const timeDimensionName = 'date';
 
 const dimension = mockDimension(dimensionName, 'string', { title: 'Country' });
+const dimensionGroup = mockDimension(dimensionGroupName, 'string', { title: 'Category' });
+const geoDimension = mockDimension(geoDimensionName, 'geo', { title: 'Location' });
 const measure = mockMeasure(measureName, 'number', { title: 'Count' });
 const measure2 = mockMeasure(measureName2, 'number', { title: 'Revenue' });
-const dimensionGroup = mockDimension(dimensionGroupName, 'string', {
-  title: 'Category',
-});
-const geoDimension = mockDimension(geoDimensionName, 'geo', { title: 'Location' });
+const timeDimension = mockDimension(timeDimensionName, 'time', { title: 'Date' });
 
 const results1Measure1Dimension = mockDataResponse(
   [dimensionName, measureName],
@@ -95,20 +93,40 @@ const results1Measure1TimeDimension = mockDataResponse(
 const results1Measure1TimeDimension1Group = mockDataResponse(
   [timeDimensionName, dimensionGroupName, measureName],
   [
-    ['2024-01-01T00:00:00.000', 'Cat 1', 70],
-    ['2024-01-01T00:00:00.000', 'Cat 2', 50],
+    ['2026-01-01T00:00:00.000', 'Cat 1', 70],
+    ['2026-01-01T00:00:00.000', 'Cat 2', 50],
 
-    ['2024-01-08T00:00:00.000', 'Cat 1', 85],
-    ['2024-01-08T00:00:00.000', 'Cat 2', 55],
+    ['2026-01-08T00:00:00.000', 'Cat 1', 85],
+    ['2026-01-08T00:00:00.000', 'Cat 2', 55],
 
-    ['2024-01-15T00:00:00.000', 'Cat 1', 55],
-    ['2024-01-15T00:00:00.000', 'Cat 2', 40],
+    ['2026-01-15T00:00:00.000', 'Cat 1', 55],
+    ['2026-01-15T00:00:00.000', 'Cat 2', 40],
 
-    ['2024-01-22T00:00:00.000', 'Cat 1', 95],
-    ['2024-01-22T00:00:00.000', 'Cat 2', 65],
+    ['2026-01-22T00:00:00.000', 'Cat 1', 95],
+    ['2026-01-22T00:00:00.000', 'Cat 2', 65],
 
-    ['2024-01-29T00:00:00.000', 'Cat 1', 65],
-    ['2024-01-29T00:00:00.000', 'Cat 2', 45],
+    ['2026-01-29T00:00:00.000', 'Cat 1', 65],
+    ['2026-01-29T00:00:00.000', 'Cat 2', 45],
+  ],
+);
+
+const results1Measure1TimeDimension1GroupPrevious = mockDataResponse(
+  [timeDimensionName, dimensionGroupName, measureName],
+  [
+    ['2025-12-01T00:00:00.000', 'Cat 1', 60],
+    ['2025-12-01T00:00:00.000', 'Cat 2', 40],
+
+    ['2025-12-08T00:00:00.000', 'Cat 1', 75],
+    ['2025-12-08T00:00:00.000', 'Cat 2', 45],
+
+    ['2025-12-15T00:00:00.000', 'Cat 1', 50],
+    ['2025-12-15T00:00:00.000', 'Cat 2', 35],
+
+    ['2025-12-22T00:00:00.000', 'Cat 1', 80],
+    ['2025-12-22T00:00:00.000', 'Cat 2', 55],
+
+    ['2025-12-29T00:00:00.000', 'Cat 1', 55],
+    ['2025-12-29T00:00:00.000', 'Cat 2', 35],
   ],
 );
 
@@ -152,14 +170,15 @@ export const previewData = {
   measure,
   measure2,
   results1Measure,
-  results1MeasureVariant,
   results1Measure1Dimension,
   results1Measure1DimensionVariant,
-  results1Measure2Dimensions,
-  results1Measure2DimensionsVariant,
-  results2Measures1Dimension,
   results1Measure1GeoDimension,
-  timeDimension,
   results1Measure1TimeDimension,
   results1Measure1TimeDimension1Group,
+  results1Measure1TimeDimension1GroupPrevious,
+  results1Measure2Dimensions,
+  results1Measure2DimensionsVariant,
+  results1MeasureVariant,
+  results2Measures1Dimension,
+  timeDimension,
 } as const;

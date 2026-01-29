@@ -1,10 +1,16 @@
 import { Value } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 import { endOfDay, startOfDay } from 'date-fns';
 
 import TimeComparisonType from '../../../../types/TimeComparison.type.emb';
 import { timeRangeToUTC } from '../../../util/timezone';
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'ComparisonFilter',
@@ -105,6 +111,17 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  title: '',
+  showGranularity: false,
+  defaultComparison: 'Previous period',
+  defaultPeriod: { relativeTimeString: 'Last 7 days', from: new Date(), to: new Date() },
+  defaultGranularity: 'day',
+  onChangePeriod: () => previewData,
+  onChangeComparison: () => previewData,
+  onChangeGranularity: () => 'day',
+});
 
 export default defineComponent(Component, meta, {
   /* The Inputs type is currently set to PICK properties from the "events" section of the meta object
