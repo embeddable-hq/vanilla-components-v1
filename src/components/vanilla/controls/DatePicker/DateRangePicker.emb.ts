@@ -1,9 +1,15 @@
 import { Value } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 import { endOfDay, startOfDay } from 'date-fns';
 
 import { timeRangeToUTC } from '../../../util/timezone';
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'DateRangePicker',
@@ -80,6 +86,17 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  title: '',
+  showGranularity: false,
+  value: { relativeTimeString: 'Last 30 days', to: new Date(), from: new Date() },
+  defaultGranularity: 'day',
+  onChange: () => null,
+  onChangeComparison: () => null,
+  onChangeGranularity: () => null,
+  onChangePeriod: () => null,
+});
 
 export default defineComponent(Component, meta, {
   /* @ts-expect-error - to be fixed in @embeddable.com/react */

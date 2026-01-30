@@ -5,15 +5,16 @@ import Container from '../../Container';
 import DateRangeWithGranularity from './components/DateRangeWithGranularity';
 
 export type Props = {
-  defaultPeriod?: TimeRange;
   defaultGranularity?: Granularity;
-  showGranularity?: boolean;
+  defaultPeriod?: TimeRange;
   onChange: (v: TimeRange | null) => void;
   onChangeComparison: (v: TimeRange | null) => void;
-  onChangePeriod: (v: TimeRange | null) => void;
   onChangeGranularity: (v: Granularity | null) => void;
-  value: TimeRange;
+  onChangePeriod: (v: TimeRange | null) => void;
+  showGranularity?: boolean;
   timezone?: string;
+  title?: string;
+  value: TimeRange;
 };
 
 export default (props: Props) => {
