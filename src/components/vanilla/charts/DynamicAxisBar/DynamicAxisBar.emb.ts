@@ -1,5 +1,11 @@
 import { DimensionOrMeasure, loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
+import { previewData } from '../../../preview.data.constants';
 
 import Component, { Props } from './index';
 
@@ -117,6 +123,18 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  xAxis: previewData.dimension,
+  xAxisOptions: [previewData.dimension, previewData.dimensionGroup],
+  metrics: [previewData.measure],
+  results: previewData.results1Measure1Dimension,
+  title: 'Dynamic Bar Chart',
+  showLegend: true,
+  showLabels: false,
+  displayHorizontally: false,
+  reverseXAxis: false,
+});
 
 type EmbeddableState = {
   page: number;
