@@ -137,7 +137,7 @@ export default (props: Props) => {
             items-center
             min-h-36px
             overflow-hidden
-            px-3
+            px-6
             py-2
             text-ellipsis
             whitespace-nowrap
@@ -184,7 +184,7 @@ export default (props: Props) => {
             h-9
             leading-9
             outline-none
-            px-3
+            px-6
             text-sm
             w-full
             text-controls-font-normal
@@ -250,7 +250,7 @@ export default (props: Props) => {
           >
             {list}
             {list?.length === 0 && !!search && (
-              <div className="px-3 py-2 text-black/50 italic cursor-pointer">No results</div>
+              <div className="px-6 py-2 text-black/50 italic cursor-pointer">No results</div>
             )}
           </div>
         )}
@@ -259,7 +259,7 @@ export default (props: Props) => {
           className={`
           absolute
           cursor-pointer
-          right-2.5
+          right-4
           top-2.5
           z-controls-multiselector-chevron
         `}
