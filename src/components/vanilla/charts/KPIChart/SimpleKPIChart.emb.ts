@@ -1,7 +1,8 @@
 import { loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import { EmbeddedComponentMeta, Inputs, defineComponent, definePreview } from '@embeddable.com/react';
 
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'SimpleKPIChart',
@@ -100,6 +101,14 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  metric: previewData.measure,
+  results: previewData.results1Measure,
+  title: '',
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>, _, clientContext) => {

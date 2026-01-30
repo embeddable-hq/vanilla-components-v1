@@ -1,7 +1,13 @@
 import { Value, loadData, Granularity } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 
 import Component, { Props } from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'GranularityPicker',
@@ -81,6 +87,21 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  title: '',
+  defaultValue: 'day' as Granularity,
+  onChange: () => null,
+  second: false,
+  minute: true,
+  hour: true,
+  day: true,
+  week: true,
+  month: true,
+  quarter: false,
+  year: true,
+  displayCustomGranularities: false,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {

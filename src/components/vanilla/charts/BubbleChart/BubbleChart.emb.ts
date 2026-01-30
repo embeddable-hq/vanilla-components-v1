@@ -1,7 +1,8 @@
 import { OrderBy, loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import { EmbeddedComponentMeta, Inputs, defineComponent, definePreview } from '@embeddable.com/react';
 
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'BubbleChart',
@@ -133,6 +134,18 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  xAxis: previewData.dimension,
+  yAxis: previewData.measure,
+  bubbleSize: previewData.measure2,
+  results: previewData.results2Measures1Dimension,
+  isTimeDimension: false,
+  title: '',
+  showLabels: false,
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>, _, clientContext) => {

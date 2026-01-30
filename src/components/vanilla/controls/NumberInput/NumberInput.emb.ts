@@ -1,7 +1,10 @@
 import { Value } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
-
-
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 
 import Component from './index';
 
@@ -17,21 +20,21 @@ export const meta = {
       type: 'string',
       label: 'Title',
       description: 'The title',
-      category: 'Settings'
+      category: 'Settings',
     },
     {
       name: 'value',
       type: 'number',
       label: 'Value',
-      category: 'Pre-configured variables'
+      category: 'Pre-configured variables',
     },
     {
       name: 'placeholder',
       type: 'string',
       label: 'Placeholder',
       defaultValue: 'E.g. 3',
-      category: 'Settings'
-    }
+      category: 'Settings',
+    },
   ],
   events: [
     {
@@ -40,10 +43,10 @@ export const meta = {
       properties: [
         {
           name: 'value',
-          type: 'number'
-        }
-      ]
-    }
+          type: 'number',
+        },
+      ],
+    },
   ],
   variables: [
     {
@@ -51,20 +54,27 @@ export const meta = {
       type: 'number',
       defaultValue: Value.noFilter(),
       inputs: ['value'],
-      events: [{ name: 'onChange', property: 'value' }]
-    }
-  ]
+      events: [{ name: 'onChange', property: 'value' }],
+    },
+  ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  title: '',
+  onChange: () => null,
+  placeholder: 'Choose a Number',
+  value: 4,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => ({
-    ...inputs
+    ...inputs,
   }),
   events: {
     onChange: (value) => {
       const noValue = typeof value !== 'number' && !value;
 
       return { value: noValue ? Value.noFilter() : parseFloat(`${value}`) };
-    }
-  }
+    },
+  },
 });

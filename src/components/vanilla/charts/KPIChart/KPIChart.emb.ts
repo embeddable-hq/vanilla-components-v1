@@ -1,7 +1,8 @@
 import { loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import { EmbeddedComponentMeta, Inputs, defineComponent, definePreview } from '@embeddable.com/react';
 
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'KPIChart',
@@ -133,6 +134,22 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  metric: previewData.measure,
+  timeProperty: previewData.timeDimension,
+  results: previewData.results1Measure,
+  prevResults: previewData.results1MeasureVariant,
+  prevTimeFilter: {
+    from: new Date('2024-01-01'),
+    to: new Date('2024-01-31'),
+    relativeTimeString: 'previous period',
+  },
+  title: '',
+  showPrevPeriodLabel: true,
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>, _, clientContext) => {

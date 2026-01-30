@@ -1,4 +1,9 @@
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 
 import Component from './index';
 
@@ -35,6 +40,11 @@ export const meta = {
     },
   ]
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  title: 'Sample Title',
+  body: 'This is sample body text that demonstrates how the text component renders content.',
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {

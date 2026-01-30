@@ -1,7 +1,13 @@
 import { loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'TimeSeriesStackedBarChart',
@@ -137,6 +143,20 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+  granularity: 'day',
+  isGroupedBar: true,
+  metric: previewData.measure,
+  results: previewData.results1Measure1TimeDimension1Group,
+  segment: previewData.dimensionGroup,
+  showLabels: false,
+  stackBars: false,
+  title: '',
+  xAxis: previewData.timeDimension,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>, _, clientContext) => {

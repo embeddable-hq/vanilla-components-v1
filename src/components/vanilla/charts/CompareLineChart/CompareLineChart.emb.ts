@@ -1,7 +1,13 @@
 import { OrderBy, loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'CompareLineChart',
@@ -153,6 +159,30 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  applyFill: false,
+  ds: previewData.dataset,
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+  granularity: 'day',
+  metrics: [previewData.measure],
+  prevTimeFilter: {
+    from: new Date('2025-12-01T00:00:00.000'),
+    to: new Date('2025-12-31T23:59:59.999'),
+    relativeTimeString: 'Previous Month',
+  },
+  results: previewData.results1Measure1TimeDimension1Group,
+  showLabels: false,
+  timeFilter: {
+    from: new Date('2026-01-01T00:00:00.000'),
+    to: new Date('2026-01-31T23:59:59.999'),
+    relativeTimeString: 'This Month',
+  },
+  title: '',
+  xAxis: previewData.timeDimension,
+  prevResults: previewData.results1Measure1TimeDimension1GroupPrevious,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>, _, clientContext) => {

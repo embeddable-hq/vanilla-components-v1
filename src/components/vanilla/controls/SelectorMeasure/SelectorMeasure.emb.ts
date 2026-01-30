@@ -1,5 +1,11 @@
 import { Value } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
+import { previewData } from '../../../preview.data.constants';
 import Component, { Props } from './index';
 
 export const meta = {
@@ -80,6 +86,15 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  ds: previewData.dataset,
+  options: [previewData.measure, previewData.measure2],
+  title: 'Select a measure',
+  defaultValue: undefined,
+  allowNoValue: false,
+  onChange: () => null,
+});
 
 export default defineComponent<Props, typeof meta, { search: string }>(Component, meta, {
   props: (inputs: Inputs<typeof meta>, [embState]) => {

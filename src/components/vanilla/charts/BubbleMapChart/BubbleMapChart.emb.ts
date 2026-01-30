@@ -1,7 +1,13 @@
 import { loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'BubbleMapChart',
@@ -24,7 +30,7 @@ export const meta = {
       required: true,
       config: {
         dataset: 'ds',
-        supportedTypes: ['geo']
+        supportedTypes: ['geo'],
       },
       category: 'Chart Data',
     },
@@ -125,6 +131,17 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  bubblePlacement: previewData.geoDimension,
+  metric: previewData.measure,
+  results: previewData.results1Measure1GeoDimension,
+  markerColor: '#6574C8',
+  title: '',
+  showTooltips: true,
+  enableDownloadAsCSV: false,
+  enableDownloadAsPNG: false,
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {

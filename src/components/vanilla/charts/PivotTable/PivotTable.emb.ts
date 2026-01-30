@@ -7,12 +7,13 @@ import {
   isMeasure,
   loadData,
 } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import { EmbeddedComponentMeta, Inputs, defineComponent, definePreview } from '@embeddable.com/react';
 
 import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
 import { MeasureVisualizationFormat } from './enums/MeasureVisualizationFormat';
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'PivotTable',
@@ -155,6 +156,18 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  metrics: [previewData.measure],
+  rowValues: [previewData.dimension],
+  columnValues: [previewData.dimensionGroup],
+  resultsDimension0: previewData.results1Measure2Dimensions,
+  rowSortDirection: SortDirection.NONE,
+  columnSortDirection: SortDirection.NONE,
+  measureVisualizationFormat: MeasureVisualizationFormat.NUMERIC_VALUES_ONLY,
+  aggregateRowDimensions: true,
+  title: '',
+});
 
 const aggregateRowDimensions = true; // This is unfinished functionality to disable aggregation rows and show row dimension in separate column
 

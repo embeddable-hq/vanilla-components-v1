@@ -1,7 +1,13 @@
 import { DimensionOrMeasure, OrderBy, OrderDirection, Value, loadData } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 import { SortDirection } from '../../../../enums/SortDirection';
 import SortDirectionType from '../../../../types/SortDirection.type.emb';
+import { previewData } from '../../../preview.data.constants';
 
 import Component, { Props } from './index';
 
@@ -93,6 +99,18 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  ds: previewData.dataset,
+  property: previewData.dimension,
+  sortBy: undefined,
+  sortDirection: 'descending',
+  title: '',
+  onChange: () => null,
+  options: previewData.results1Measure1Dimension,
+  defaultValue: undefined,
+  placeholder: 'Select an option',
+});
 
 export default defineComponent<Props, typeof meta, { search: string }>(Component, meta, {
   props: (inputs: Inputs<typeof meta>, [embState]) => {

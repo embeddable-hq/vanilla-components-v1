@@ -1,5 +1,11 @@
 import { Value } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
+import { previewData } from '../../../preview.data.constants';
 
 import Component, { Props } from './index';
 import { selectorOptionIncludesSearch } from '../Selector.utils';
@@ -85,6 +91,15 @@ export const meta = {
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  ds: previewData.dataset,
+  options: [previewData.dimension, previewData.dimensionGroup, previewData.timeDimension],
+  title: 'Select dimensions',
+  defaultValue: undefined,
+  allowNoValue: false,
+  onChange: () => null,
+});
 
 export default defineComponent<Props, typeof meta, { search: string }>(Component, meta, {
   props: (inputs: Inputs<typeof meta>, [embState]) => {

@@ -1,7 +1,13 @@
 import { Value } from '@embeddable.com/core';
-import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
+import {
+  EmbeddedComponentMeta,
+  Inputs,
+  defineComponent,
+  definePreview,
+} from '@embeddable.com/react';
 
 import Component from './index';
+import { previewData } from '../../../preview.data.constants';
 
 export const meta = {
   name: 'MultiSelectButtons',
@@ -15,21 +21,21 @@ export const meta = {
       type: 'string',
       array: true,
       label: 'Values',
-      category: 'Button values'
+      category: 'Button values',
     },
     {
       name: 'title',
       type: 'string',
       label: 'Title',
-      category: 'Settings'
+      category: 'Settings',
     },
     {
       name: 'defaultValue',
       type: 'string',
       array: true,
       label: 'Default value',
-      category: 'Pre-configured variables'
-    }
+      category: 'Pre-configured variables',
+    },
   ],
   events: [
     {
@@ -39,10 +45,10 @@ export const meta = {
         {
           name: 'value',
           type: 'string',
-          array: true
-        }
-      ]
-    }
+          array: true,
+        },
+      ],
+    },
   ],
   variables: [
     {
@@ -51,18 +57,25 @@ export const meta = {
       array: true,
       defaultValue: Value.noFilter(),
       inputs: ['defaultValue'],
-      events: [{ name: 'onChange', property: 'value' }]
-    }
-  ]
+      events: [{ name: 'onChange', property: 'value' }],
+    },
+  ],
 } as const satisfies EmbeddedComponentMeta;
+
+export const preview = definePreview(Component, {
+  title: '',
+  onChange: () => null,
+  defaultValue: undefined,
+  values: ['Option 1', 'Option 2', 'Option 3'],
+});
 
 export default defineComponent(Component, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
-      ...inputs
+      ...inputs,
     };
   },
   events: {
-    onChange: (value) => ({ value: value.length > 0 ? value : Value.noFilter() })
-  }
+    onChange: (value) => ({ value: value.length > 0 ? value : Value.noFilter() }),
+  },
 });

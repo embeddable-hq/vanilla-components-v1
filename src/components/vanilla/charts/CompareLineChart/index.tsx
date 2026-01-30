@@ -50,24 +50,26 @@ ChartJS.register(
 );
 
 type Props = {
-  title?: string;
-  ds: Dataset;
-  xAxis: Dimension;
+  applyFill?: boolean;
   comparisonXAxis?: Dimension;
+  comparisonXAxisTitle?: string;
+  dps?: number;
+  ds: Dataset;
+  enableDownloadAsCSV?: boolean;
+  enableDownloadAsPNG?: boolean;
   granularity: Granularity;
   metrics: Measure[];
-  timeFilter?: TimeRange;
+  prevResults: DataResponse;
   prevTimeFilter?: TimeRange;
-  yAxisMin?: number;
-  xAxisTitle?: string;
-  comparisonXAxisTitle?: string;
-  yAxisTitle?: string;
-  applyFill?: boolean;
+  results: DataResponse;
   showLabels?: boolean;
   showLegend?: boolean;
-  results: DataResponse;
-  prevResults: DataResponse;
-  dps?: number;
+  timeFilter?: TimeRange;
+  title?: string;
+  xAxis: Dimension;
+  xAxisTitle?: string;
+  yAxisMin?: number;
+  yAxisTitle?: string;
 };
 
 type PropsWithRequiredTheme = Props & { theme: Theme };

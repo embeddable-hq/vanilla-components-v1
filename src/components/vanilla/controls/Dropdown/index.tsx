@@ -1,4 +1,4 @@
-import { DataResponse } from '@embeddable.com/core';
+import { DataResponse, DimensionOrMeasure } from '@embeddable.com/core';
 import { useEmbeddableState, useTheme } from '@embeddable.com/react';
 import React, {
   ReactNode,
@@ -16,19 +16,21 @@ import Spinner from '../../Spinner';
 import { ChevronDown, ClearIcon } from '../../icons';
 
 export type Props = {
-  icon?: ReactNode;
   className?: string;
-  options: DataResponse;
-  unclearable?: boolean;
-  inputClassName?: string;
-  onChange: (v: string) => void;
-  searchProperty?: string;
-  minDropdownWidth?: number;
-  property?: { name: string; title: string; nativeType: string; __type__: string };
-  title?: string;
   defaultValue?: string;
-  placeholder?: string;
   ds?: { embeddableId: string; datasetId: string; variableValues: Record };
+  icon?: ReactNode;
+  inputClassName?: string;
+  minDropdownWidth?: number;
+  onChange: (v: string) => void;
+  options: DataResponse;
+  placeholder?: string;
+  property?: { name: string; title: string; nativeType: string; __type__: string };
+  searchProperty?: string;
+  sortBy?: DimensionOrMeasure;
+  sortDirection?: unknown;
+  title?: string;
+  unclearable?: boolean;
 };
 
 type Record = { [p: string]: string };

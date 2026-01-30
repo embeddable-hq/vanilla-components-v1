@@ -16,7 +16,7 @@ export default defineConfig({
   // region: 'US',
 
   //For internal use only (this helps us help you debug issues)
-  //
+
   // previewBaseUrl: 'https://app.dev.embeddable.com',
   // pushBaseUrl: 'https://api.dev.embeddable.com',
   // audienceUrl: 'https://api.dev.embeddable.com/',
