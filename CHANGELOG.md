@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.3.2
+
+### Patch Changes
+
+- 592bad9: Add component previews
+
 ## 1.3.1
 
 ### Patch Changes
