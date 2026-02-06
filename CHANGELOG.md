@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.3.3
+
+### Patch Changes
+
+- 558078d: Remove an unnecessary dependency
+
 ## 1.3.2
 
 ### Patch Changes
