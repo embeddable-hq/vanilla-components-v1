@@ -1,3 +1,11 @@
+# This Repo Is In Maintenance Mode
+
+Please do not clone or otherwise use this repo! Vanilla Components is being sunset in favor of our new, improved component library, [Remarkable Pro](https://github.com/embeddable-hq/remarkable-pro-boilerplate). If you are an existing user and have questions about this transition, please reach out to Customer Success or your account manager. If you are a new user, please start with Remarkable Pro instead of Vanilla Components.
+
+This repo will only receive updates between now and the end of Q3, 2026, when it will be fully archived, if there are significant bug fixes, or if the components need to be updated to work with changes in the Embeddable SDK or Platform.
+
+---
+
 # Embeddable.com Starter Pack
 
 Hello and welcome to our Embeddable components **starter pack** built just for you by the Embeddable team ❤️ We wish to thank you for using our platform and welcome any feedback.
