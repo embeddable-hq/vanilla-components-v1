@@ -1,5 +1,11 @@
 # @embeddable.com/vanilla-components
 
+## 1.3.4
+
+### Patch Changes
+
+- 80a95e1: Update Axios to avoid any security vulnerabilities
+
 ## 1.3.3
 
 ### Patch Changes
