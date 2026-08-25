@@ -1,8 +1,7 @@
-# This Repo Is In Maintenance Mode
+# This Repo Is Deprecated
+Please do not clone or otherwise use this repo! This component library is no longer supported by Embeddable, and will soon be archived entirely. If you are seeing this for some reason, please [visit our documentation](https://docs.embeddable.com/component-libraries/remarkable-pro/introduction) for full information on our current component set, Remarkable Pro.
 
-Please do not clone or otherwise use this repo! Vanilla Components is being sunset in favor of our new, improved component library, [Remarkable Pro](https://github.com/embeddable-hq/remarkable-pro-boilerplate). If you are an existing user and have questions about this transition, please reach out to Customer Success or your account manager. If you are a new user, please start with Remarkable Pro instead of Vanilla Components.
-
-This repo will only receive updates between now and the end of Q3, 2026, when it will be fully archived, if there are significant bug fixes, or if the components need to be updated to work with changes in the Embeddable SDK or Platform.
+If you would like assistance in upgrading to Remarkable Pro, please reach out to Embeddable Customer Success.
 
 ---
 
